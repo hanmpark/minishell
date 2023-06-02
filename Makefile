@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
+#    By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:08:12 by hanmpark          #+#    #+#              #
-#    Updated: 2023/06/02 07:35:42 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/06/02 11:30:09 by kquetat-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,9 @@ LPURPLE = \033[38;5;189m
 LGREEN = \033[38;5;155m
 
 # ---------------------------- SOURCES / OBJECTS ----------------------------- #
-SRC_PATH = ./src/
+SRC_PATH = ./srcs/
 
-SRC_PATH = ${SRC_PATH}mandatory/
-SRC_MAN = ${addprefix ${SRC_PATH}, ...} #TO BE COMPLETED
+SRC_MAN = ${addprefix ${SRC_PATH}, main.c} #TO BE COMPLETED
 
 OBJ = ${SRC_MAN:.c=.o}
 
@@ -53,12 +52,14 @@ ${SRC_PATH}%.o: ${SRC_PATH}%.c ${HEADER_PATH}
 	@echo "${UP}${UP}${UP}"
 
 # ---------------------------------- RULES ----------------------------------- #
-NAME = #TO BE COMPLETED
+NAME = minishell #TO BE COMPLETED
 
 all: ${NAME}
 
+# pour la fonction readline, il faut inclure la librairie qu'on installe en utilisant la commmande 'brew install readline'
+# -l specifie la bibliotheque, -L le chemin d'accès (du coup dans le repertoire brew)
 ${NAME}: ${OBJ}
-	@${CC} ${CFLAGS} ${OBJ} -o ${NAME}
+	@${CC} ${CFLAGS} ${OBJ} -o ${NAME} -lreadline -L ~/.brew/opt/readline/lib
 	@echo "\n\n\n\n   ${BOLD}${CUR}${LYELLOW}${NAME} COMPILED ✨${DEF}\n"
 
 bonus:
