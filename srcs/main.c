@@ -6,7 +6,7 @@
 /*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:07:03 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/06/02 11:21:17 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/06/02 11:42:38 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@ int	main(void)
 {
 	char	*line;
 
-	line = readline("Test-> ");
-	if (!line)
-		printf("\n");
-	else
+	while ("MINISHELL")
 	{
+		line = readline("Test-> ");
 		printf("you typed: %s\n", line);
 		free(line);
 	}
