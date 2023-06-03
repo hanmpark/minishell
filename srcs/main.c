@@ -1,5 +1,9 @@
 #include "minishell.h"
 
+/*
+Once we have read the line from the prompt,...
+*/
+
 int	main(void)
 {
 	char	*line;
@@ -7,8 +11,6 @@ int	main(void)
 	while ("MINISHELL")
 	{
 		line = readline("Minishell-> ");
-		printf("line length: %zu\n", ft_strlen(line));
-		printf("%s\n", line);
 		free(line);
 	}
 	return (0);
