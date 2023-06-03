@@ -58,8 +58,7 @@ all: ${NAME}
 ${NAME}: ${OBJ}
 	@echo "\n\n\n"
 	@${MAKE} -C ${LIBFT_PATH}
-	@${CC} ${CFLAGS} ${OBJ} -o ${NAME} -lreadline -L ${READ_LINE_PATH}
-	@${CC} ${CFLAGS} ${LIBFT_PATH}libft.a ${OBJS_MAIN} -o ${NAME}
+	@${CC} ${CFLAGS} ${LIBFT_PATH}libft.a ${OBJ} -o ${NAME} -lreadline -L ${READ_LINE_PATH}
 	@echo "\n\n\n\n   ${BOLD}${CUR}${LYELLOW}${NAME} COMPILED ✨${DEF}\n"
 
 bonus:
