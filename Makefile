@@ -14,6 +14,11 @@ LGREEN = \033[38;5;155m
 # ---------------------------- SOURCES / OBJECTS ----------------------------- #
 SRC_PATH = ./srcs/
 
+### Must MODIFY Makefile for the PC that doesn't have the library for readline function();
+READ_LINE_PATH = ~/.brew/opt/readline/lib
+
+LIBFT_PATH = ./libs/libft/
+
 SRC_MAN = ${addprefix ${SRC_PATH}, main.c} #TO BE COMPLETED
 
 OBJ = ${SRC_MAN:.c=.o}
@@ -40,14 +45,21 @@ ${SRC_PATH}%.o: ${SRC_PATH}%.c ${HEADER_PATH}
 	@echo "${UP}${UP}${UP}"
 
 # ---------------------------------- RULES ----------------------------------- #
+# pour la fonction readline, il faut inclure la librairie qu'on installe en utilisant
+# la commmande: 'brew install readline'
+# -l specifie la bibliotheque,
+# -L le chemin d'accès (du coup dans le repertoire brew)
+# J'ai rajouter la Libft comme tu le fais toi =>							03 / 06 / 2023
+
 NAME = minishell #TO BE COMPLETED
 
 all: ${NAME}
 
-# pour la fonction readline, il faut inclure la librairie qu'on installe en utilisant la commmande 'brew install readline'
-# -l specifie la bibliotheque, -L le chemin d'accès (du coup dans le repertoire brew)
 ${NAME}: ${OBJ}
-	@${CC} ${CFLAGS} ${OBJ} -o ${NAME} -lreadline -L ~/.brew/opt/readline/lib
+	@echo "\n\n\n"
+	@${MAKE} -C ${LIBFT_PATH}
+	@${CC} ${CFLAGS} ${OBJ} -o ${NAME} -lreadline -L ${READ_LINE_PATH}
+	@${CC} ${CFLAGS} ${LIBFT_PATH}libft.a ${OBJS_MAIN} -o ${NAME}
 	@echo "\n\n\n\n   ${BOLD}${CUR}${LYELLOW}${NAME} COMPILED ✨${DEF}\n"
 
 bonus:
@@ -57,12 +69,13 @@ debug:
 	@${MAKE} DEBUG=1
 
 clean:
+	@${MAKE} -C ${LIBFT_PATH} clean
 	@rm -f ${OBJ}
 	@echo "${ORANGE}${BOLD}\tCLEANING${DEF}"
 	@echo "${LBLUE}${BOLD}${CUR} - Deleted object files${DEF}"
 
 fclean: clean
-	@rm -f ${NAME}
+	@rm -f ${NAME} ${LIBFT_PATH}libft.a
 	@echo "${LBLUE}${BOLD}${CUR} - Deleted ${NAME}${DEF}"
 
 re: fclean

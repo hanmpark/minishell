@@ -1,5 +1,4 @@
 #include "minishell.h"
-#include <readline/readline.h>
 
 int	main(void)
 {
@@ -7,8 +6,9 @@ int	main(void)
 
 	while ("MINISHELL")
 	{
-		line = readline("Test-> ");
-		printf("you typed: %s\n", line);
+		line = readline("Minishell-> ");
+		printf("line length: %zu\n", ft_strlen(line));
+		printf("%s\n", line);
 		free(line);
 	}
 	return (0);
