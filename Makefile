@@ -12,23 +12,22 @@ LPURPLE = \033[38;5;189m
 LGREEN = \033[38;5;155m
 
 # ---------------------------- SOURCES / OBJECTS ----------------------------- #
-SRC_PATH = ./srcs/
+SRC_PATH = ./src/
 
-### Must MODIFY Makefile for the PC that doesn't have the library for readline function();
-READ_LINE_PATH = ~/.brew/opt/readline/lib
+PARSING_PATH = ${SRC_PATH}parsing/
+SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c \
+											print_tree.c}
 
-LIBFT_PATH = ./libs/libft/
+SRC = ${SRC_PARSING} ${SRC_PATH}main.c
 
-SRC_MAN = ${addprefix ${SRC_PATH}, main.c} #TO BE COMPLETED
-
-OBJ = ${SRC_MAN:.c=.o}
+OBJ = ${SRC:.c=.o}
 
 # --------------------------------- COMPILER --------------------------------- #
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
 ifdef DEBUG
-	CFLAGS += -fsanitize=address -g
+	CFLAGS += -fsanitize=address -g3
 endif
 
 HEADER_PATH = ./inc/
@@ -49,9 +48,14 @@ ${SRC_PATH}%.o: ${SRC_PATH}%.c ${HEADER_PATH}
 # la commmande: 'brew install readline'
 # -l specifie la bibliotheque,
 # -L le chemin d'accès (du coup dans le repertoire brew)
-# J'ai rajouter la Libft comme tu le fais toi =>							03 / 06 / 2023
 
-NAME = minishell #TO BE COMPLETED
+
+NAME = minishell
+
+### Must MODIFY Makefile for the PC that doesn't have the library for readline function();
+READ_LINE_PATH = ~/.brew/opt/readline/lib
+
+LIBFT_PATH = ./libs/libft/
 
 all: ${NAME}
 

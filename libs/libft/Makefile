@@ -48,7 +48,8 @@ SRCS_LISTFT = ${addprefix ${LISTFT_PATH}, ft_lstadd_back.c \
 											ft_lstlast.c \
 											ft_lstmap.c \
 											ft_lstnew.c \
-											ft_lstsize.c}
+											ft_lstsize.c \
+											ft_treenew.c}
 
 MEMFT_PATH = ./src/memft/
 SRCS_MEMFT = ${addprefix ${MEMFT_PATH}, ft_bzero.c \

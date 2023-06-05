@@ -1,11 +1,40 @@
 #ifndef LISTFT_H
 # define LISTFT_H
 
+# include <stdbool.h>
+
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }	t_list;
+
+typedef enum s_redirect
+{
+	NONE,
+	GREAT,
+	SMALL,
+	APPEND,
+	HEREDOC
+}	t_redirect;
+
+typedef enum s_separator
+{
+	NONE,
+	PIPE,
+	AND,
+	OR,
+	PRIO
+}	t_separator;
+
+typedef struct s_treenode
+{
+	char				**cmd;
+	enum s_redirect		redir;
+	enum s_separator	sep;
+	struct s_treenode	*nprio;
+	struct s_treenode	*prio;
+}	t_treenode;
 
 /* CHAINED LIST MANIPULATION */
 
@@ -18,5 +47,8 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+/* BINARY TREE MANIPULATION */
+t_treenode	*ft_treenew(char **cmd, t_redirect redir, t_separator sep);
 
 #endif
