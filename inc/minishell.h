@@ -6,6 +6,7 @@
 # include <readline/readline.h>
 # include "../libs/libft/inc/listft.h"
 # include "../libs/libft/inc/charft.h"
+# include "../libs/libft/inc/memft.h"
 
 typedef enum	s_quote
 {
