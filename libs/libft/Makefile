@@ -13,54 +13,57 @@ LGREEN = \033[38;5;155m
 
 # ------------------------------ LIBFT SOURCES ------------------------------- #
 
-LIBFT_PATH = ./src/libft/
-SRCS_LIBFT = ${addprefix ${LIBFT_PATH}, ft_bzero.c \
-										ft_isalnum.c \
+CHARFT_PATH = ./src/charft/
+SRCS_CHARFT = ${addprefix ${CHARFT_PATH}, ft_atoi.c \
+											ft_itoa.c \
+											ft_split.c \
+											ft_strchr.c \
+											ft_strdup.c \
+											ft_striteri.c \
+											ft_strjoin.c \
+											ft_strlcat.c \
+											ft_strlcpy.c \
+											ft_strlen.c \
+											ft_strmapi.c \
+											ft_strncmp.c \
+											ft_strnstr.c \
+											ft_strtrim.c \
+											ft_substr.c \
+											ft_tolower.c \
+											ft_toupper.c}
+
+ISFT_PATH = ./src/isft/
+SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
 										ft_isalpha.c \
 										ft_isascii.c \
 										ft_isdigit.c \
-										ft_isprint.c \
-										ft_memcpy.c \
-										ft_memset.c \
-										ft_strlen.c \
-										ft_memmove.c \
-										ft_strlcpy.c \
-										ft_strlcat.c \
-										ft_toupper.c \
-										ft_tolower.c \
-										ft_strchr.c \
-										ft_strrchr.c \
-										ft_strncmp.c \
+										ft_isprint.c}
+
+LISTFT_PATH = ./src/listft/
+SRCS_LISTFT = ${addprefix ${LISTFT_PATH}, ft_lstadd_back.c \
+											ft_lstadd_front.c \
+											ft_lstclear.c \
+											ft_lstdelone.c \
+											ft_lstiter.c \
+											ft_lstlast.c \
+											ft_lstmap.c \
+											ft_lstnew.c \
+											ft_lstsize.c}
+
+MEMFT_PATH = ./src/memft/
+SRCS_MEMFT = ${addprefix ${MEMFT_PATH}, ft_bzero.c \
+										ft_calloc.c \
 										ft_memchr.c \
 										ft_memcmp.c \
-										ft_strnstr.c \
-										ft_atoi.c \
-										ft_calloc.c \
-										ft_strdup.c \
-										ft_substr.c \
-										ft_strjoin.c \
-										ft_strtrim.c \
-										ft_split.c \
-										ft_itoa.c \
-										ft_strmapi.c \
-										ft_striteri.c \
-										ft_putchar_fd.c \
-										ft_putstr_fd.c \
+										ft_memcpy.c \
+										ft_memmove.c \
+										ft_memset.c}
+
+PUTFT_PATH = ./src/putft/
+SRCS_PUTFT = ${addprefix ${PUTFT_PATH}, ft_putchar_fd.c \
 										ft_putendl_fd.c \
 										ft_putnbr_fd.c \
-										ft_lstnew.c \
-										ft_lstadd_front.c \
-										ft_lstsize.c \
-										ft_lstlast.c \
-										ft_lstadd_back.c \
-										ft_lstdelone.c \
-										ft_lstclear.c \
-										ft_lstiter.c \
-										ft_lstmap.c \
-										ft_filelen.c \
-										ft_mapdup.c \
-										ft_error.c \
-										ft_freestr_array.c}
+										ft_putstr_fd.c}
 
 PRINTF_PATH = ./src/ft_printf/
 SRCS_PRINTF = ${addprefix ${PRINTF_PATH}, def_flags.c \
@@ -76,7 +79,7 @@ GNL_PATH = ./src/get_next_line/
 SRCS_GNL = ${addprefix ${GNL_PATH}, get_next_line_utils.c \
 									get_next_line.c}
 
-SRCS =	${SRCS_LIBFT} ${SRCS_PRINTF} ${SRCS_GNL}
+SRCS =	${SRCS_CHARFT} ${SRCS_ISFT} ${SRCS_LISTFT} ${SRCS_MEMFT} ${SRCS_PUTFT} ${SRCS_PRINTF} ${SRCS_GNL}
 OBJS =	${SRCS:.c=.o}
 
 # --------------------------------- COMPILER --------------------------------- #

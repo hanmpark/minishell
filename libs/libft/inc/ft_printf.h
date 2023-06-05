@@ -2,7 +2,11 @@
 # define FT_PRINTF_H
 
 # include <stdarg.h>
-# include "libft.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include "isft.h"
+# include "charft.h"
+# include "putft.h"
 
 # define TRUE 1
 # define FALSE 0

@@ -1,4 +1,5 @@
 #include "get_next_line.h"
+#include "charft.h"
 
 void	ft_freeall(char *buf, char *line, char *stash)
 {

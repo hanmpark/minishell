@@ -1,4 +1,5 @@
 #include "get_next_line.h"
+#include "charft.h"
 
 static int	ft_is_nl(char *str)
 {
