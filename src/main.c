@@ -12,6 +12,7 @@ int	main(void)
 	{
 		line = readline("minishell $ ");
 		parsing(line);
+		printf("line after parsing = %s\n", line);
 		free(line);
 	}
 	return (0);

@@ -7,6 +7,7 @@
 # include "../libs/libft/inc/listft.h"
 # include "../libs/libft/inc/charft.h"
 # include "../libs/libft/inc/memft.h"
+# include "../libs/libft/inc/isft.h"
 
 typedef enum	s_quote
 {
