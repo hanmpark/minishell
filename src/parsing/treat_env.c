@@ -41,6 +41,7 @@ char	*treat_env(char *cmd_line, int *i)
 
 	env = subenv(cmd_line + *i + 1);
 	tmp = getenv(env);
+	free(env);
 	if (!tmp)
 		line = replace_env(cmd_line, "", *i);
 	else

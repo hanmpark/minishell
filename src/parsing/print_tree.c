@@ -25,11 +25,11 @@ void	print_tree_rec(t_treenode *root, int level)
 	print_tabs(level);
 	printf("left\n");
 
-	print_tree(root, level + 1);
+	print_tree_rec(root, level + 1);
 	print_tabs(level);
 	printf("right\n");
 
-	print_tree(root, level + 1);
+	print_tree_rec(root, level + 1);
 	print_tabs(level);
 	printf("done\n");
 }

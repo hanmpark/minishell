@@ -11,6 +11,9 @@ int	main(void)
 	while ("apagnan")
 	{
 		line = readline("minishell$ ");
+		if (!line)
+			break ;
+		add_history(line);
 		parsing(line);
 		free(line);
 	}
