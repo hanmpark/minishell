@@ -27,6 +27,7 @@ SRCS_CHARFT = ${addprefix ${CHARFT_PATH}, ft_atoi.c \
 											ft_strmapi.c \
 											ft_strncmp.c \
 											ft_strnstr.c \
+											ft_strrchr.c \
 											ft_strtrim.c \
 											ft_substr.c \
 											ft_tolower.c \
@@ -38,7 +39,8 @@ SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
 										ft_isascii.c \
 										ft_isdigit.c \
 										ft_isprint.c \
-										ft_isspace.c}
+										ft_isspace.c \
+										ft_isenv.c}
 
 LISTFT_PATH = ./src/listft/
 SRCS_LISTFT = ${addprefix ${LISTFT_PATH}, ft_lstadd_back.c \

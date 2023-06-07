@@ -9,15 +9,6 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-typedef enum s_redirect
-{
-	NONE,
-	GREAT,
-	SMALL,
-	APPEND,
-	HEREDOC
-}	t_redirect;
-
 typedef enum s_separator
 {
 	NONE,
@@ -30,7 +21,6 @@ typedef enum s_separator
 typedef struct s_treenode
 {
 	char				**cmd;
-	enum s_redirect		redir;
 	enum s_separator	sep;
 	struct s_treenode	*nprio;
 	struct s_treenode	*prio;
@@ -49,6 +39,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 /* BINARY TREE MANIPULATION */
-t_treenode	*ft_treenew(char **cmd, t_redirect redir, t_separator sep);
+t_treenode	*ft_treenew(char **cmd, t_separator sep);
 
 #endif

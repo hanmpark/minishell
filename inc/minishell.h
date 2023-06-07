@@ -11,9 +11,11 @@
 
 typedef enum	s_quote
 {
-	NONE,
 	NOT_CLOSED,
 	CLOSED
 }	t_quote;
+
+bool	parsing(char *cmd_line);
+char	*treat_env(char *cmd_line, int *i);
 
 #endif

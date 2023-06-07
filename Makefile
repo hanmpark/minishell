@@ -16,7 +16,7 @@ SRC_PATH = ./src/
 
 PARSING_PATH = ${SRC_PATH}parsing/
 SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c \
-											print_tree.c}
+											treat_env.c}
 
 SRC = ${SRC_PARSING} ${SRC_PATH}main.c
 

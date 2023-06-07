@@ -10,9 +10,8 @@ int	main(void)
 
 	while ("apagnan")
 	{
-		line = readline("minishell $ ");
+		line = readline("minishell$ ");
 		parsing(line);
-		printf("line after parsing = %s\n", line);
 		free(line);
 	}
 	return (0);
