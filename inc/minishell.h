@@ -15,7 +15,14 @@ typedef enum	s_quote
 	CLOSED
 }	t_quote;
 
-bool	parsing(char *cmd_line);
+typedef struct	s_data
+{
+	char	*line;
+	char	**token;
+	int		nb_cmd;
+}	t_data;
+
+bool	parsing(t_data *ms);
 char	*treat_env(char *cmd_line, int *i);
 
 #endif

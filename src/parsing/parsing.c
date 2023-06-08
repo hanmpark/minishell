@@ -27,26 +27,32 @@
 // 	return (true);
 // }
 
+/* Starting to tokenize
+* It's the lexer part.
+*/
+void	divide(char *cmd_line, int i)
+{
+	
+}
+
 /* Scans the input text character by character and groups characters
 * into meaningful units, such as keywords, identifiers, operators,
 * and literals.
 */
-bool	parsing(char *cmd_line)
+bool	parsing(t_data *ms)
 {
 	int		i;
-	char	*line;
 
-	if (!cmd_line)
+	if (!ms->line)
 		return (false);
-	line = ft_strdup(cmd_line);
 	i = 0;
-	while (line[i])
+	while (ms->line[i])
 	{
-		if (line[i] == '$' && ft_isenv(line[i + 1]))
-			line = treat_env(line, &i);
+		if (ms->line[i] == '$' && ft_isenv(ms->line[i + 1]))
+			ms->line = treat_env(ms->line, &i);
 		else
 			i++;
 	}
-	printf("%s\n", line);
+	printf("%s\n", ms->line);
 	return (true);
 }
