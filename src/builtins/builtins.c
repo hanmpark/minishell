@@ -25,7 +25,7 @@ void	ft_echo(char *line)
 	if (line[i] == '-' && line[i + 1] == 'n' && line[i + 2] == ' ')
 	{
 		n_flag = true;
-		i += 2;
+		i += 3;
 	}
 	// print the arguments
 	while (line[i])
