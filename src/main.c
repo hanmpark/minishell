@@ -11,6 +11,8 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 1)
 		return (EXIT_FAILURE);
+	(void)argv;
+	(void)envp;
 	ms = malloc(sizeof(t_data));
 	if (!ms)
 		return (1);

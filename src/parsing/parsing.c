@@ -1,38 +1,44 @@
 #include "minishell.h"
 #include <stdbool.h>
 
-// static bool	check_quote(char *cmd_line)
-// {
-// 	int		i;
-// 	t_quote	quote;
-// 	t_quote	dquote;
-
-// 	quote = NONE;
-// 	dquote = NONE;
-// 	i = 0;
-// 	while (cmd_line[i])
-// 	{
-// 		if (cmd_line[i] == '\'')
-// 			quote++;
-// 		else if (cmd_line[i] == '"')
-// 			dquote++;
-// 		if (quote == CLOSED)
-// 			quote = NONE;
-// 		if (dquote == CLOSED)
-// 			dquote = NONE;
-// 		i++;
-// 	}
-// 	if (quote != NONE || dquote != NONE)
-// 		return (false);
-// 	return (true);
-// }
-
 /* Starting to tokenize
 * It's the lexer part.
 */
 void	divide(char *cmd_line, int i)
 {
 	
+}
+
+static int	check_parentheses(char *line)
+{
+	int	i;
+	int	closed;
+
+	i = -1;
+	closed = 0;
+	while (line[++i])
+	{
+		if (line[i] == '(' || line[i] == ')')
+			closed++;
+	}
+	return (closed % 2);
+}
+
+static int	check_quotes(char *line, bool simple)
+{
+	int	i;
+	int closed;
+
+	i = -1;
+	closed = 0;
+	while (line[++i])
+	{
+		if (!simple && line[i] == '"')
+			closed++;
+		else if (simple && line[i] == '\'')
+			closed++;
+	}
+	return (closed % 2);
 }
 
 /* Scans the input text character by character and groups characters
@@ -45,9 +51,13 @@ bool	parsing(t_data *ms)
 
 	if (!ms->line)
 		return (false);
+	if (check_parentheses(ms->line) || check_quotes(ms->line, true) || \
+		check_quotes(ms->line, false))
+		return (false);
 	i = 0;
 	while (ms->line[i])
 	{
+		
 		if (ms->line[i] == '$' && ft_isenv(ms->line[i + 1]))
 			ms->line = treat_env(ms->line, &i);
 		else

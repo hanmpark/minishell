@@ -16,18 +16,18 @@ typedef enum	s_token
 	REDIRECTIONS
 } t_token;
 
-typedef enum	s_operators
-{
-	AND_IF = 3,
-	OR_IF,
-	PIPE,
-	LESS,
-	GREAT,
-	DLESS,
-	DGREAT,
-	LPAR,
-	RPAR
-} t_operators;
+// typedef enum	s_operators
+// {
+// 	AND_IF = 3,
+// 	OR_IF,
+// 	PIPE,
+// 	LESS,
+// 	GREAT,
+// 	DLESS,
+// 	DGREAT,
+// 	LPAR,
+// 	RPAR
+// } t_operators;
 
 typedef struct	s_data
 {

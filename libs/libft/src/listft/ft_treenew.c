@@ -10,7 +10,7 @@ t_treenode	*ft_treenew(char **cmd, t_separator sep)
 		return (NULL);
 	newtree->cmd = cmd;
 	newtree->sep = sep;
-	newtree->nprio = NULL;
-	newtree->prio = NULL;
+	newtree->left = NULL;
+	newtree->right = NULL;
 	return (newtree);
 }

@@ -15,15 +15,17 @@ typedef enum s_separator
 	PIPE,
 	AND,
 	OR,
-	PRIO
+	RPAR,
+	LPAR
 }	t_separator;
 
 typedef struct s_treenode
 {
 	char				**cmd;
 	enum s_separator	sep;
-	struct s_treenode	*nprio;
-	struct s_treenode	*prio;
+	int					prio;
+	struct s_treenode	*left;
+	struct s_treenode	*right;
 }	t_treenode;
 
 /* CHAINED LIST MANIPULATION */
