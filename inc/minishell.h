@@ -9,11 +9,25 @@
 # include "../libs/libft/inc/memft.h"
 # include "../libs/libft/inc/isft.h"
 
-typedef enum	s_quote
+typedef enum	s_token
 {
-	NOT_CLOSED,
-	CLOSED
-}	t_quote;
+	WORD,
+	OPERATORS,
+	REDIRECTIONS
+} t_token;
+
+typedef enum	s_operators
+{
+	AND_IF = 3,
+	OR_IF,
+	PIPE,
+	LESS,
+	GREAT,
+	DLESS,
+	DGREAT,
+	LPAR,
+	RPAR
+} t_operators;
 
 typedef struct	s_data
 {

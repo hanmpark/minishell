@@ -5,10 +5,12 @@
 * Ctrl + D = end the program as it returns (NULL).
 */
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	*ms;
 
+	if (argc != 1)
+		return (EXIT_FAILURE);
 	ms = malloc(sizeof(t_data));
 	if (!ms)
 		return (1);
@@ -17,10 +19,11 @@ int	main(void)
 		ms->line = readline("minishell$ ");
 		if (!ms->line)
 			break ;
-		add_history(ms->line);
+		if (*ms->line)
+			add_history(ms->line);
 		parsing(ms);
 		free(ms->line);
 	}
 	// system("leaks minishell");
-	return (0);
+	return (EXIT_SUCCESS);
 }
