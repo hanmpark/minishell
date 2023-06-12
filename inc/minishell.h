@@ -10,34 +10,27 @@
 # include "../libs/libft/inc/memft.h"
 # include "../libs/libft/inc/isft.h"
 
-typedef enum	s_token
+typedef enum	e_type
 {
 	WORD,
-	OPERATORS,
-	REDIRECTIONS
-} t_token;
+	PIPE,
+	LPAR,
+	RPAR,
+	LESS,
+	GREAT,
+	DLESS,
+	DGREAT,
+	OR_IF,
+	AND_IF
+}	t_type;
 
-// typedef enum	s_operators
-// {
-// 	AND_IF = 3,
-// 	OR_IF,
-// 	PIPE,
-// 	LESS,
-// 	GREAT,
-// 	DLESS,
-// 	DGREAT,
-// 	LPAR,
-// 	RPAR
-// } t_operators;
-
-typedef struct	s_data
+typedef struct	s_minishell
 {
-	char	*line;
-	char	**token;
-	int		nb_cmd;
-}	t_data;
+	char				*line;
+	struct s_treenode	*node;
+}	t_minishell;
 
-bool	parsing(t_data *ms);
+bool	parsing(t_minishell *ms);
 char	*treat_env(char *cmd_line, int *i);
 
 #endif

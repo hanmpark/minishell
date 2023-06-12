@@ -1,14 +1,6 @@
 #include "minishell.h"
 #include <stdbool.h>
 
-/* Starting to tokenize
-* It's the lexer part.
-*/
-void	divide(char *cmd_line, int i)
-{
-	
-}
-
 static int	check_parentheses(char *line)
 {
 	int	i;
@@ -45,7 +37,7 @@ static int	check_quotes(char *line, bool simple)
 * into meaningful units, such as keywords, identifiers, operators,
 * and literals.
 */
-bool	parsing(t_data *ms)
+bool	parsing(t_minishell *ms)
 {
 	int		i;
 
@@ -54,15 +46,15 @@ bool	parsing(t_data *ms)
 	if (check_parentheses(ms->line) || check_quotes(ms->line, true) || \
 		check_quotes(ms->line, false))
 		return (false);
+	lexer(ms->line);
 	i = 0;
-	while (ms->line[i])
-	{
-		
-		if (ms->line[i] == '$' && ft_isenv(ms->line[i + 1]))
-			ms->line = treat_env(ms->line, &i);
-		else
-			i++;
-	}
+	// while (ms->line[i])
+	// {
+	// 	if (ms->line[i] == '$' && ft_isenv(ms->line[i + 1]))
+	// 		ms->line = treat_env(ms->line, &i);
+	// 	else
+	// 		i++;
+	// }
 	printf("%s\n", ms->line);
 	return (true);
 }

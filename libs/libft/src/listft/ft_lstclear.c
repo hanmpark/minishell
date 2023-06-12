@@ -2,10 +2,10 @@
 #include <stdlib.h>
 
 // Deletes and frees all the nodes in a linked list.
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_cmdtable **lst, void (*del)(void *))
 {
-	t_list	*current;
-	t_list	*next;
+	t_cmdtable	*current;
+	t_cmdtable	*next;
 
 	if (lst && del)
 	{

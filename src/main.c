@@ -7,13 +7,13 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	*ms;
+	t_minishell	*ms;
 
 	if (argc != 1)
 		return (EXIT_FAILURE);
 	(void)argv;
 	(void)envp;
-	ms = malloc(sizeof(t_data));
+	ms = malloc(sizeof(t_minishell));
 	if (!ms)
 		return (1);
 	while ("apagnan")
@@ -23,7 +23,11 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		if (*ms->line)
 			add_history(ms->line);
-		parsing(ms);
+		if(!parsing(ms))
+		{
+			free(ms->line);
+			break ;
+		}
 		free(ms->line);
 	}
 	// system("leaks minishell");

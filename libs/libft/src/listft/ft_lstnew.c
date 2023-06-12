@@ -2,14 +2,15 @@
 #include <stdlib.h>
 
 // Creates a new linked list node.
-t_list	*ft_lstnew(void *content)
+t_cmdtable	*ft_lstnew(char *token, int type)
 {
-	t_list	*lst;
+	t_cmdtable	*lst;
 
-	lst = malloc(sizeof(t_list));
+	lst = malloc(sizeof(t_cmdtable));
 	if (!lst)
 		return (NULL);
-	lst->content = content;
+	lst->token = token;
+	lst->type = type;
 	lst->next = NULL;
 	return (lst);
 }

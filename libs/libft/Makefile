@@ -31,7 +31,8 @@ SRCS_CHARFT = ${addprefix ${CHARFT_PATH}, ft_atoi.c \
 											ft_strtrim.c \
 											ft_substr.c \
 											ft_tolower.c \
-											ft_toupper.c}
+											ft_toupper.c \
+											ft_strndup.c}
 
 ISFT_PATH = ./src/isft/
 SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
@@ -49,11 +50,11 @@ SRCS_LISTFT = ${addprefix ${LISTFT_PATH}, ft_lstadd_back.c \
 											ft_lstdelone.c \
 											ft_lstiter.c \
 											ft_lstlast.c \
-											ft_lstmap.c \
 											ft_lstnew.c \
 											ft_lstsize.c \
 											ft_treenew.c \
-											ft_treeadd_left.c}
+											ft_treeadd_left.c \
+											ft_treeadd_right.c}
 
 MEMFT_PATH = ./src/memft/
 SRCS_MEMFT = ${addprefix ${MEMFT_PATH}, ft_bzero.c \

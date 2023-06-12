@@ -1,7 +1,7 @@
 #include "listft.h"
 
 // Adds a new node at the beginning of a linked list.
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstadd_front(t_cmdtable **lst, t_cmdtable *new)
 {
 	if (*lst)
 	{

@@ -3,44 +3,38 @@
 
 # include <stdbool.h>
 
-typedef struct s_list
+typedef struct s_cmdtable
 {
-	void			*content;
-	struct s_list	*next;
-}	t_list;
-
-typedef enum s_separator
-{
-	NONE,
-	PIPE,
-	AND,
-	OR,
-	RPAR,
-	LPAR
-}	t_separator;
+	char				*token;
+	int					type;
+	struct s_cmdtable	*next;
+}	t_cmdtable;
 
 typedef struct s_treenode
 {
-	char				**cmd;
-	enum s_separator	sep;
-	int					prio;
-	struct s_treenode	*left;
-	struct s_treenode	*right;
+	char				**tokens;
+	int					return_val;
+	int					redir;
+	struct s_treenode	*tree;
+	struct s_treenode	*or_branch;
+	struct s_treenode	*and_branch;
 }	t_treenode;
 
 /* CHAINED LIST MANIPULATION */
 
-t_list	*ft_lstnew(void *content);
-void	ft_lstadd_front(t_list **lst, t_list *new);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-int		ft_lstsize(t_list *lst);
-t_list	*ft_lstlast(t_list *lst);
-void	ft_lstdelone(t_list *lst, void (*del)(void *));
-void	ft_lstclear(t_list **lst, void (*del)(void *));
-void	ft_lstiter(t_list *lst, void (*f)(void *));
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_cmdtable	*ft_lstnew(char *token, int type);
+void	ft_lstadd_front(t_cmdtable **lst, t_cmdtable *new);
+void	ft_lstadd_back(t_cmdtable **lst, t_cmdtable *new);
+int		ft_lstsize(t_cmdtable *lst);
+t_cmdtable	*ft_lstlast(t_cmdtable *lst);
+void	ft_lstdelone(t_cmdtable *lst, void (*del)(void *));
+void	ft_lstclear(t_cmdtable **lst, void (*del)(void *));
+void	ft_lstiter(t_cmdtable *lst, void (*f)(void *));
+t_cmdtable	*ft_lstmap(t_cmdtable *lst, void *(*f)(void *), void (*del)(void *));
 
 /* BINARY TREE MANIPULATION */
-t_treenode	*ft_treenew(char **cmd, t_separator sep);
+t_treenode	*ft_treenew(t_cmdtable *tokens, int redir);
+void	ft_treeadd_left(t_treenode *node, t_treenode *new, int pass);
+void	ft_treeadd_right(t_treenode *node, t_treenode *new, int pass);
 
 #endif

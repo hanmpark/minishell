@@ -1,25 +1,17 @@
 #include "listft.h"
-#include <stdbool.h>
 
-static void	recursive_add_left(t_treenode *node, t_treenode *new, bool right)
+void	ft_treeadd_left(t_treenode *node, t_treenode *new, int pass)
 {
-	if (!node->left)
-		node->left = new;
-}
-
-void	ft_treeadd_left(t_treenode *tree, t_treenode *new, bool right)
-{
-	if (!tree || !new)
+	if (!node)
 		return ;
-	if (!tree->left)
-		tree->left = new;
-	if (right && tree->right)
+	if (!node->or_branch)
 	{
-		ft_treeadd_left(tree->right, new, true);
-		right = false;
+		node->or_branch = new;
+		pass = 0;
 	}
-	if (!right && tree->left)
-		ft_treeadd_left();
-	else if ((right && !tree->right) || (!right && !tree->left))
+	if (!node->and_branch)
 		return ;
+	ft_treeadd_left(node->and_branch, new, 1);
+	if (pass)
+		ft_treeadd_left(node->or_branch, new, 1);
 }
