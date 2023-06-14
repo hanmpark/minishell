@@ -1,45 +1,83 @@
 #include "minishell.h"
 #include <stdbool.h>
 
-static bool	is_dsym(char *symbol, char c)
+t_type	is_separator(char *str)
 {
-	return (*symbol == c && *symbol + 1 == c);
-}
+	static t_sep	sep[] = {{"<<", 2}, {">>", 2}, {"||", 2}, {"&&", 2}, \
+		{"<", 1}, {">", 1}, {"|", 1}, {"(", 1}, {")", 1}, {"\'", 1}, \
+		{"\"", 1}};
+	int	i;
 
-static bool	is_sym(char symbol)
-{
-	return (symbol == '|' || symbol == '<' || symbol == '>');
-}
-
-static bool	is_sep(char *symbol)
-{
-	return (is_dsym(symbol, '&') || is_dsym(symbol, '|') || \
-		is_dsym(symbol, '<') || is_dsym(symbol, '>') || is_sym(*symbol) || \
-		ft_isspace(*symbol));
-}
-
-int	check_type(char *str, int *i)
-{
-	if (str[*i] == '|' && str[*i + 1] == '|')
-		return (OR_IF);
-	else if (str[*i] == '|')
-		return (PIPE);
-	else if (str[*i] == '&' && str[*i + 1] == '&')
-		return (AND_IF);
-	else if (str[*i] == '<' && str[*i + 1] == '<')
-		return (DLESS);
-	else if (str[*i] == '<')
-		return (LESS);
-	else if (str[*i] == '>' && str[*i + 1] == '>')
-		return (DGREAT);
-	else if (str[*i] == '>')
-		return (GREAT);
-	else if (str[*i] == '(')
-		return (LPAR);
-	else if (str[*i] == ')')
-		return (RPAR);
+	i = -1;
+	while (++i < NBR_TYPES)
+		if (!ft_strncmp(str, sep[i].line, sep[i].cmp))
+			return (i);
+	if (ft_isspace(*str))
+		return (SPACE);
 	else
 		return (WORD);
+}
+
+int	skip_sep(char *str)
+{
+	int	skip;
+
+	skip = 0;
+	if (!str)
+		return (0);
+	while (str[skip] && ft_isspace(str[skip]))
+		skip++;
+	if (is_separator(str) == DLESS || is_separator(str) == DGREAT || \
+		is_separator(str) == OR_IF || is_separator(str) == AND_IF)
+		return (2);
+	else if (is_separator(str) != WORD)
+		return (1);
+	else
+		return (skip);
+}
+
+int	separate_token(t_cmdtable **table, char *line, int end)
+{
+	t_type		type;
+	char		*token;
+	static int	j = 0;
+
+	type = is_separator(line + end);
+	if (type != WORD || !line[end])
+	{
+		token = ft_strndup(line + j, end - j);
+		if (token)
+			ft_lstadd_back(table, ft_lstnew(token, WORD));
+		j = skip_sep(line + end);
+		if (type != SPACE && line[end])
+			ft_lstadd_back(table, ft_lstnew(ft_strndup(line + end, j), type));
+		end += j;
+		if (line[end])
+			j = end;
+		return (end);
+	}
+	return (end + 1);
+}
+
+int	string_token(t_cmdtable **table, char *line, int i)
+{
+	t_type	type;
+	char	*token;
+	char	next;
+	int		start;
+
+	type = is_separator(line + i);
+	next = line[i];
+	i++;
+	start = i;
+	while (line[i] && line[i] != next)
+		i++;
+	if (!line[i])
+		return (-1);
+	token = ft_strndup(line + start, i - start);
+	if (token)
+		ft_lstadd_back(table, ft_lstnew(token, type));
+	return (i + 1);
 }
 
 /* Starting to tokenize
@@ -48,24 +86,22 @@ int	check_type(char *str, int *i)
 t_cmdtable	*lexer(char *line)
 {
 	t_cmdtable	*table;
-	char		*token;
-	t_type		type;
 	int			i;
-	int			j;
 
-	i = -1;
-	j = 0;
-	while (line[++i])
+	i = 0;
+	table = NULL;
+	while (line[i])
 	{
-		// quotes
-		if (is_sep(line + i))
+		if (line[i] == '"' || line[i] == '\'')
+			i = string_token(&table, line, i);
+		else
+			i = separate_token(&table, line, i);
+		if (i == -1)
 		{
-			ft_lstadd_back(&table, ft_lstnew(ft_strndup(line + j, i - j), \
-				WORD));
-			type = check_type(line, &i);
-			j = i;
+			free_tokens(&table);
+			return (NULL);
 		}
-
 	}
+	separate_token(&table, line, i);
 	return (table);
 }

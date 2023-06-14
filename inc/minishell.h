@@ -10,27 +10,41 @@
 # include "../libs/libft/inc/memft.h"
 # include "../libs/libft/inc/isft.h"
 
+# define NBR_TYPES 11
+
 typedef enum	e_type
 {
-	WORD,
-	PIPE,
-	LPAR,
-	RPAR,
-	LESS,
-	GREAT,
 	DLESS,
 	DGREAT,
 	OR_IF,
-	AND_IF
+	AND_IF,
+	LESS,
+	GREAT,
+	PIPE,
+	LPAR,
+	RPAR,
+	QUOTE,
+	DQUOTE,
+	SPACE,
+	WORD
 }	t_type;
+
+typedef struct	s_separator
+{
+	char	*line;
+	int		cmp;
+}	t_sep;
 
 typedef struct	s_minishell
 {
 	char				*line;
 	struct s_treenode	*node;
+	struct s_cmdtable	*table;
 }	t_minishell;
 
-bool	parsing(t_minishell *ms);
-char	*treat_env(char *cmd_line, int *i);
+bool		parsing(t_minishell *ms);
+t_cmdtable	*lexer(char *line);
+char		*treat_env(char *cmd_line, int *i);
+void		free_tokens(t_cmdtable **table);
 
 #endif

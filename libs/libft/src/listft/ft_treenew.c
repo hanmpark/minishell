@@ -1,7 +1,7 @@
 #include "listft.h"
 #include <stdlib.h>
 
-t_treenode	*ft_treenew(t_list *tokens, int redir)
+t_treenode	*ft_treenew(t_cmdtable *tokens, int redir)
 {
 	t_treenode	*node;
 

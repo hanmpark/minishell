@@ -1,5 +1,24 @@
 #include "minishell.h"
 
+void	free_tokens(t_cmdtable **table)
+{
+	t_cmdtable	*current;
+	t_cmdtable	*next;
+
+	if (!*table)
+		return ;
+	current = *table;
+	while (current)
+	{
+		next = current->next;
+		free(current->token);
+		current->token = NULL;
+		free(current);
+		current = next;
+	}
+	*table = NULL;
+}
+
 /*
 * Once we have read the line from the prompt,...
 * Ctrl + D = end the program as it returns (NULL).
@@ -22,14 +41,14 @@ int	main(int argc, char **argv, char **envp)
 		if (!ms->line)
 			break ;
 		if (*ms->line)
-			add_history(ms->line);
-		if(!parsing(ms))
 		{
-			free(ms->line);
-			break ;
+			add_history(ms->line);
+			parsing(ms);
 		}
+		if (ms->table)
+			free_tokens(&ms->table);
 		free(ms->line);
+		system("leaks minishell");
 	}
-	// system("leaks minishell");
 	return (EXIT_SUCCESS);
 }

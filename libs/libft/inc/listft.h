@@ -12,7 +12,7 @@ typedef struct s_cmdtable
 
 typedef struct s_treenode
 {
-	char				**tokens;
+	struct s_cmdtable	*tokens;
 	int					return_val;
 	int					redir;
 	struct s_treenode	*tree;

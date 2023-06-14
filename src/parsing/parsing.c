@@ -1,36 +1,50 @@
 #include "minishell.h"
 #include <stdbool.h>
 
-static int	check_parentheses(char *line)
+// static int	check_parentheses(char *line)
+// {
+// 	int	i;
+// 	int	closed;
+
+// 	i = -1;
+// 	closed = 0;
+// 	while (line[++i])
+// 	{
+// 		if (line[i] == '(' || line[i] == ')')
+// 			closed++;
+// 	}
+// 	return (closed % 2);
+// }
+
+// static int	check_quotes(char *line, bool simple)
+// {
+// 	int	i;
+// 	int closed;
+
+// 	i = -1;
+// 	closed = 0;
+// 	while (line[++i])
+// 	{
+// 		if (!simple && line[i] == '"')
+// 			closed++;
+// 		else if (simple && line[i] == '\'')
+// 			closed++;
+// 	}
+// 	return (closed % 2);
+// }
+
+static void	print_list(t_cmdtable *table)
 {
-	int	i;
-	int	closed;
+	int	count;
 
-	i = -1;
-	closed = 0;
-	while (line[++i])
+	count = 0;
+	while (table)
 	{
-		if (line[i] == '(' || line[i] == ')')
-			closed++;
+		printf("[%d] token = \"%s\" type = %d\n", count, table->token, table->type);
+		table = table->next;
+		count++;
 	}
-	return (closed % 2);
-}
-
-static int	check_quotes(char *line, bool simple)
-{
-	int	i;
-	int closed;
-
-	i = -1;
-	closed = 0;
-	while (line[++i])
-	{
-		if (!simple && line[i] == '"')
-			closed++;
-		else if (simple && line[i] == '\'')
-			closed++;
-	}
-	return (closed % 2);
+	printf("\n");
 }
 
 /* Scans the input text character by character and groups characters
@@ -39,15 +53,17 @@ static int	check_quotes(char *line, bool simple)
 */
 bool	parsing(t_minishell *ms)
 {
-	int		i;
+	// int		i;
 
 	if (!ms->line)
 		return (false);
-	if (check_parentheses(ms->line) || check_quotes(ms->line, true) || \
-		check_quotes(ms->line, false))
+	// if (!check_parentheses(ms->line) || !check_quotes(ms->line, true) || \
+	// 	!check_quotes(ms->line, false))
+		// return (false);
+	ms->table = lexer(ms->line);
+	if (!ms->table)
 		return (false);
-	lexer(ms->line);
-	i = 0;
+	// i = 0;
 	// while (ms->line[i])
 	// {
 	// 	if (ms->line[i] == '$' && ft_isenv(ms->line[i + 1]))
@@ -55,6 +71,7 @@ bool	parsing(t_minishell *ms)
 	// 	else
 	// 		i++;
 	// }
-	printf("%s\n", ms->line);
+	print_list(ms->table);
+	// printf("%s\n", ms->line);
 	return (true);
 }
