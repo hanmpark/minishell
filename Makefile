@@ -17,7 +17,7 @@ SRC_PATH = ./src/
 PARSING_PATH = ${SRC_PATH}parsing/
 SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c}
 
-LEXER_PATH = ${SRC_PATH}lexer/
+LEXER_PATH = ${PARSING_PATH}lexer/
 SRC_LEXER = ${addprefix ${LEXER_PATH}, lexer.c \
 										tokenize.c \
 										quotes.c}
