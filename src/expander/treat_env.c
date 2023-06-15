@@ -28,12 +28,7 @@ static char	*replace_env(char *line, char *replace, int start)
 	return (str);
 }
 
-/* If the environment variable exists, replace it by its value.
-* Else, deletes it from the command line.
-*
-* eg: $LIGNAME = "" ≠ $LOGNAMe = "" ≠ $LOGNAME = "hanmpark"
-*/
-char	*treat_env(char *cmd_line, int *i)
+static char	*edit_line(char *cmd_line, int *i)
 {
 	char	*env;
 	char	*tmp;
@@ -51,4 +46,24 @@ char	*treat_env(char *cmd_line, int *i)
 	}
 	free(cmd_line);
 	return (line);
+}
+
+/* If the environment variable exists, replace it by its value.
+* Else, deletes it from the command line.
+*
+* eg: $LIGNAME = "" ≠ $LOGNAMe = "" ≠ $LOGNAME = "hanmpark"
+*/
+char	*treat_env(char *cmd_line)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_line[i])
+	{
+		if (cmd_line[i] == '$' && ft_isenv(cmd_line[i + 1]))
+			cmd_line = edit_line(cmd_line, &i);
+		else
+			i++;
+	}
+	return (cmd_line);
 }

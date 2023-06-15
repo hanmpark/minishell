@@ -15,11 +15,20 @@ LGREEN = \033[38;5;155m
 SRC_PATH = ./src/
 
 PARSING_PATH = ${SRC_PATH}parsing/
-SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c \
-											treat_env.c \
-											lexer.c}
+SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c}
 
-SRC = ${SRC_PARSING} ${SRC_PATH}main.c
+LEXER_PATH = ${SRC_PATH}lexer/
+SRC_LEXER = ${addprefix ${LEXER_PATH}, lexer.c \
+										tokenize.c \
+										quotes.c}
+
+EXPANDER_PATH = ${SRC_PATH}expander/
+SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c}
+
+EXIT_PATH = ${SRC_PATH}exit/
+SRC_EXIT = ${addprefix ${EXIT_PATH}, free.c}
+
+SRC = ${SRC_PARSING} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} ${SRC_PATH}main.c
 
 OBJ = ${SRC:.c=.o}
 
@@ -56,7 +65,7 @@ NAME = minishell
 ### Must MODIFY Makefile for the PC that doesn't have the library for readline function();
 READ_LINE_PATH = ~/.brew/opt/readline/lib
 
-LIBFT_PATH = ./libs/libft/
+LIBFT_PATH = ./lib/libft/
 
 all: ${NAME}
 
