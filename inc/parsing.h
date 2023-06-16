@@ -1,7 +1,7 @@
 #ifndef PARSING_H
 # define PARSING_H
 
-# define NBR_TYPES 11
+# define NBR_TYPES 13
 
 typedef enum	e_type
 {
@@ -16,6 +16,8 @@ typedef enum	e_type
 	RPAR,
 	QUOTE,
 	DQUOTE,
+	SEMI,
+	BACKSLASH,
 	SPACE,
 	WORD
 }	t_type;
@@ -35,10 +37,13 @@ typedef struct	s_lexer
 }	t_lex;
 
 bool		parsing(t_minishell *ms);
+
 t_cmdtable	*lexer(char *line);
 void		tokenize(t_cmdtable **table, t_lex *lex, char *line);
 bool		tokenize_quote(t_lex *lex, char *line);
 t_type		is_separator(char *str);
 void		skip_sep(t_cmdtable **table, t_lex *lex, char *line);
+
+bool		parser(t_cmdtable *table);
 
 #endif

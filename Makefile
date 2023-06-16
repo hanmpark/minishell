@@ -22,8 +22,8 @@ SRC_LEXER = ${addprefix ${LEXER_PATH}, lexer.c \
 										tokenize.c \
 										quotes.c}
 
-# PARSER_PATH = ${PARSING_PATH}parser/
-# SRC_PARSER = ${addprefix ${PARSER_PATH}, parser.c}
+PARSER_PATH = ${PARSING_PATH}parser/
+SRC_PARSER = ${addprefix ${PARSER_PATH}, parser.c}
 
 EXPANDER_PATH = ${SRC_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c}
@@ -32,8 +32,8 @@ EXIT_PATH = ${SRC_PATH}exit/
 SRC_EXIT = ${addprefix ${EXIT_PATH}, free.c \
 										error.c}
 
-SRC = ${SRC_PARSING} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} ${SRC_PATH}main.c
-# ${SRC_PARSER}
+SRC = ${SRC_PARSING} ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} ${SRC_PATH}main.c
+
 OBJ = ${SRC:.c=.o}
 
 # --------------------------------- COMPILER --------------------------------- #
