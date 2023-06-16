@@ -26,7 +26,7 @@ bool	parsing(t_minishell *ms)
 	if (!ms->table)
 		return (false);
 	print_list(ms->table);
-	if (!parser(ms->table))
-		return (false);
+	// if (!parser(ms->table))
+	// 	return (false);
 	return (true);
 }

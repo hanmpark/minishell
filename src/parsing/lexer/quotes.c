@@ -1,5 +1,6 @@
 #include "minishell.h"
 #include "parsing.h"
+#include "error.h"
 #include <stdbool.h>
 
 static char	*quote_str(t_lex *lex, char *line)
@@ -13,10 +14,9 @@ static char	*quote_str(t_lex *lex, char *line)
 		lex->cur++;
 	if (!line[lex->cur])
 		return (NULL);
+	str = ft_substr(line, lex->last, lex->cur - lex->last);
 	if (lex->type == DQUOTE)
-		str = treat_env(ft_substr(line, lex->last, lex->cur - lex->last));
-	else
-		str = ft_substr(line, lex->last, lex->cur - lex->last);
+		str = treat_env(str);
 	lex->last = ++lex->cur;
 	return (str);
 }
@@ -79,18 +79,15 @@ bool	tokenize_quote(t_lex *lex, char *line)
 
 	if (lex->last < lex->cur)
 	{
-		str = ft_substr(line, lex->last, lex->cur - lex->last);
+		str = treat_env(ft_substr(line, lex->last, lex->cur - lex->last));
 		lex->last = lex->cur;
 	}
 	else
 		str = ft_strdup("");
 	str = single_token(lex, str, line);
 	if (!str)
-		return (false);
-	if (*str)
-		ft_lstadd_back(&lex->table, ft_lstnew(str, WORD));
-	else if (!*str)
-		free(str);
+		return (error_quote(lex->type));
+	ft_lstadd_back(&lex->table, ft_lstnew(str, WORD));
 	skip_sep(&lex->table, lex, line);
 	return (true);
 }

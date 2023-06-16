@@ -9,6 +9,7 @@
 # include "../lib/libft/inc/charft.h"
 # include "../lib/libft/inc/memft.h"
 # include "../lib/libft/inc/isft.h"
+# include "../lib/libft/inc/putft.h"
 
 typedef struct	s_minishell
 {

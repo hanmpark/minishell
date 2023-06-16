@@ -64,6 +64,7 @@ char	*treat_env(char *cmd_line)
 			cmd_line = edit_line(cmd_line, &i);
 		else
 			i++;
+		// add condition about the '$?' case
 	}
 	return (cmd_line);
 }
