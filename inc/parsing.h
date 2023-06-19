@@ -19,7 +19,8 @@ typedef enum	e_type
 	SEMI,
 	BACKSLASH,
 	SPACE,
-	WORD
+	WORD,
+	BUILT_IN
 }	t_type;
 
 typedef struct	s_separator

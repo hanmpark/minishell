@@ -1,6 +1,11 @@
 #include "minishell.h"
 #include "parsing.h"
 
+void	exec_line(t_minishell *ms)
+{
+	builtin_cmds(ms);
+}
+
 /*
 * Once we have read the line from the prompt,...
 * Ctrl + D = end the program as it returns (NULL).
@@ -25,7 +30,9 @@ int	main(int argc, char **argv, char **envp)
 		if (*ms->line)
 		{
 			add_history(ms->line);
-			parsing(ms);
+			if (parsing(ms) == false)
+				break ;
+			exec_line(ms);
 		}
 		if (ms->table)
 			free_tokens(&ms->table);

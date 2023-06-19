@@ -21,4 +21,9 @@ typedef struct	s_minishell
 char	*treat_env(char *cmd_line);
 void	free_tokens(t_cmdtable **table);
 
+/* BUILTIN COMMANDS (kiki) */
+void	builtin_cmds(t_minishell *ms);
+// echo implementation (in progress...)
+void	ft_echo(t_cmdtable *table);
+
 #endif
