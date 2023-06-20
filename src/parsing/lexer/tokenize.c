@@ -30,6 +30,8 @@ static int	nbr_skip(char *str)
 	if (is_separator(str) == DLESS || is_separator(str) == DGREAT || \
 		is_separator(str) == OR_IF || is_separator(str) == AND_IF)
 		return (2);
+	else if (is_separator(str) == LESS && *(str + 1) == '>')
+		return (2);
 	else if (is_separator(str) != WORD && !ft_isspace(*str))
 		return (1);
 	else
@@ -60,7 +62,14 @@ void	tokenize(t_cmdtable **table, t_lex *lex, char *line)
 
 	token = treat_env(ft_substr(line, lex->last, lex->cur - lex->last));
 	if (*token)
+	{
+		if (ft_strlen(token) == 1 && *token == '~') // This can be done in the expander
+		{
+			free(token);
+			token = treat_env(ft_strdup("$HOME"));
+		}
 		ft_lstadd_back(table, ft_lstnew(token, WORD));
+	}
 	else if (!*token)
 		free(token);
 	skip_sep(table, lex, line);

@@ -3,10 +3,11 @@
 #include "error.h"
 #include <stdbool.h>
 
-/* PARSER PART (note for Hanmin):
-* - treat redirections
-* - '<>' is valid and it's considered to be '<'
-* - create the binary tree out of the tokens only if they are valid
+/* UPDATE:
+* - ~ has to print the value of $HOME only if it's not a string and alone
+* - instead of doing part of the expander's job in the lexer, do it after the parser
+* - have to do the parentheses parsing
+* - when doing the expander don't forget to treat the '*'
 */
 
 static bool	is_redir(t_type type)
