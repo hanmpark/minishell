@@ -1,10 +1,10 @@
 #include "minishell.h"
 #include "parsing.h"
 
-void	exec_line(t_minishell *ms)
-{
-	builtin_cmds(ms);
-}
+// void	exec_line(t_minishell *ms)
+// {
+// 	builtin_cmds(ms);
+// }
 
 /*
 * Once we have read the line from the prompt,...
@@ -22,6 +22,7 @@ int	main(int argc, char **argv, char **envp)
 	ms = malloc(sizeof(t_minishell));
 	if (!ms)
 		return (1);
+	ms->table = NULL;
 	while ("apagnan")
 	{
 		ms->line = readline("minishell$ ");
@@ -30,9 +31,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*ms->line)
 		{
 			add_history(ms->line);
-			if (parsing(ms) == false)
-				break ;
-			exec_line(ms);
+			parsing(ms); // parsing() is a boolean, it will be used when the execution part is completed
 		}
 		if (ms->table)
 			free_tokens(&ms->table);

@@ -5,6 +5,7 @@
 # define ERR_TOKEN "minishell: syntax error near unexpected token `"
 # define ERR_NOHANDLE "minishell: undefined token `"
 # define ERR_CTOKEN "'\n"
+# define ERR_REDIR "minishell: syntax error near unexpected token `newline'\n"
 
 # define ERR_MISS "minishell: syntax error missing token\n"
 
