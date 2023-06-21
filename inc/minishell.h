@@ -11,6 +11,27 @@
 # include "../lib/libft/inc/isft.h"
 # include "../lib/libft/inc/putft.h"
 
+# define NBR_TYPES 11
+# define NBR_UDF 9
+
+typedef enum	e_type
+{
+	DLESS,
+	DGREAT,
+	OR_IF,
+	AND_IF,
+	LESS,
+	GREAT,
+	PIPE,
+	LPAR,
+	RPAR,
+	QUOTE,
+	DQUOTE,
+	UNDEFINED,
+	SPACE,
+	WORD
+}	t_type;
+
 typedef struct	s_minishell
 {
 	char				*line;

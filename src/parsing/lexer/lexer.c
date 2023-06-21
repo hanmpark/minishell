@@ -9,11 +9,9 @@
 static bool	separate_token(t_lex *lex, char *line)
 {
 	lex->type = is_separator(line + lex->cur);
-	if (lex->type == QUOTE || lex->type == DQUOTE)
-	{
-		if (!tokenize_quote(lex, line))
+	if ((lex->type == QUOTE || lex->type == DQUOTE) && \
+		!tokenize_quote(lex, line))
 			return (false);
-	}
 	else if (lex->type != WORD || !line[lex->cur])
 		tokenize(&lex->table, lex, line);
 	else
@@ -31,6 +29,7 @@ t_cmdtable	*lexer(char *line)
 
 	lex.cur = 0;
 	lex.last = 0;
+	lex.here_doc = false;
 	lex.table = NULL;
 	while (line[lex.last])
 	{

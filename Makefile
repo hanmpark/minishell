@@ -20,7 +20,8 @@ SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c}
 LEXER_PATH = ${PARSING_PATH}lexer/
 SRC_LEXER = ${addprefix ${LEXER_PATH}, lexer.c \
 										tokenize.c \
-										quotes.c}
+										quotes.c \
+										is_type.c}
 
 PARSER_PATH = ${PARSING_PATH}parser/
 SRC_PARSER = ${addprefix ${PARSER_PATH}, parser.c}

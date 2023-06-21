@@ -1,29 +1,6 @@
 #ifndef PARSING_H
 # define PARSING_H
 
-# define NBR_TYPES 13
-
-typedef enum	e_type
-{
-	DLESS,
-	DGREAT,
-	OR_IF,
-	AND_IF,
-	LESS,
-	GREAT,
-	PIPE,
-	LPAR,
-	RPAR,
-	QUOTE,
-	DQUOTE,
-	SEMI,
-	BACKSLASH,
-	SPACE,
-	DSTRING,
-	STRING,
-	WORD
-}	t_type;
-
 typedef struct	s_separator
 {
 	char	*cmpstr;
@@ -36,6 +13,7 @@ typedef struct	s_lexer
 	t_type		type;
 	int			cur;
 	int			last;
+	bool		here_doc;
 }	t_lex;
 
 bool		parsing(t_minishell *ms);
@@ -43,8 +21,12 @@ bool		parsing(t_minishell *ms);
 t_cmdtable	*lexer(char *line);
 void		tokenize(t_cmdtable **table, t_lex *lex, char *line);
 bool		tokenize_quote(t_lex *lex, char *line);
-t_type		is_separator(char *str);
 void		skip_sep(t_cmdtable **table, t_lex *lex, char *line);
+
+t_type		is_separator(char *str);
+int			is_undefined(char *str);
+bool		is_redir(t_type type);
+bool		is_cmdsep(t_type type);
 
 bool		parser(t_cmdtable *table);
 

@@ -62,6 +62,11 @@ char	*treat_env(char *cmd_line)
 	{
 		if (cmd_line[i] == '$' && ft_isenv(cmd_line[i + 1]))
 			cmd_line = edit_line(cmd_line, &i);
+		else if (ft_strlen(cmd_line) == 1 && cmd_line[i] == '~')
+		{
+			free(cmd_line);
+			cmd_line = edit_line(ft_strdup("$HOME"), &i);
+		}
 		else
 			i++;
 		// add condition about the '$?' case

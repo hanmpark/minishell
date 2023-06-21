@@ -15,8 +15,6 @@ static char	*quote_str(t_lex *lex, char *line)
 	if (!line[lex->cur])
 		return (NULL);
 	str = ft_substr(line, lex->last, lex->cur - lex->last);
-	if (lex->type == DQUOTE)
-		str = treat_env(str);
 	lex->last = ++lex->cur;
 	return (str);
 }
@@ -27,7 +25,7 @@ static char	*word_str(t_lex *lex, char *line)
 
 	while (line[lex->cur] && is_separator(line + lex->cur) == WORD)
 		lex->cur++;
-	str = treat_env(ft_substr(line, lex->last, lex->cur - lex->last));
+	str = ft_substr(line, lex->last, lex->cur - lex->last);
 	lex->last = lex->cur;
 	return (str);
 }
@@ -39,6 +37,7 @@ static char	*put_to_token(t_lex *lex, char *join, char *line)
 
 	if (lex->type == QUOTE || lex->type == DQUOTE)
 	{
+		printf("PASS\n");
 		str = quote_str(lex, line);
 		if (!str)
 		{
@@ -62,6 +61,8 @@ static char	*single_token(t_lex *lex, char *final_token, char *line)
 		final_token = put_to_token(lex, final_token, line);
 		if (!final_token)
 			return (NULL);
+		if ((lex->type == QUOTE || lex->type == WORD) && !lex->here_doc)
+			final_token = treat_env(final_token);
 		lex->type = is_separator(line + lex->cur);
 	}
 	return (final_token);
@@ -79,7 +80,9 @@ bool	tokenize_quote(t_lex *lex, char *line)
 
 	if (lex->last < lex->cur)
 	{
-		str = treat_env(ft_substr(line, lex->last, lex->cur - lex->last));
+		str = ft_substr(line, lex->last, lex->cur - lex->last);
+		if (!lex->here_doc)
+			str = treat_env(str);
 		lex->last = lex->cur;
 	}
 	else
@@ -88,6 +91,7 @@ bool	tokenize_quote(t_lex *lex, char *line)
 	if (!str)
 		return (error_quote(lex->type));
 	ft_lstadd_back(&lex->table, ft_lstnew(str, WORD));
+	lex->here_doc = false;
 	skip_sep(&lex->table, lex, line);
 	return (true);
 }

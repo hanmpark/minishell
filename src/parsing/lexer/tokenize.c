@@ -1,24 +1,7 @@
 #include "minishell.h"
 #include "parsing.h"
 
-t_type	is_separator(char *str)
-{
-	static t_sep	sep[] = {{"<<", 2}, {">>", 2}, {"||", 2}, {"&&", 2}, \
-		{"<", 1}, {">", 1}, {"|", 1}, {"(", 1}, {")", 1}, {"\'", 1}, \
-		{"\"", 1}, {";", 1}, {"\\", 1}};
-	int				i;
-
-	i = -1;
-	while (++i < NBR_TYPES)
-		if (!ft_strncmp(str, sep[i].cmpstr, sep[i].bytes))
-			return (i);
-	if (ft_isspace(*str))
-		return (SPACE);
-	else
-		return (WORD);
-}
-
-static int	nbr_skip(char *str)
+static int	nbr_skip(char *str, t_type type)
 {
 	int	skip;
 
@@ -27,15 +10,16 @@ static int	nbr_skip(char *str)
 	skip = 0;
 	while (str[skip] && ft_isspace(str[skip]))
 		skip++;
-	if (is_separator(str) == DLESS || is_separator(str) == DGREAT || \
-		is_separator(str) == OR_IF || is_separator(str) == AND_IF)
+	if (type == DLESS || type == DGREAT || type == OR_IF || type == AND_IF || \
+		(type == LESS && *(str + 1) == '>'))
 		return (2);
-	else if (is_separator(str) == LESS && *(str + 1) == '>')
-		return (2);
-	else if (is_separator(str) != WORD && !ft_isspace(*str))
+	else if (type == UNDEFINED && is_undefined(str))
+		return (is_undefined(str));
+	else if ((type == UNDEFINED && *str == '&'))
 		return (1);
-	else
-		return (skip);
+	else if (type != WORD && !ft_isspace(*str))
+		return (1);
+	return (skip);
 }
 
 /* Skips the separator:
@@ -46,10 +30,13 @@ void	skip_sep(t_cmdtable **table, t_lex *lex, char *line)
 {
 	int	skip;
 
-	skip = nbr_skip(line + lex->cur);
+	skip = nbr_skip(line + lex->cur, lex->type);
+	printf("skip = %d\nline[lex->cur] = %c\n", skip, line[lex->cur]);
 	if (lex->type != SPACE && line[lex->cur])
 		ft_lstadd_back(table, ft_lstnew(ft_substr(line, lex->cur, skip), \
 			lex->type));
+	if (lex->type == DLESS)
+		lex->here_doc = true;
 	if (!skip && line[lex->cur])
 		lex->cur++;
 	lex->cur += skip;
@@ -60,15 +47,13 @@ void	tokenize(t_cmdtable **table, t_lex *lex, char *line)
 {
 	char	*token;
 
-	token = treat_env(ft_substr(line, lex->last, lex->cur - lex->last));
+	token = ft_substr(line, lex->last, lex->cur - lex->last);
+	if (!lex->here_doc)
+		token = treat_env(token);
 	if (*token)
 	{
-		if (ft_strlen(token) == 1 && *token == '~') // This can be done in the expander
-		{
-			free(token);
-			token = treat_env(ft_strdup("$HOME"));
-		}
 		ft_lstadd_back(table, ft_lstnew(token, WORD));
+		lex->here_doc = false;
 	}
 	else if (!*token)
 		free(token);
