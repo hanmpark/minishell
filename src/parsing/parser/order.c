@@ -2,15 +2,17 @@
 #include "parsing.h"
 #include "error.h"
 
-static int	right_token(int last_type, t_cmdtable cur)
+static int	right_token(int last_type, t_cmdtable *cur)
 {
-	if (is_redir(last_type) && cur.type != WORD)
+	if (is_redir(last_type) && \
+		(cur->type != WORD && cur->type != LPAR && cur->type != RPAR))
 		return (-1);
-	else if (is_cmdsep(cur.type) && last_type != WORD && last_type != LPAR && last_type != RPAR)
+	else if (is_cmdsep(cur->type) && \
+		(last_type != WORD && last_type != LPAR && last_type != RPAR))
 		return (-1);
-	else if (cur.type == UNDEFINED)
+	else if (cur->type == UNDEFINED)
 		return (-2);
-	return (cur.type);
+	return (cur->type);
 }
 
 /* Checks the order of the tokens
@@ -25,7 +27,7 @@ bool	check_order(t_cmdtable *table)
 	last_type = -1;
 	while (table)
 	{
-		last_type = right_token(last_type, *table);
+		last_type = right_token(last_type, table);
 		if (last_type == -1)
 			return (error_token(table->token, true));
 		if (last_type == -2)
