@@ -29,5 +29,6 @@ bool		is_redir(t_type type);
 bool		is_cmdsep(t_type type);
 
 bool		parser(t_cmdtable *table);
+bool		check_order(t_cmdtable *table);
 
 #endif

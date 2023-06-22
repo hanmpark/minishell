@@ -24,7 +24,8 @@ SRC_LEXER = ${addprefix ${LEXER_PATH}, lexer.c \
 										is_type.c}
 
 PARSER_PATH = ${PARSING_PATH}parser/
-SRC_PARSER = ${addprefix ${PARSER_PATH}, parser.c}
+SRC_PARSER = ${addprefix ${PARSER_PATH}, parser.c \
+											order.c}
 
 EXPANDER_PATH = ${SRC_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c}

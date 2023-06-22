@@ -30,7 +30,6 @@ t_cmdtable	*ft_lstlast(t_cmdtable *lst);
 void	ft_lstdelone(t_cmdtable *lst, void (*del)(void *));
 void	ft_lstclear(t_cmdtable **lst, void (*del)(void *));
 void	ft_lstiter(t_cmdtable *lst, void (*f)(void *));
-t_cmdtable	*ft_lstmap(t_cmdtable *lst, void *(*f)(void *), void (*del)(void *));
 
 /* BINARY TREE MANIPULATION */
 t_treenode	*ft_treenew(t_cmdtable *tokens, int redir);
