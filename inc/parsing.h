@@ -13,15 +13,14 @@ typedef struct	s_lexer
 	t_type		type;
 	int			cur;
 	int			last;
-	bool		here_doc;
+	bool		redir;
 }	t_lex;
 
 bool		parsing(t_minishell *ms);
 
 t_cmdtable	*lexer(char *line);
-void		tokenize(t_cmdtable **table, t_lex *lex, char *line);
-bool		tokenize_quote(t_lex *lex, char *line);
-void		skip_sep(t_cmdtable **table, t_lex *lex, char *line);
+bool		tokenize(t_cmdtable **table, t_lex *lex, char *line);
+char		*tokenize_string(t_lex *lex, char *str, char *line);
 
 t_type		is_separator(char *str);
 int			is_undefined(char *str);

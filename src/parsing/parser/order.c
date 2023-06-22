@@ -6,13 +6,18 @@ static int	right_token(int last_type, t_cmdtable cur)
 {
 	if (is_redir(last_type) && cur.type != WORD)
 		return (-1);
-	else if (is_cmdsep(cur.type) && last_type != WORD)
+	else if (is_cmdsep(cur.type) && last_type != WORD && last_type != LPAR && last_type != RPAR)
 		return (-1);
 	else if (cur.type == UNDEFINED)
 		return (-2);
 	return (cur.type);
 }
 
+/* Checks the order of the tokens
+* - file after a redir
+* - something before and after cmdseps
+* - if there is an undefined token, returns false
+*/
 bool	check_order(t_cmdtable *table)
 {
 	int	last_type;

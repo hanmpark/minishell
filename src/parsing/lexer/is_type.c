@@ -4,7 +4,7 @@
 int	is_undefined(char *str)
 {
 	static t_sep	undefined[] = {{"&>>", 3}, {"<<-", 3}, {"<<<", 3}, \
-		{">|", 2}, {"&>", 2}, {">&", 2}, {"<&", 2}, {";", 1}, \
+		{"<>", 2}, {">|", 2}, {"&>", 2}, {">&", 2}, {"<&", 2}, {";", 1}, \
 		{"\\", 1}};
 	int				i;
 
@@ -22,9 +22,11 @@ t_type	is_separator(char *str)
 		{"\"", 1}};
 	int				i;
 
-	i = -1;
+	if (!str)
+		return (-1);
 	if (is_undefined(str))
 		return (UNDEFINED);
+	i = -1;
 	while (++i < NBR_TYPES)
 		if (!ft_strncmp(str, sep[i].cmpstr, sep[i].bytes))
 			return (i);

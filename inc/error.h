@@ -10,7 +10,7 @@
 # define ERR_MISS "minishell: syntax error missing token\n"
 
 bool	error_token(char *token, bool handle);
-bool	error_quote(t_type type);
+char	*error_quote(t_type type);
 bool	error_parsing(char *msg);
 
 #endif

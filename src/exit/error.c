@@ -14,7 +14,7 @@ bool	error_token(char *token, bool handle)
 	return (false);
 }
 
-bool	error_quote(t_type type)
+char	*error_quote(t_type type)
 {
 	ft_putstr_fd(ERR_TOKEN, 2);
 	if (type == QUOTE)
@@ -22,7 +22,7 @@ bool	error_quote(t_type type)
 	else
 		ft_putstr_fd("\"", 2);
 	ft_putstr_fd(ERR_CTOKEN, 2);
-	return (false);
+	return (NULL);
 }
 
 bool	error_parsing(char *msg)

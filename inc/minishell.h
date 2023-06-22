@@ -12,7 +12,7 @@
 # include "../lib/libft/inc/putft.h"
 
 # define NBR_TYPES 11
-# define NBR_UDF 9
+# define NBR_UDF 10
 
 typedef enum	e_type
 {

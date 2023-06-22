@@ -3,6 +3,18 @@
 #include "error.h"
 #include <stdbool.h>
 
+/* THIS CODE MIGHT BE USEFUL IN THE EXPANDER PART
+* I'm separating it because of the following case which doesn't work with this code
+*
+* bash$ export MYVAR="hello world"
+* bash$ <$MYVAR
+* bash: $MYVAR: ambiguous redirect
+* bash$ <"$MYVAR"
+* bash: hello world: No such file or directory
+*
+* This is why I'm going to do the variable expansions after the parser
+*/
+
 static char	*quote_str(t_lex *lex, char *line)
 {
 	char	quote_type;
@@ -60,8 +72,6 @@ static char	*single_token(t_lex *lex, char *final_token, char *line)
 		final_token = put_to_token(lex, final_token, line);
 		if (!final_token)
 			return (NULL);
-		if ((lex->type == QUOTE || lex->type == WORD) && !lex->here_doc)
-			final_token = treat_env(final_token);
 		lex->type = is_separator(line + lex->cur);
 	}
 	return (final_token);
@@ -77,20 +87,13 @@ bool	tokenize_quote(t_lex *lex, char *line)
 {
 	char	*str;
 
-	if (lex->last < lex->cur)
-	{
-		str = ft_substr(line, lex->last, lex->cur - lex->last);
-		if (!lex->here_doc)
-			str = treat_env(str);
-		lex->last = lex->cur;
-	}
-	else
-		str = ft_strdup("");
+	str = ft_substr(line, lex->last, lex->cur - lex->last);
+	lex->last = lex->cur;
 	str = single_token(lex, str, line);
 	if (!str)
 		return (error_quote(lex->type));
 	ft_lstadd_back(&lex->table, ft_lstnew(str, WORD));
-	lex->here_doc = false;
+	lex->redir = false;
 	skip_sep(&lex->table, lex, line);
 	return (true);
 }
