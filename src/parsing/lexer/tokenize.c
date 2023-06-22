@@ -31,7 +31,6 @@ void	skip_sep(t_cmdtable **table, t_lex *lex, char *line)
 	int	skip;
 
 	skip = nbr_skip(line + lex->cur, lex->type);
-	printf("skip = %d\nline[lex->cur] = %c\n", skip, line[lex->cur]);
 	if (lex->type != SPACE && line[lex->cur])
 		ft_lstadd_back(table, ft_lstnew(ft_substr(line, lex->cur, skip), \
 			lex->type));

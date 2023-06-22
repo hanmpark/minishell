@@ -9,9 +9,11 @@
 static bool	separate_token(t_lex *lex, char *line)
 {
 	lex->type = is_separator(line + lex->cur);
-	if ((lex->type == QUOTE || lex->type == DQUOTE) && \
-		!tokenize_quote(lex, line))
+	if ((lex->type == QUOTE || lex->type == DQUOTE))
+	{
+		if (!tokenize_quote(lex, line))
 			return (false);
+	}
 	else if (lex->type != WORD || !line[lex->cur])
 		tokenize(&lex->table, lex, line);
 	else
@@ -21,7 +23,7 @@ static bool	separate_token(t_lex *lex, char *line)
 
 /* Divides the given line into sequence of tokens
 * This will help the program identify the building blocks of the command(s)
-* If no error has been encountered, returns the command table
+* If no error has been encountered, returns the command table (t_cmdtable *)
 */
 t_cmdtable	*lexer(char *line)
 {

@@ -37,7 +37,6 @@ static char	*put_to_token(t_lex *lex, char *join, char *line)
 
 	if (lex->type == QUOTE || lex->type == DQUOTE)
 	{
-		printf("PASS\n");
 		str = quote_str(lex, line);
 		if (!str)
 		{
