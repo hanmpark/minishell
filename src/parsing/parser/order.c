@@ -4,12 +4,14 @@
 
 static int	right_token(int last_type, t_cmdtable *cur)
 {
-	if (is_redir(last_type) && \
-		(cur->type != WORD && cur->type != LPAR && cur->type != RPAR))
+	if (is_redir(last_type) && cur->type != WORD)
 		return (-1);
-	else if (is_cmdsep(cur->type) && \
-		(last_type != WORD && last_type != LPAR && last_type != RPAR))
+	else if (is_cmdsep(last_type) && (cur->type != WORD && cur->type != LPAR))
 		return (-1);
+	else if (is_cmdsep(cur->type) && (last_type != WORD && last_type != RPAR))
+		return (-1);
+	else if (cur->type == LPAR && (last_type != -1 && !is_cmdsep(last_type)))
+		return (-2);
 	else if (cur->type == UNDEFINED)
 		return (-2);
 	return (cur->type);
