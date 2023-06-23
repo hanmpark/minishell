@@ -3,18 +3,25 @@
 
 # include <stdbool.h>
 
-typedef struct s_cmdtable
+typedef struct	s_cmdtable
 {
 	char				*token;
 	int					type;
 	struct s_cmdtable	*next;
 }	t_cmdtable;
 
-typedef struct s_treenode
+typedef struct	s_cmd
 {
-	struct s_cmdtable	*tokens;
-	int					return_val;
-	int					redir;
+	char			**args;
+	int				fdin;
+	int				fdout;
+	int				return_val;
+	struct s_cmd	*next;
+}	t_cmd;
+
+typedef struct	s_treenode
+{
+	struct s_cmd		*cmds;
 	struct s_treenode	*tree;
 	struct s_treenode	*or_branch;
 	struct s_treenode	*and_branch;
