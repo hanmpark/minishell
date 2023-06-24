@@ -10,9 +10,9 @@
 * - when doing the expander don't forget to treat the '*'
 */
 
-bool	parser(t_cmdtable *table)
+bool	parser(t_token *l_token)
 {
-	if (!check_order(table) || !check_parentheses(table))
+	if (!check_order(l_token) || !check_parentheses(l_token))
 		return (false);
 	return (true);
 }

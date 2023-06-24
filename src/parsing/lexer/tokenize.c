@@ -26,18 +26,35 @@ static int	nbr_skip(char *str, t_type type)
 * - if ≠ spaces, tokenizes the sep
 * - else, skip spaces and go to the next token
 */
-static void	skip_sep(t_cmdtable **table, t_lex *lex, char *line)
+static void	skip_sep(t_token **l_token, t_lex *lex, char *line)
 {
 	int	skip;
 
 	skip = nbr_skip(line + lex->cur, lex->type);
 	if (lex->type != SPACE && line[lex->cur])
-		ft_lstadd_back(table, ft_lstnew(ft_substr(line, lex->cur, skip), \
+		ft_lstadd_back(l_token, ft_lstnew(ft_substr(line, lex->cur, skip), \
 			lex->type));
 	if (!skip && line[lex->cur])
 		lex->cur++;
 	lex->cur += skip;
 	lex->last = lex->cur;
+}
+
+static bool	join_sep(t_token **l_token, t_lex *lex, char *line, char *join)
+{
+	char	*tmp;
+	int		skip;
+
+	skip = nbr_skip(line + lex->cur, lex->type);
+	tmp = ft_substr(line, lex->cur, skip);
+	ft_lstadd_back(l_token, ft_lstnew(ft_strjoin(join, tmp), lex->type));
+	if (!skip && line[lex->cur])
+		lex->cur++;
+	lex->cur += skip;
+	lex->last = lex->cur;
+	free(join);
+	free(tmp);
+	return (true);
 }
 
 /* Creates tokens and their type:
@@ -46,19 +63,21 @@ static void	skip_sep(t_cmdtable **table, t_lex *lex, char *line)
 * variables
 * - returns false if the second quotation mark is not found
 */
-bool	tokenize(t_cmdtable **table, t_lex *lex, char *line)
+bool	tokenize(t_token **l_token, t_lex *lex, char *line)
 {
 	char	*token;
 
 	token = ft_substr(line, lex->last, lex->cur - lex->last);
+	if (is_redir(lex->type) && ft_strisdigit(token))
+		return (join_sep(l_token, lex, line, token));
 	if (lex->type == QUOTE || lex->type == DQUOTE)
 		token = tokenize_string(lex, token, line);
 	if (!token)
 		return (false);
 	if (*token)
-		ft_lstadd_back(table, ft_lstnew(token, WORD));
+		ft_lstadd_back(l_token, ft_lstnew(token, WORD));
 	else if (!*token)
 		free(token);
-	skip_sep(table, lex, line);
+	skip_sep(l_token, lex, line);
 	return (true);
 }

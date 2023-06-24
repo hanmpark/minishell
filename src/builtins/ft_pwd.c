@@ -1,11 +1,11 @@
 #include "minishell.h"
 
 // pwd builtin
-void	ft_pwd(t_cmdtable *table)
+void	ft_pwd(t_token *l_token)
 {
 	char	*pwd;
 
-	(void)table;
+	(void)l_token;
 	pwd = getcwd(NULL, 0);
 	ft_putendl_fd(pwd, 1);
 	free(pwd);

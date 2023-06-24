@@ -2,11 +2,11 @@
 #include <stdlib.h>
 
 // Creates a new linked list node.
-t_cmdtable	*ft_lstnew(char *token, int type)
+t_token	*ft_lstnew(char *token, int type)
 {
-	t_cmdtable	*lst;
+	t_token	*lst;
 
-	lst = malloc(sizeof(t_cmdtable));
+	lst = malloc(sizeof(t_token));
 	if (!lst)
 		return (NULL);
 	lst->token = token;

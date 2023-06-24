@@ -1,9 +1,9 @@
 #include "listft.h"
 
 // Adds a new node at the end of a linked list.
-void	ft_lstadd_back(t_cmdtable **lst, t_cmdtable *new)
+void	ft_lstadd_back(t_token **lst, t_token *new)
 {
-	t_cmdtable	*theone;
+	t_token	*theone;
 
 	if (!*lst)
 		*lst = new;

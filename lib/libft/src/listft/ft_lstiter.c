@@ -1,7 +1,7 @@
 #include "listft.h"
 
 // Applies a function to each element of a linked list.
-void	ft_lstiter(t_cmdtable *lst, void (*f)(void *))
+void	ft_lstiter(t_token *lst, void (*f)(void *))
 {
 	if (lst && f)
 	{

@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-void	free_tokens(t_cmdtable **table)
+void	free_tokens(t_token **l_token)
 {
-	t_cmdtable	*current;
-	t_cmdtable	*next;
+	t_token	*current;
+	t_token	*next;
 
-	if (!*table)
+	if (!*l_token)
 		return ;
-	current = *table;
+	current = *l_token;
 	while (current)
 	{
 		next = current->next;
@@ -16,5 +16,5 @@ void	free_tokens(t_cmdtable **table)
 		free(current);
 		current = next;
 	}
-	*table = NULL;
+	*l_token = NULL;
 }

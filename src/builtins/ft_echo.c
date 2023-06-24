@@ -39,13 +39,13 @@ static void	put_var(char *token)
 	// need to handle environment variables
 }
 
-void	ft_echo(t_cmdtable *table)
+void	ft_echo(t_token *l_token)
 {
-	t_cmdtable	*tmp;
+	t_token	*tmp;
 	bool	n_option;
 
 	n_option = false;
-	tmp = table->next;
+	tmp = l_token->next;
 	if (tmp && n_identifier(tmp->token))
 	{
 		n_option = true;

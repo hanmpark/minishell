@@ -41,7 +41,8 @@ SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
 										ft_isdigit.c \
 										ft_isprint.c \
 										ft_isspace.c \
-										ft_isenv.c}
+										ft_isenv.c \
+										ft_strisdigit.c}
 
 LISTFT_PATH = ./src/listft/
 SRCS_LISTFT = ${addprefix ${LISTFT_PATH}, ft_lstadd_back.c \

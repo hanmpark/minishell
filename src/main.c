@@ -13,29 +13,25 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_minishell	*ms;
-
 	if (argc != 1)
 		return (EXIT_FAILURE);
 	(void)argv;
 	(void)envp;
-	ms = malloc(sizeof(t_minishell));
-	if (!ms)
-		return (1);
-	ms->table = NULL;
+	g_ms.l_token = NULL;
+	g_ms.return_value = 0;
 	while ("apagnan")
 	{
-		ms->line = readline("minishell$ ");
-		if (!ms->line)
+		g_ms.line = readline("minishell$ ");
+		if (!g_ms.line)
 			break ;
-		if (*ms->line)
+		if (*g_ms.line)
 		{
-			add_history(ms->line);
-			parsing(ms); // parsing() is a boolean, it will be used when the execution part is completed
+			add_history(g_ms.line);
+			parsing(); // parsing() is a boolean, it will be used when the execution part is completed
 		}
-		if (ms->table)
-			free_tokens(&ms->table);
-		free(ms->line);
+		if (g_ms.l_token)
+			free_tokens(&g_ms.l_token);
+		free(g_ms.line);
 		// system("leaks minishell");
 	}
 	return (EXIT_SUCCESS);

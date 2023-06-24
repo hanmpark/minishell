@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 // Returns the last element of a linked list.
-t_cmdtable	*ft_lstlast(t_cmdtable *lst)
+t_token	*ft_lstlast(t_token *lst)
 {
 	if (!lst)
 		return (NULL);

@@ -3,15 +3,15 @@
 #include <stdbool.h>
 
 // Prints out the tokens with their type (ONLY FOR DEBUG PURPOSE)
-static void	print_list(t_cmdtable *table)
+static void	print_tokens(t_token *l_token)
 {
 	int	count;
 
 	count = 0;
-	while (table)
+	while (l_token)
 	{
-		printf("[%d] token = [%s] type = %d\n", count, table->token, table->type);
-		table = table->next;
+		printf("[%d] token = [%s] type = %d\n", count, l_token->token, l_token->type);
+		l_token = l_token->next;
 		count++;
 	}
 	printf("\n");
@@ -19,7 +19,7 @@ static void	print_list(t_cmdtable *table)
 
 // Note for self (Kian):
 // The lexer is the first step of the parsing process
-// the tokens are stored in a linked list of t_cmdtable
+// the tokens are stored in a linked list of t_token
 // the tokens are separated by their type
 // the tokens are then passed to the parser
 // the parser will check if the tokens are in the right order
@@ -30,13 +30,13 @@ static void	print_list(t_cmdtable *table)
 * - deals with redirections
 * - creates the binary tree (or not if it is a simple command line)
 */
-bool	parsing(t_minishell *ms)
+bool	parsing(void)
 {
-	ms->table = lexer(ms->line);
-	if (!ms->table)
+	g_ms.l_token = lexer(g_ms.line);
+	if (!g_ms.l_token)
 		return (false);
-	print_list(ms->table);
-	if (!parser(ms->table))
+	print_tokens(g_ms.l_token);
+	if (!parser(g_ms.l_token))
 		return (false);
 	return (true);
 }

@@ -36,15 +36,18 @@ typedef struct	s_minishell
 {
 	char				*line;
 	struct s_treenode	*node;
-	struct s_cmdtable	*table;
+	struct s_token		*l_token;
+	int					return_value;
 }	t_minishell;
 
+struct s_minishell	g_ms;
+
 char	*treat_env(char *cmd_line);
-void	free_tokens(t_cmdtable **table);
+void	free_tokens(t_token **l_token);
 
 /* BUILTIN COMMANDS (kiki) */
-void	builtin_cmds(t_minishell *ms);
+void	builtin_cmds(void);
 // echo implementation (in progress...)
-void	ft_echo(t_cmdtable *table);
+void	ft_echo(t_token *l_token);
 
 #endif

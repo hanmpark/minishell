@@ -1,7 +1,7 @@
 #include "listft.h"
 
 // Counts the number of elements in a linked list.
-int	ft_lstsize(t_cmdtable *lst)
+int	ft_lstsize(t_token *lst)
 {
 	int	count;
 
