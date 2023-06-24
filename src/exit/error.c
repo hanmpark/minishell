@@ -11,6 +11,7 @@ bool	error_token(char *token, bool handle)
 		ft_putstr_fd(ERR_NOHANDLE, 2);
 	ft_putstr_fd(token, 2);
 	ft_putstr_fd(ERR_CTOKEN, 2);
+	g_ms.return_value = 258;
 	return (false);
 }
 
@@ -22,6 +23,7 @@ char	*error_quote(t_type type)
 	else
 		ft_putstr_fd("\"", 2);
 	ft_putstr_fd(ERR_CTOKEN, 2);
+	g_ms.return_value = 258;
 	return (NULL);
 }
 

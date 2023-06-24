@@ -5,17 +5,19 @@
 
 typedef struct	s_token
 {
-	char				*token;
-	int					type;
+	char			*token;
+	int				type;
 	struct s_token	*next;
 }	t_token;
 
 typedef struct	s_cmd
 {
-	char			**args;
-	int				fdin;
-	int				fdout;
-	struct s_cmd	*next;
+	char	**args;
+	int		redir_in;
+	int		redir_out;
+	int		fdin;
+	int		fdout;
+	char	*hdoc;
 }	t_cmd;
 
 typedef struct	s_treenode
@@ -27,18 +29,18 @@ typedef struct	s_treenode
 
 /* CHAINED LIST MANIPULATION */
 
-t_token	*ft_lstnew(char *token, int type);
-void	ft_lstadd_front(t_token **lst, t_token *new);
-void	ft_lstadd_back(t_token **lst, t_token *new);
-int		ft_lstsize(t_token *lst);
-t_token	*ft_lstlast(t_token *lst);
-void	ft_lstdelone(t_token *lst, void (*del)(void *));
-void	ft_lstclear(t_token **lst, void (*del)(void *));
-void	ft_lstiter(t_token *lst, void (*f)(void *));
+t_token		*ft_lstnew(char *token, int type);
+void		ft_lstadd_front(t_token **lst, t_token *new);
+void		ft_lstadd_back(t_token **lst, t_token *new);
+int			ft_lstsize(t_token *lst);
+t_token		*ft_lstlast(t_token *lst);
+void		ft_lstdelone(t_token *lst, void (*del)(void *));
+void		ft_lstclear(t_token **lst, void (*del)(void *));
+void		ft_lstiter(t_token *lst, void (*f)(void *));
 
 /* BINARY TREE MANIPULATION */
 t_treenode	*ft_treenew(t_cmd *cmd);
-void	ft_treeadd_left(t_treenode *node, t_treenode *new, int pass);
-void	ft_treeadd_right(t_treenode *node, t_treenode *new, int pass);
+void		ft_treeadd_left(t_treenode *node, t_treenode *new, int pass);
+void		ft_treeadd_right(t_treenode *node, t_treenode *new, int pass);
 
 #endif

@@ -1,6 +1,8 @@
 #ifndef PARSING_H
 # define PARSING_H
 
+# include "../lib/libft/inc/get_next_line.h"
+
 typedef struct	s_separator
 {
 	char	*cmpstr;
@@ -15,7 +17,7 @@ typedef struct	s_lexer
 	int			last;
 }	t_lex;
 
-bool		parsing(void);
+t_treenode	**parsing(void);
 
 t_token		*lexer(char *line);
 bool		tokenize(t_token **l_token, t_lex *lex, char *line);
@@ -26,7 +28,7 @@ int			is_undefined(char *str);
 bool		is_redir(t_type type);
 bool		is_cmdsep(t_type type);
 
-bool		parser(t_token *l_token);
+t_treenode	**parser(t_token *l_token);
 bool		check_order(t_token *l_token);
 bool		check_parentheses(t_token *l_token);
 

@@ -30,13 +30,17 @@ static void	print_tokens(t_token *l_token)
 * - deals with redirections
 * - creates the binary tree (or not if it is a simple command line)
 */
-bool	parsing(void)
+t_treenode	**parsing(void)
 {
+	t_treenode	**cmdtable;
+
+	cmdtable = NULL;
 	g_ms.l_token = lexer(g_ms.line);
 	if (!g_ms.l_token)
-		return (false);
+		return (NULL);
 	print_tokens(g_ms.l_token);
-	if (!parser(g_ms.l_token))
-		return (false);
-	return (true);
+	cmdtable = parser(g_ms.l_token);
+	if (!cmdtable)
+		return (NULL);
+	return (cmdtable);
 }
