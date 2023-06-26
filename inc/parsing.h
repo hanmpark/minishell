@@ -31,5 +31,9 @@ bool		is_cmdsep(t_type type);
 t_treenode	**parser(t_token *l_token);
 bool		check_order(t_token *l_token);
 bool		check_parentheses(t_token *l_token);
+t_treenode	**get_cmdtable(t_token *l_token);
+char		**get_args(t_token **cur);
+void		treat_redir(t_cmd *cmd, t_token *cur, t_type type);
+int			here_doc(char *limiter);
 
 #endif

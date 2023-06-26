@@ -19,33 +19,33 @@ void	free_tokens(t_token **l_token)
 	*l_token = NULL;
 }
 
-void	free_array(char **args)
+static void	free_array(char **args)
 {
 	int	i = 0;
-	while (args[i])
+	while (args && args[i])
 	{
 		free(args[i]);
 		i++;
 	}
-	free(args);
+	if (args)
+		free(args);
 }
 
-void	free_node(t_treenode *tree)
+static void	free_node(t_treenode *node)
 {
-	if (!tree)
+	if (!node)
 		return ;
-	free_node(tree->or_branch);
-	free_node(tree->and_branch);
-	free_array(tree->cmd->args);
-	tree->cmd->args = NULL;
-	if (fdin != STDIN_FILENO && fdin != -1)
-		close(fdin);
-	if (fdout != STDOUT_FILENO && fdout != -1)
-		close(fdout);
-	free(tree->cmd);
-	tree->cmd = NULL;
-	if (tree->cmd->hdoc)
-		free(tree->cmd->hdoc);
+	free_node(node->or_branch);
+	free_node(node->and_branch);
+	free_array(node->cmd->args);
+	node->cmd->args = NULL;
+	if (node->cmd->fdin != STDIN_FILENO && node->cmd->fdin != -1)
+		close(node->cmd->fdin);
+	if (node->cmd->fdout != STDOUT_FILENO && node->cmd->fdout != -1)
+		close(node->cmd->fdout);
+	if (node->cmd)
+		free(node->cmd);
+	node->cmd = NULL;
 }
 
 void	free_tree(t_treenode **tree)

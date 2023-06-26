@@ -26,7 +26,11 @@ SRC_LEXER = ${addprefix ${LEXER_PATH}, lexer.c \
 PARSER_PATH = ${PARSING_PATH}parser/
 SRC_PARSER = ${addprefix ${PARSER_PATH}, parser.c \
 											order.c \
-											parentheses.c}
+											parentheses.c \
+											filedescriptor.c \
+											get_cmdtable.c \
+											get_cmdargs.c \
+											here_doc.c}
 
 EXPANDER_PATH = ${SRC_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c}

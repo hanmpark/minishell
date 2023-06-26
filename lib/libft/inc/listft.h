@@ -17,7 +17,6 @@ typedef struct	s_cmd
 	int		redir_out;
 	int		fdin;
 	int		fdout;
-	char	*hdoc;
 }	t_cmd;
 
 typedef struct	s_treenode
