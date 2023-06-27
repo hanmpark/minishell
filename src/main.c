@@ -1,5 +1,6 @@
 #include "minishell.h"
 #include "parsing.h"
+#include "error.h"
 
 // void	exec_line(t_minishell *ms)
 // {
@@ -31,6 +32,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (g_ms.l_token)
 			free_tokens(&g_ms.l_token);
+		if (g_ms.node)
+			free_tree(g_ms.node);
 		free(g_ms.line);
 		// system("leaks minishell");
 	}

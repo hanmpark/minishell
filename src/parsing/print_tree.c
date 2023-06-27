@@ -21,13 +21,15 @@ void	print_tree_rec(t_treenode *node, int level)
 		return ;
 	}
 	print_tabs(level);
-	printf("node->fdin = %d\n", node->cmd->fdin);
+	printf("command = %s\n", node->cmd->args[0]);
 	print_tabs(level);
-	printf("node->fdout = %d\n", node->cmd->fdout);
+	printf("fdin = %d\n", node->cmd->fdin);
 	print_tabs(level);
-	printf("node->redir_in = %d\n", node->cmd->redir_in);
+	printf("fdout = %d\n", node->cmd->fdout);
 	print_tabs(level);
-	printf("node->redir_out = %d\n", node->cmd->redir_out);
+	printf("redir_in = %d\n", node->cmd->redir_in);
+	print_tabs(level);
+	printf("redir_out = %d\n", node->cmd->redir_out);
 	print_tabs(level);
 	printf("left\n");
 
@@ -40,9 +42,9 @@ void	print_tree_rec(t_treenode *node, int level)
 	printf("done\n");
 }
 
-/*
-* Function that will print out the contents of a binary tree structure
+/* Prints out the contents of a binary tree structure
 * with tabs to make it easier to apprehend.
+* Only for debugging purpose.
 */
 void	print_tree(t_treenode **node)
 {

@@ -39,7 +39,7 @@ void		ft_lstiter(t_token *lst, void (*f)(void *));
 
 /* BINARY TREE MANIPULATION */
 t_treenode	*ft_treenew(t_cmd *cmd);
-void		ft_treeadd_left(t_treenode *node, t_treenode *new, int pass);
-void		ft_treeadd_right(t_treenode *node, t_treenode *new, int pass);
+void		ft_treeadd_left(t_treenode **node, t_treenode *new);
+void		ft_treeadd_right(t_treenode **node, t_treenode *new);
 
 #endif

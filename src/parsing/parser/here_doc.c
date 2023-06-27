@@ -18,7 +18,7 @@ static void	check_doc(char *limiter, int *pfd)
 			free(line);
 			free(new_limiter);
 			close(pfd[1]);
-			break ;
+			exit(EXIT_SUCCESS);
 		}
 		write(pfd[1], line, ft_strlen(line));
 		free(line);

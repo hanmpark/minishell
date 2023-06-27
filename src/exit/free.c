@@ -21,7 +21,9 @@ void	free_tokens(t_token **l_token)
 
 static void	free_array(char **args)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	while (args && args[i])
 	{
 		free(args[i]);
@@ -35,8 +37,8 @@ static void	free_node(t_treenode *node)
 {
 	if (!node)
 		return ;
-	free_node(node->or_branch);
 	free_node(node->and_branch);
+	free_node(node->or_branch);
 	free_array(node->cmd->args);
 	node->cmd->args = NULL;
 	if (node->cmd->fdin != STDIN_FILENO && node->cmd->fdin != -1)
@@ -56,6 +58,8 @@ void	free_tree(t_treenode **tree)
 	while (tree && tree[i])
 	{
 		free_node(tree[i]);
+		free(tree[i]);
+		tree[i] = NULL;
 		i++;
 	}
 }

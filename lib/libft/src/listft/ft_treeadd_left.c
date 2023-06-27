@@ -1,6 +1,6 @@
 #include "listft.h"
 
-void	ft_treeadd_left(t_treenode *node, t_treenode *new, int pass)
+static void	recursive_add_left(t_treenode *node, t_treenode *new, int pass)
 {
 	if (!node)
 		return ;
@@ -11,7 +11,15 @@ void	ft_treeadd_left(t_treenode *node, t_treenode *new, int pass)
 	}
 	if (!node->and_branch)
 		return ;
-	ft_treeadd_left(node->and_branch, new, 1);
+	recursive_add_left(node->and_branch, new, 1);
 	if (pass)
-		ft_treeadd_left(node->or_branch, new, 1);
+		recursive_add_left(node->or_branch, new, 1);
+}
+
+void	ft_treeadd_left(t_treenode **node, t_treenode *new)
+{
+	if (!*node)
+		*node = new;
+	else
+		recursive_add_left(*node, new, 1);
 }

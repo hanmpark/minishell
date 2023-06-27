@@ -50,17 +50,17 @@ void	close_fd(int fd, int *redir, bool in)
 * - treats here_doc
 * - open the file(s)
 */
-void	treat_redir(t_cmd *cmd, t_token *cur, t_type type)
+void	treat_redir(t_cmd *cmd, t_token *cur, t_token *redir, t_type type)
 {
 	if (type == LESS || type == DLESS)
 	{
 		close_fd(cmd->fdin, &cmd->redir_in, true);
-		cmd->redir_in = check_fd(cur->token);
+		cmd->redir_in = check_fd(redir->token);
 	}
 	else if (type == GREAT || type == DGREAT)
 	{
 		close_fd(cmd->fdout, &cmd->redir_out, false);
-		cmd->redir_out = check_fd(cur->token);
+		cmd->redir_out = check_fd(redir->token);
 	}
 	if (type == LESS)
 		cmd->fdin = open_file(cur->token, 0);
