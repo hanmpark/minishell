@@ -14,7 +14,7 @@ static void	print_tokens(t_token *l_token)
 		l_token = l_token->next;
 		count++;
 	}
-	printf("\n");
+	printf("\n\n");
 }
 
 // Note for self (Kian):
@@ -42,5 +42,6 @@ t_treenode	**parsing(void)
 	cmdtable = parser(g_ms.l_token);
 	if (!cmdtable)
 		return (NULL);
+	print_tree(cmdtable);
 	return (cmdtable);
 }

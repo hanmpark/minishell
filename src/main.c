@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*g_ms.line)
 		{
 			add_history(g_ms.line);
-			parsing(); // parsing() is a boolean, it will be used when the execution part is completed
+			g_ms.node = parsing(); // parsing() is a boolean, it will be used when the execution part is completed
 		}
 		if (g_ms.l_token)
 			free_tokens(&g_ms.l_token);

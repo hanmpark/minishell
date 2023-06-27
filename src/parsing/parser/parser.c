@@ -22,5 +22,6 @@ t_treenode	**parser(t_token *l_token)
 	cmdtable = get_cmdtable(l_token);
 	if (!cmdtable)
 		return (NULL);
+	printf("cmdtable has been created\n");
 	return (cmdtable);
 }

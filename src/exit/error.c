@@ -32,3 +32,13 @@ bool	error_parsing(char *msg)
 	ft_putstr_fd(msg, 2);
 	return (false);
 }
+
+void	error_exit(t_treenode **tree, t_token **l_token, char *msg)
+{
+	perror(msg);
+	if (tree)
+		free_tree(tree);
+	if (l_token)
+		free_tokens(l_token);
+	exit(1);
+}

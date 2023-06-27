@@ -17,13 +17,13 @@ static int	open_file(char	*filename, int mode)
 	return (fd);
 }
 
-static int	check_fd(t_cmd *cmd, char *token)
+static int	check_fd(char *token)
 {
 	char	*tmp;
 	int		fd;
 	int		i;
 
-	if (!is_digit(*token))
+	if (!ft_isdigit(*token))
 		return (-1);
 	i = 0;
 	while (token[i] && !is_redir(is_separator(token + i)))
@@ -55,12 +55,12 @@ void	treat_redir(t_cmd *cmd, t_token *cur, t_type type)
 	if (type == LESS || type == DLESS)
 	{
 		close_fd(cmd->fdin, &cmd->redir_in, true);
-		cmd->redir_in = check_fd(cmd, cur->token);
+		cmd->redir_in = check_fd(cur->token);
 	}
 	else if (type == GREAT || type == DGREAT)
 	{
 		close_fd(cmd->fdout, &cmd->redir_out, false);
-		cmd->redir_out = check_fd(cmd, cur->token);
+		cmd->redir_out = check_fd(cur->token);
 	}
 	if (type == LESS)
 		cmd->fdin = open_file(cur->token, 0);

@@ -46,6 +46,9 @@ struct s_minishell	g_ms;
 char	*treat_env(char *cmd_line);
 void	free_tokens(t_token **l_token);
 
+// only for debugging purpose
+void	print_tree(t_treenode **node);
+
 /* BUILTIN COMMANDS (kiki) */
 void	builtin_cmds(void);
 // echo implementation (in progress...)

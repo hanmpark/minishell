@@ -46,3 +46,8 @@ bool	is_cmdsep(t_type type)
 {
 	return (type == OR_IF || type == AND_IF || type == PIPE);
 }
+
+bool	is_par(t_type type)
+{
+	return (type == LPAR || type == RPAR);
+}

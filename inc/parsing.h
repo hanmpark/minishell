@@ -1,8 +1,6 @@
 #ifndef PARSING_H
 # define PARSING_H
 
-# include "../lib/libft/inc/get_next_line.h"
-
 typedef struct	s_separator
 {
 	char	*cmpstr;
@@ -27,13 +25,18 @@ t_type		is_separator(char *str);
 int			is_undefined(char *str);
 bool		is_redir(t_type type);
 bool		is_cmdsep(t_type type);
+bool		is_par(t_type type);
 
 t_treenode	**parser(t_token *l_token);
 bool		check_order(t_token *l_token);
 bool		check_parentheses(t_token *l_token);
 t_treenode	**get_cmdtable(t_token *l_token);
-char		**get_args(t_token **cur);
+t_cmd		*get_cmd(t_token *l_token);
 void		treat_redir(t_cmd *cmd, t_token *cur, t_type type);
 int			here_doc(char *limiter);
+
+t_token		*next_cmd(t_token *l_token);
+t_token		*next_pipeline(t_token *l_token);
+t_token		*next_token(t_token *l_token);
 
 #endif

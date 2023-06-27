@@ -12,6 +12,7 @@
 bool	error_token(char *token, bool handle);
 char	*error_quote(t_type type);
 bool	error_parsing(char *msg);
+void	error_exit(t_treenode **tree, t_token **l_token, char *msg);
 
 void	free_tree(t_treenode **tree);
 

@@ -15,7 +15,8 @@ LGREEN = \033[38;5;155m
 SRC_PATH = ./src/
 
 PARSING_PATH = ${SRC_PATH}parsing/
-SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c}
+SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c \
+											print_tree.c}
 
 LEXER_PATH = ${PARSING_PATH}lexer/
 SRC_LEXER = ${addprefix ${LEXER_PATH}, lexer.c \
@@ -29,8 +30,9 @@ SRC_PARSER = ${addprefix ${PARSER_PATH}, parser.c \
 											parentheses.c \
 											filedescriptor.c \
 											get_cmdtable.c \
-											get_cmdargs.c \
-											here_doc.c}
+											get_cmd.c \
+											here_doc.c \
+											next_token.c}
 
 EXPANDER_PATH = ${SRC_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c}
