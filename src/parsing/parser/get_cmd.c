@@ -4,12 +4,14 @@
 
 static int	count_args(t_token *cur)
 {
-	int	len;
+	char	**tmp;
+	int		len;
+	int		i;
 
 	len = 0;
 	while (cur && !is_redir(cur->type) && !is_cmdsep(cur->type))
 	{
-		len++;
+		cur->token = expand_token(cur->token);
 		cur = cur->next;
 	}
 	return (len);

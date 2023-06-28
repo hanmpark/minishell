@@ -43,4 +43,7 @@ t_token		*next_cmd(t_token *l_token);
 t_token		*next_pipeline(t_token *l_token);
 t_token		*next_token(t_token *l_token);
 
+char		*treat_env(char *cmd_line);
+char		*expand_token(char *line);
+
 #endif

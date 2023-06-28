@@ -34,7 +34,7 @@ SRC_PARSER = ${addprefix ${PARSER_PATH}, parser.c \
 											here_doc.c \
 											next_token.c}
 
-EXPANDER_PATH = ${SRC_PATH}expander/
+EXPANDER_PATH = ${PARSING_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c}
 
 EXIT_PATH = ${SRC_PATH}exit/

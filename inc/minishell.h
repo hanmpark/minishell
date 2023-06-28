@@ -37,7 +37,6 @@ typedef struct	s_minishell
 	char				*line;
 	struct s_treenode	**node;
 	struct s_token		*l_token;
-	int					nbr_pipeine;
 	int					return_value;
 }	t_minishell;
 
