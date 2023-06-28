@@ -16,41 +16,36 @@ static int	count_pipeline(t_token	*l_token)
 	return (nbr + 1);
 }
 
-static int	set_mode(t_type type)
+static void	add_node(t_treenode **node, t_treenode *add, t_type add_mode)
 {
-	if (type == AND_IF)
-		return (1);
-	else if (type == OR_IF)
-		return (2);
-	return (0);
+	if (add_mode == AND_IF)
+		ft_treeadd_right(node, add);
+	else if (add_mode == OR_IF)
+		ft_treeadd_left(node, add);
+	else
+		*node = add;
 }
 
 // bad order bruh
-static t_treenode	*get_currenttable(t_token *l_token)
+static t_treenode	*get_table(t_token *l_token)
 {
 	t_treenode	*table;
 	t_cmd		*cmd;
-	int			mode;
+	t_type		add_mode;
 
 	// check_redir if parentheses
 	table = NULL;
-	mode = 0;
 	while (l_token && l_token->type != PIPE)
 	{
+		cmd = NULL;
+		add_mode = l_token->type;
+		if (is_cmdsep(add_mode))
+			l_token = l_token->next;
 		cmd = get_cmd(l_token);
 		if (!cmd)
 			return (NULL);
-		if (mode == 0)
-			table = ft_treenew(cmd);
-		else if (mode == 1)
-			ft_treeadd_right(&table, ft_treenew(cmd));
-		else if (mode == 2)
-			ft_treeadd_left(&table, ft_treenew(cmd));
+		add_node(&table, ft_treenew(cmd), add_mode);
 		l_token = next_cmd(l_token);
-		if (!l_token || l_token->type == PIPE)
-			break ;
-		mode = set_mode(l_token->type);
-		l_token = l_token->next;
 	}
 	return (table);
 }
@@ -72,7 +67,7 @@ t_treenode	**get_cmdtable(t_token *l_token)
 	i = 0;
 	while (l_token && i < nb_pipeline)
 	{
-		cmdtable[i] = get_currenttable(l_token);
+		cmdtable[i] = get_table(l_token);
 		if (!cmdtable[i])
 			error_exit(cmdtable, &l_token, "malloc");
 		l_token = next_pipeline(l_token);

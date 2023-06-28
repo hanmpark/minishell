@@ -8,11 +8,11 @@ static int	open_file(char	*filename, int mode)
 	int fd;
 
 	fd = -1;
-	if (mode == 0)
+	if (mode == READ)
 		fd = open(filename, O_RDONLY);
-	else if (mode == 1)
+	else if (mode == TRUNC)
 		fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	else if (mode == 2)
+	else if (mode == APPEND)
 		fd = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	return (fd);
 }
@@ -34,15 +34,20 @@ static int	check_fd(char *token)
 	return (fd);
 }
 
-void	close_fd(int fd, int *redir, bool in)
+static void	reset_fd(t_cmd *cmd, t_token *l_token)
 {
-	if (in)
-		if (fd != STDIN_FILENO)
-			close(fd);
-	if (!in)
-		if (fd != STDOUT_FILENO)
-			close(fd);
-	*redir = -1;
+	if (l_token->type == LESS || l_token->type == DLESS)
+	{
+		if (cmd->fdin != STDIN_FILENO)
+			close(cmd->fdin);
+		cmd->redir_in = check_fd(l_token->token);
+	}
+	else if (l_token->type == GREAT || l_token->type == DGREAT)
+	{
+		if (cmd->fdout != STDOUT_FILENO)
+			close(cmd->fdout);
+		cmd->redir_out = check_fd(l_token->token);
+	}
 }
 
 /* Treats the redirection for the command:
@@ -50,24 +55,17 @@ void	close_fd(int fd, int *redir, bool in)
 * - treats here_doc
 * - open the file(s)
 */
-void	treat_redir(t_cmd *cmd, t_token *cur, t_token *redir, t_type type)
+t_token	*treat_redir(t_cmd *cmd, t_token *l_token, t_type type)
 {
-	if (type == LESS || type == DLESS)
-	{
-		close_fd(cmd->fdin, &cmd->redir_in, true);
-		cmd->redir_in = check_fd(redir->token);
-	}
-	else if (type == GREAT || type == DGREAT)
-	{
-		close_fd(cmd->fdout, &cmd->redir_out, false);
-		cmd->redir_out = check_fd(redir->token);
-	}
+	reset_fd(cmd, l_token);
+	l_token = l_token->next;
 	if (type == LESS)
-		cmd->fdin = open_file(cur->token, 0);
+		cmd->fdin = open_file(l_token->token, READ);
 	else if (type == DLESS)
-		cmd->fdin = here_doc(cur->token);
+		cmd->fdin = here_doc(l_token->token);
 	else if (type == GREAT)
-		cmd->fdout = open_file(cur->token, 1);
+		cmd->fdout = open_file(l_token->token, TRUNC);
 	else if (type == DGREAT)
-		cmd->fdout = open_file(cur->token, 2);
+		cmd->fdout = open_file(l_token->token, APPEND);
+	return (l_token->next);
 }

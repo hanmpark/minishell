@@ -21,6 +21,7 @@ typedef struct	s_cmd
 
 typedef struct	s_treenode
 {
+	int					ref_count;
 	struct s_cmd		*cmd;
 	struct s_treenode	*or_branch;
 	struct s_treenode	*and_branch;

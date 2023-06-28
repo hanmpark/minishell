@@ -1,6 +1,10 @@
 #ifndef PARSING_H
 # define PARSING_H
 
+# define READ 0
+# define TRUNC 1
+# define APPEND 2
+
 typedef struct	s_separator
 {
 	char	*cmpstr;
@@ -32,11 +36,11 @@ bool		check_order(t_token *l_token);
 bool		check_parentheses(t_token *l_token);
 t_treenode	**get_cmdtable(t_token *l_token);
 t_cmd		*get_cmd(t_token *l_token);
-void	treat_redir(t_cmd *cmd, t_token *cur, t_token *redir, t_type type);
+t_token		*treat_redir(t_cmd *cmd, t_token *l_token, t_type type);
 int			here_doc(char *limiter);
 
 t_token		*next_cmd(t_token *l_token);
 t_token		*next_pipeline(t_token *l_token);
-t_token		*next_token(t_token *l_token, bool redir);
+t_token		*next_token(t_token *l_token);
 
 #endif

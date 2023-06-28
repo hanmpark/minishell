@@ -15,7 +15,6 @@ static int	count_args(t_token *cur)
 	return (len);
 }
 
-// Get the command and its arguments if it has some
 static char	**get_cmdargs(t_token *cur)
 {
 	char	**args;
@@ -50,22 +49,19 @@ static t_cmd	*new_cmd(void)
 t_cmd	*get_cmd(t_token *l_token)
 {
 	t_cmd	*cmd;
-	bool	redir;
 
 	cmd = new_cmd();
 	if (!cmd)
 		return (NULL);
 	while (l_token && !is_cmdsep(l_token->type))
 	{
-		redir = false;
 		if (is_redir(l_token->type))
-		{
-			treat_redir(cmd, l_token->next, l_token, l_token->type);
-			redir = true;
-		}
+			l_token = treat_redir(cmd, l_token, l_token->type);
 		else
+		{
 			cmd->args = get_cmdargs(l_token);
-		l_token = next_token(l_token, redir);
+			l_token = next_token(l_token);
+		}
 	}
 	return (cmd);
 }
