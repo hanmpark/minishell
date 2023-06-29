@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "expander.h"
 #include "parsing.h"
 #include "fcntl.h"
 #include "error.h"
@@ -50,15 +51,33 @@ static void	reset_fd(t_cmd *cmd, t_token *l_token)
 	}
 }
 
+static bool	check_filename(char *filename)
+{
+	char	*tmp;
+
+	tmp = expand_arg(ft_strdup(filename));
+	if (!tmp || ft_foundspace(tmp))
+	{
+		if (tmp)
+			free(tmp);
+		return (error_expand(filename, ERR_AMB, 1));
+	}
+	free(tmp);
+	return (true);
+}
+
 /* Treats the redirection for the command:
 * - treats the entry of the redirection as well (eg: 2>)
 * - treats here_doc
 * - open the file(s)
 */
-t_token	*treat_redir(t_cmd *cmd, t_token *l_token, t_type type)
+bool	treat_redir(t_cmd *cmd, t_token *l_token, t_type type)
 {
 	reset_fd(cmd, l_token);
 	l_token = l_token->next;
+	if (!check_filename(l_token->token))
+		return (false);
+	l_token->token = expand_arg(l_token->token);
 	if (type == LESS)
 		cmd->fdin = open_file(l_token->token, READ);
 	else if (type == DLESS)
@@ -67,5 +86,7 @@ t_token	*treat_redir(t_cmd *cmd, t_token *l_token, t_type type)
 		cmd->fdout = open_file(l_token->token, TRUNC);
 	else if (type == DGREAT)
 		cmd->fdout = open_file(l_token->token, APPEND);
-	return (l_token->next);
+	if (cmd->fdin == -1 || cmd->fdout == -1)
+		return (error_expand(l_token->token, ERR_ENOENT, 1));
+	return (true);
 }

@@ -42,3 +42,17 @@ void	error_exit(t_treenode **tree, t_token **l_token, char *msg)
 		free_tokens(l_token);
 	exit(1);
 }
+
+bool	error_expand(char *error_token, char *msg, int error_code)
+{
+	ft_putstr_fd("minishell: ", 2);
+	if (msg)
+	{
+		ft_putstr_fd(error_token, 2);
+		ft_putstr_fd(msg, 2);
+	}
+	else
+		perror(error_token);
+	g_ms.return_value = error_code;
+	return (false);
+}

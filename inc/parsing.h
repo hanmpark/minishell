@@ -36,14 +36,11 @@ bool		check_order(t_token *l_token);
 bool		check_parentheses(t_token *l_token);
 t_treenode	**get_cmdtable(t_token *l_token);
 t_cmd		*get_cmd(t_token *l_token);
-t_token		*treat_redir(t_cmd *cmd, t_token *l_token, t_type type);
+bool		treat_redir(t_cmd *cmd, t_token *l_token, t_type type);
 int			here_doc(char *limiter);
 
 t_token		*next_cmd(t_token *l_token);
 t_token		*next_pipeline(t_token *l_token);
 t_token		*next_token(t_token *l_token);
-
-char		*treat_env(char *cmd_line);
-char		*expand_token(char *line);
 
 #endif

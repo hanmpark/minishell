@@ -21,7 +21,10 @@ void	print_tree_rec(t_treenode *node, int level)
 		return ;
 	}
 	print_tabs(level);
-	printf("command = %s\n", node->cmd->args[0]);
+	if (node->cmd->args)
+		printf("command = %s\n", node->cmd->args[0]);
+	else
+		printf("command = NULL\n");
 	print_tabs(level);
 	printf("fdin = %d\n", node->cmd->fdin);
 	print_tabs(level);
@@ -51,7 +54,6 @@ void	print_tree(t_treenode **node)
 	int	i;
 
 	i = 0;
-	printf("PASS\n");
 	while (node[i])
 	{
 		printf("--- TREE N%d ---\n", i);

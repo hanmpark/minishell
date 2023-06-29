@@ -25,5 +25,8 @@ char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 int		ft_arraylen(char **array);
+char	**ft_arrayjoin(char **ar1, char **ar2);
+char	**ft_arraydup(char **ar);
+char	**ft_arrayadd(char **ar, char *add);
 
 #endif

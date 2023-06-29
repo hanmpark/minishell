@@ -1,34 +1,19 @@
 #include "minishell.h"
+#include "expander.h"
 #include "parsing.h"
 #include "error.h"
-
-static int	count_args(t_token *cur)
-{
-	char	**tmp;
-	int		len;
-	int		i;
-
-	len = 0;
-	while (cur && !is_redir(cur->type) && !is_cmdsep(cur->type))
-	{
-		cur->token = expand_token(cur->token);
-		cur = cur->next;
-	}
-	return (len);
-}
 
 static char	**get_cmdargs(t_token *cur)
 {
 	char	**args;
-	int		i;
 
-	args = ft_calloc(count_args(cur) + 1, sizeof(char *));
-	if (!args)
-		return (NULL);
-	i = 0;
+	args = NULL;
 	while (cur && !is_redir(cur->type) && !is_cmdsep(cur->type))
 	{
-		args[i++] = ft_strdup(cur->token);
+		if (!args)
+			args = expand_cmd(ft_strdup(cur->token));
+		else
+			args = ft_arrayadd(args, expand_arg(ft_strdup(cur->token)));
 		cur = cur->next;
 	}
 	return (args);
@@ -41,6 +26,7 @@ static t_cmd	*new_cmd(void)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
+	cmd->args = NULL;
 	cmd->redir_in = -1;
 	cmd->redir_out = -1;
 	cmd->fdin = STDIN_FILENO;
@@ -58,7 +44,11 @@ t_cmd	*get_cmd(t_token *l_token)
 	while (l_token && !is_cmdsep(l_token->type))
 	{
 		if (is_redir(l_token->type))
-			l_token = treat_redir(cmd, l_token, l_token->type);
+		{
+			if (!treat_redir(cmd, l_token, l_token->type))
+				return (cmd);
+			l_token = l_token->next->next;
+		}
 		else
 		{
 			cmd->args = get_cmdargs(l_token);

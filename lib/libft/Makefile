@@ -33,7 +33,10 @@ SRCS_CHARFT = ${addprefix ${CHARFT_PATH}, ft_atoi.c \
 											ft_tolower.c \
 											ft_toupper.c \
 											ft_strndup.c \
-											ft_arraylen.c}
+											ft_arraylen.c \
+											ft_arrayjoin.c \
+											ft_arraydup.c \
+											ft_arrayadd.c}
 
 ISFT_PATH = ./src/isft/
 SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
@@ -43,7 +46,8 @@ SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
 										ft_isprint.c \
 										ft_isspace.c \
 										ft_isenv.c \
-										ft_strisdigit.c}
+										ft_strisdigit.c \
+										ft_foundspace.c}
 
 LISTFT_PATH = ./src/listft/
 SRCS_LISTFT = ${addprefix ${LISTFT_PATH}, ft_lstadd_back.c \
@@ -65,7 +69,8 @@ SRCS_MEMFT = ${addprefix ${MEMFT_PATH}, ft_bzero.c \
 										ft_memcmp.c \
 										ft_memcpy.c \
 										ft_memmove.c \
-										ft_memset.c}
+										ft_memset.c \
+										ft_arrayfree.c}
 
 PUTFT_PATH = ./src/putft/
 SRCS_PUTFT = ${addprefix ${PUTFT_PATH}, ft_putchar_fd.c \

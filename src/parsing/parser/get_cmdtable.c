@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "expander.h"
 #include "parsing.h"
 #include "error.h"
 
@@ -43,7 +44,10 @@ static t_treenode	*get_table(t_token *l_token)
 			l_token = l_token->next;
 		cmd = get_cmd(l_token);
 		if (!cmd)
+		{
+			free_node(&table);
 			return (NULL);
+		}
 		add_node(&table, ft_treenew(cmd), add_mode);
 		l_token = next_cmd(l_token);
 	}
