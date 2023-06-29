@@ -3,6 +3,33 @@
 #include "parsing.h"
 #include "error.h"
 
+// Get a pipeline 
+static t_treenode	*get_table(t_token *l_token)
+{
+	t_treenode	*table;
+	t_cmd		*cmd;
+	t_type		add_mode;
+
+	// check_redir if parentheses
+	table = NULL;
+	while (l_token && l_token->type != PIPE)
+	{
+		cmd = NULL;
+		add_mode = l_token->type;
+		if (is_cmdsep(add_mode))
+			l_token = l_token->next;
+		cmd = get_cmd(l_token);
+		if (!cmd) // malloc problem
+		{
+			free_node(&table);
+			return (NULL);
+		}
+		add_node(&table, ft_treenew(cmd), add_mode);
+		l_token = next_cmd(l_token);
+	}
+	return (table);
+}
+
 static int	count_pipeline(t_token	*l_token)
 {
 	int	nbr;
@@ -25,33 +52,6 @@ static void	add_node(t_treenode **node, t_treenode *add, t_type add_mode)
 		ft_treeadd_left(node, add);
 	else
 		*node = add;
-}
-
-// bad order bruh
-static t_treenode	*get_table(t_token *l_token)
-{
-	t_treenode	*table;
-	t_cmd		*cmd;
-	t_type		add_mode;
-
-	// check_redir if parentheses
-	table = NULL;
-	while (l_token && l_token->type != PIPE)
-	{
-		cmd = NULL;
-		add_mode = l_token->type;
-		if (is_cmdsep(add_mode))
-			l_token = l_token->next;
-		cmd = get_cmd(l_token);
-		if (!cmd)
-		{
-			free_node(&table);
-			return (NULL);
-		}
-		add_node(&table, ft_treenew(cmd), add_mode);
-		l_token = next_cmd(l_token);
-	}
-	return (table);
 }
 
 /* Get the command table for the execution part:

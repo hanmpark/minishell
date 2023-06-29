@@ -6,7 +6,8 @@ static int	right_token(int last_type, t_token *cur)
 {
 	if (is_redir(last_type) && cur->type != WORD)
 		return (-1);
-	else if (is_cmdsep(last_type) && (cur->type != WORD && cur->type != LPAR))
+	else if (is_cmdsep(last_type) && (!is_redir(cur->type) \
+		&& cur->type != WORD && cur->type != LPAR))
 		return (-1);
 	else if (is_cmdsep(cur->type) && (last_type != WORD && last_type != RPAR))
 		return (-1);

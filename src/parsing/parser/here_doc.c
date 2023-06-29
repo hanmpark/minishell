@@ -11,19 +11,17 @@ static void	check_doc(char *limiter, int *pfd)
 	new_limiter = ft_strjoin(limiter, "\n");
 	free(limiter);
 	line = readline("> ");
-	while (line)
+	while (line && ft_strncmp(line, new_limiter, ft_strlen(line)))
 	{
-		if (!ft_strncmp(line, new_limiter, ft_strlen(line)))
-		{
-			free(line);
-			free(new_limiter);
-			close(pfd[1]);
-			exit(EXIT_SUCCESS);
-		}
 		write(pfd[1], line, ft_strlen(line));
 		free(line);
 		line = readline("> ");
 	}
+	if (line)
+		free(line);
+	free(new_limiter);
+	close(pfd[1]);
+	exit(EXIT_SUCCESS);
 }
 
 int	here_doc(char *limiter)
