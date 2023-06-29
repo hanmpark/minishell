@@ -3,6 +3,30 @@
 #include "parsing.h"
 #include "error.h"
 
+static int	count_pipeline(t_token	*l_token)
+{
+	int	nbr;
+
+	nbr = 0;
+	while (l_token)
+	{
+		if (l_token->type == PIPE)
+			nbr++;
+		l_token = l_token->next;
+	}
+	return (nbr + 1);
+}
+
+static void	add_node(t_treenode **node, t_treenode *add, t_type add_mode)
+{
+	if (add_mode == AND_IF)
+		ft_treeadd_right(node, add);
+	else if (add_mode == OR_IF)
+		ft_treeadd_left(node, add);
+	else
+		*node = add;
+}
+
 // Get a pipeline 
 static t_treenode	*get_table(t_token *l_token)
 {
@@ -28,30 +52,6 @@ static t_treenode	*get_table(t_token *l_token)
 		l_token = next_cmd(l_token);
 	}
 	return (table);
-}
-
-static int	count_pipeline(t_token	*l_token)
-{
-	int	nbr;
-
-	nbr = 0;
-	while (l_token)
-	{
-		if (l_token->type == PIPE)
-			nbr++;
-		l_token = l_token->next;
-	}
-	return (nbr + 1);
-}
-
-static void	add_node(t_treenode **node, t_treenode *add, t_type add_mode)
-{
-	if (add_mode == AND_IF)
-		ft_treeadd_right(node, add);
-	else if (add_mode == OR_IF)
-		ft_treeadd_left(node, add);
-	else
-		*node = add;
 }
 
 /* Get the command table for the execution part:
