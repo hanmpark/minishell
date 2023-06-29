@@ -61,3 +61,18 @@ void	print_tree(t_treenode **node)
 		i++;
 	}
 }
+
+// Prints out the tokens with their type (ONLY FOR DEBUG PURPOSE)
+void	print_tokens(t_token *l_token)
+{
+	int	count;
+
+	count = 0;
+	while (l_token)
+	{
+		printf("[%d] token = [%s] type = %d\n", count, l_token->token, l_token->type);
+		l_token = l_token->next;
+		count++;
+	}
+	printf("\n\n");
+}

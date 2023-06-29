@@ -16,7 +16,7 @@ SRC_PATH = ./src/
 
 PARSING_PATH = ${SRC_PATH}parsing/
 SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c \
-											print_tree.c}
+											print_debug.c}
 
 LEXER_PATH = ${PARSING_PATH}lexer/
 SRC_LEXER = ${addprefix ${LEXER_PATH}, lexer.c \

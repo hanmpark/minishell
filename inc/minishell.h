@@ -47,6 +47,7 @@ void	free_tokens(t_token **l_token);
 
 // only for debugging purpose
 void	print_tree(t_treenode **node);
+void	print_tokens(t_token *l_token);
 
 /* BUILTIN COMMANDS (kiki) */
 void	builtin_cmds(void);

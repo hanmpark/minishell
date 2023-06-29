@@ -2,21 +2,6 @@
 #include "parsing.h"
 #include <stdbool.h>
 
-// Prints out the tokens with their type (ONLY FOR DEBUG PURPOSE)
-static void	print_tokens(t_token *l_token)
-{
-	int	count;
-
-	count = 0;
-	while (l_token)
-	{
-		printf("[%d] token = [%s] type = %d\n", count, l_token->token, l_token->type);
-		l_token = l_token->next;
-		count++;
-	}
-	printf("\n\n");
-}
-
 // Note for self (Kian):
 // The lexer is the first step of the parsing process
 // the tokens are stored in a linked list of t_token
