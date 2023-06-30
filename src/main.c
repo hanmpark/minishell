@@ -2,11 +2,6 @@
 #include "parsing.h"
 #include "error.h"
 
-// void	exec_line(t_minishell *ms)
-// {
-// 	builtin_cmds(ms);
-// }
-
 /*
 * Once we have read the line from the prompt,...
 * Ctrl + D = end the program as it returns (NULL).
@@ -35,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 		if (g_ms.node)
 			free_tree(g_ms.node);
 		free(g_ms.line);
-		system("leaks minishell");
+		// system("leaks minishell");
 	}
 	return (EXIT_SUCCESS);
 }

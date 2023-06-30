@@ -9,7 +9,7 @@ t_treenode	*ft_treenew(t_cmd *cmd)
 	if (!node)
 		return (NULL);
 	node->depth = 1;
-	node->tree_done = 0;
+	node->initialized = 0;
 	node->cmd = cmd;
 	node->or_branch = NULL;
 	node->and_branch = NULL;

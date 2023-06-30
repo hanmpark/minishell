@@ -22,7 +22,7 @@ typedef struct	s_cmd
 typedef struct	s_treenode
 {
 	int					depth;
-	int					tree_done;
+	int					initialized;
 	struct s_cmd		*cmd;
 	struct s_treenode	*or_branch;
 	struct s_treenode	*and_branch;
@@ -43,7 +43,7 @@ void		ft_lstiter(t_token *lst, void (*f)(void *));
 t_treenode	*ft_treenew(t_cmd *cmd);
 void		ft_treeadd_left(t_treenode **node, t_treenode *new);
 void		ft_treeadd_right(t_treenode **node, t_treenode *new);
-void		ft_treereset_depth(t_treenode *node);
+void		ft_treereset(t_treenode *node);
 void		ft_treeset_depth(t_treenode *node);
 
 #endif

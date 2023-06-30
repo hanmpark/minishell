@@ -13,11 +13,9 @@ static void	array_cpy(char **dest, char **source, int start)
 char	**ft_arrayjoin(char **ar1, char **ar2)
 {
 	char	**dest;
-	int		destsize;
 
 	if (!ar1 || !ar2)
 		return (NULL);
-	destsize = ft_arraylen(ar1) + ft_arraylen(ar2);
 	dest = ft_calloc(ft_arraylen(ar1) + ft_arraylen(ar2) + 1, sizeof(char *));
 	if (!dest)
 		return (NULL);
