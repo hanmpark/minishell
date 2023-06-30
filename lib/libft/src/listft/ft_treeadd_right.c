@@ -1,20 +1,21 @@
 #include "listft.h"
 
-static void	recursive_add_right(t_treenode *node, t_treenode *new, int pass)
+static void	recursive_add_right(t_treenode *node, t_treenode *new)
 {
-	if (!node)
+	int	pass;
+
+	pass = 1;
+	if (!node || node->tree_done)
 		return ;
 	if (!node->and_branch)
 	{
 		node->and_branch = new;
-		new->ref_count++;
 		pass = 0;
 	}
-	if (!node->or_branch)
-		return ;
-	recursive_add_right(node->or_branch, new, 1);
+	recursive_add_right(node->or_branch, new);
 	if (pass)
-		recursive_add_right(node->and_branch, new, 1);
+		recursive_add_right(node->and_branch, new);
+	node->tree_done = 1;
 }
 
 void	ft_treeadd_right(t_treenode **node, t_treenode *new)
@@ -23,7 +24,9 @@ void	ft_treeadd_right(t_treenode **node, t_treenode *new)
 		*node = new;
 	else
 	{
-		new->ref_count = 0;
-		recursive_add_right(*node, new, 1);
+		ft_treereset_depth(*node);
+		new->depth = 0;
+		recursive_add_right(*node, new);
+		ft_treeset_depth(*node);
 	}
 }

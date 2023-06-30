@@ -53,7 +53,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
 ifdef DEBUG
-	CFLAGS += -fsanitize=address -g3
+	CFLAGS += -fsanitize=address -g
 endif
 
 HEADER_PATH = ./inc/

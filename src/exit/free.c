@@ -25,7 +25,7 @@ void	free_node(t_treenode **node)
 		return ;
 	free_node(&(*node)->and_branch);
 	free_node(&(*node)->or_branch);
-	if ((*node)->ref_count == 1)
+	if ((*node)->depth == 1)
 	{
 		if ((*node)->cmd->fdin != STDIN_FILENO && (*node)->cmd->fdin != -1)
 			close((*node)->cmd->fdin);
@@ -39,7 +39,7 @@ void	free_node(t_treenode **node)
 		*node = NULL;
 	}
 	else
-		(*node)->ref_count--;
+		(*node)->depth--;
 }
 
 void	free_tree(t_treenode **tree)

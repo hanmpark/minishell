@@ -67,13 +67,13 @@ t_treenode	**get_cmdtable(t_token *l_token)
 	nb_pipeline = count_pipeline(l_token);
 	cmdtable = ft_calloc(nb_pipeline + 1, sizeof(t_treenode *));
 	if (!cmdtable)
-		error_exit(NULL, &l_token, "malloc");
+		error_exit(NULL, &g_ms.l_token, "malloc");
 	i = 0;
 	while (l_token && i < nb_pipeline)
 	{
 		cmdtable[i] = get_table(l_token);
 		if (!cmdtable[i])
-			error_exit(cmdtable, &l_token, "malloc");
+			error_exit(cmdtable, &g_ms.l_token, "malloc");
 		l_token = next_pipeline(l_token);
 		i++;
 	}

@@ -8,7 +8,8 @@ t_treenode	*ft_treenew(t_cmd *cmd)
 	node = malloc(sizeof(t_treenode));
 	if (!node)
 		return (NULL);
-	node->ref_count = 1;
+	node->depth = 1;
+	node->tree_done = 0;
 	node->cmd = cmd;
 	node->or_branch = NULL;
 	node->and_branch = NULL;

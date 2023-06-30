@@ -12,6 +12,22 @@ static void	print_tabs(int numtabs)
 	}
 }
 
+static void	print_command(char **args)
+{
+	int	i;
+
+	if (!args)
+		return ;
+	printf("command = ");
+	i = 0;
+	while (args[i])
+	{
+		printf("[%s] ", args[i]);
+		i++;
+	}
+	printf("\n");
+}
+
 void	print_tree_rec(t_treenode *node, int level)
 {
 	if (node == NULL)
@@ -22,9 +38,11 @@ void	print_tree_rec(t_treenode *node, int level)
 	}
 	print_tabs(level);
 	if (node->cmd->args)
-		printf("command = %s\n", node->cmd->args[0]);
+		print_command(node->cmd->args);
 	else
 		printf("command = NULL\n");
+	print_tabs(level);
+	printf("depth = %d\n", node->depth);
 	print_tabs(level);
 	printf("fdin = %d\n", node->cmd->fdin);
 	print_tabs(level);
