@@ -64,7 +64,7 @@ static t_treenode	*get_table(t_token **l_token)
 		if (is_cmdsep(add_mode))
 			*l_token = (*l_token)->next;
 		cmd = get_cmd(l_token);
-		if (!cmd) // malloc problem
+		if (!cmd)
 		{
 			free_node(&table);
 			return (NULL);
@@ -76,7 +76,8 @@ static t_treenode	*get_table(t_token **l_token)
 
 /* Get the command table for the execution part:
 * - treats redirections for commands
-* - creates a tree node for each pipeline
+* - creates a binary tree for each pipeline
+* - expand the tokens
 */
 t_treenode	**get_cmdtable(t_token *l_token)
 {

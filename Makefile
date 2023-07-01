@@ -19,14 +19,12 @@ SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c \
 											print_debug.c}
 
 LEXER_PATH = ${PARSING_PATH}lexer/
-SRC_LEXER = ${addprefix ${LEXER_PATH}, lexer.c \
-										tokenize.c \
+SRC_LEXER = ${addprefix ${LEXER_PATH}, tokenize.c \
 										tokenize_string.c \
 										is_type.c}
 
 PARSER_PATH = ${PARSING_PATH}parser/
-SRC_PARSER = ${addprefix ${PARSER_PATH}, parser.c \
-											order.c \
+SRC_PARSER = ${addprefix ${PARSER_PATH}, order.c \
 											parentheses.c \
 											filedescriptor.c \
 											get_cmdtable.c \

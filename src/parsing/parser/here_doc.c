@@ -24,6 +24,10 @@ static void	check_doc(char *limiter, int *pfd)
 	exit(EXIT_SUCCESS);
 }
 
+/* Here document which is symbolised by the '<<' token
+* - creates a new process to write the input into a pipe
+* - waits for user's input until the limiter is found
+*/
 int	here_doc(char *limiter)
 {
 	int	pfd[2];

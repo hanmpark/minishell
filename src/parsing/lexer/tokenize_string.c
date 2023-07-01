@@ -47,6 +47,11 @@ static char	*get_string(t_lex *lex, char *str, char *line)
 	return (final_str);
 }
 
+/* When a quote is spotted in the line, as long as it is not separated
+* by another separator, take the whole string in the same token.
+*
+* eg: hello'wor'"ld" is in the same token
+*/
 char	*tokenize_string(t_lex *lex, char *str, char *line)
 {
 	lex->last = lex->cur;

@@ -7,6 +7,7 @@ typedef struct	s_token
 {
 	char			*token;
 	int				type;
+	unsigned int	parenthese;
 	struct s_token	*next;
 }	t_token;
 
@@ -21,7 +22,7 @@ typedef struct	s_cmd
 
 typedef struct	s_treenode
 {
-	int					depth;
+	unsigned int		depth;
 	int					initialized;
 	struct s_cmd		*cmd;
 	struct s_treenode	*or_branch;

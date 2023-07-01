@@ -63,7 +63,7 @@ static bool	join_sep(t_token **l_token, t_lex *lex, char *line, char *join)
 * variables
 * - returns false if the second quotation mark is not found
 */
-bool	tokenize(t_token **l_token, t_lex *lex, char *line)
+static bool	separate_token(t_token **l_token, t_lex *lex, char *line)
 {
 	char	*token;
 
@@ -79,5 +79,22 @@ bool	tokenize(t_token **l_token, t_lex *lex, char *line)
 	else if (!*token)
 		free(token);
 	skip_sep(l_token, lex, line);
+	return (true);
+}
+
+/* Separate tokens:
+* - reads each character and tokenize them by their type
+* - the line is split with the separators
+*/
+bool	tokenize(t_lex *lex, char *line)
+{
+	lex->type = is_separator(line + lex->cur);
+	if (lex->type != WORD || !line[lex->cur])
+	{
+		if (!separate_token(&lex->l_token, lex, line))
+			return (false);
+	}
+	else
+		lex->cur++;
 	return (true);
 }

@@ -1,6 +1,9 @@
 #include "minishell.h"
 #include "parsing.h"
 
+/* In the given string, checks if the following characters match with
+* one of the following undefined token that minishell does not have to handle.
+*/
 int	is_undefined(char *str)
 {
 	static t_sep	undefined[] = {{"&>>", 3}, {"<<-", 3}, {"<<<", 3}, \
@@ -15,6 +18,9 @@ int	is_undefined(char *str)
 	return (0);
 }
 
+/* In the given string, checks if the following characters match with
+* one of the following separators.
+*/
 t_type	is_separator(char *str)
 {
 	static t_sep	sep[] = {{"<<", 2}, {">>", 2}, {"||", 2}, {"&&", 2}, \

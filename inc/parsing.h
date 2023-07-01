@@ -21,8 +21,7 @@ typedef struct	s_lexer
 
 t_treenode	**parsing(void);
 
-t_token		*lexer(char *line);
-bool		tokenize(t_token **l_token, t_lex *lex, char *line);
+bool		tokenize(t_lex *lex, char *line);
 char		*tokenize_string(t_lex *lex, char *str, char *line);
 
 t_type		is_separator(char *str);
@@ -31,7 +30,6 @@ bool		is_redir(t_type type);
 bool		is_cmdsep(t_type type);
 bool		is_par(t_type type);
 
-t_treenode	**parser(t_token *l_token);
 bool		check_order(t_token *l_token);
 bool		check_parentheses(t_token *l_token);
 t_treenode	**get_cmdtable(t_token *l_token);
