@@ -1,6 +1,7 @@
-#include "listft.h"
+#include "structft.h"
 #include <stdlib.h>
 
+// Creates a new node for the tree
 t_treenode	*ft_treenew(t_cmd *cmd)
 {
 	t_treenode	*node;

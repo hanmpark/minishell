@@ -1,4 +1,4 @@
-#include "listft.h"
+#include "structft.h"
 #include <stdlib.h>
 
 // Returns the last element of a linked list.

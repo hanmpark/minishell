@@ -1,5 +1,6 @@
-#include "listft.h"
+#include "structft.h"
 
+// Counts how many times it has to pass in a node to run through the whole tree
 void	ft_treeset_depth(t_treenode *node)
 {
 	if (!node)

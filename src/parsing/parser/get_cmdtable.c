@@ -3,18 +3,40 @@
 #include "parsing.h"
 #include "error.h"
 
-static int	count_pipeline(t_token	*l_token)
+static char	**get_cmdargs(t_token **cur)
 {
-	int	nbr;
+	char	**args;
 
-	nbr = 0;
-	while (l_token)
+	args = NULL;
+	while (*cur && !is_redir((*cur)->type) && !is_cmdsep((*cur)->type))
 	{
-		if (l_token->type == PIPE)
-			nbr++;
-		l_token = l_token->next;
+		if (!args)
+			args = expand_cmd(ft_strdup((*cur)->token));
+		else
+			args = ft_arrayadd(args, expand_arg(ft_strdup((*cur)->token)));
+		*cur = (*cur)->next;
 	}
-	return (nbr + 1);
+	return (args);
+}
+
+static t_cmd	*get_cmd(t_token **l_token)
+{
+	t_cmd	*cmd;
+
+	cmd = ft_cmdnew();
+	if (!cmd)
+		return (NULL);
+	while (*l_token && !is_cmdsep((*l_token)->type))
+	{
+		if (is_redir((*l_token)->type))
+		{
+			if (!treat_redir(cmd, l_token, (*l_token)->type))
+				return (cmd);
+		}
+		else
+			cmd->args = get_cmdargs(l_token);
+	}
+	return (cmd);
 }
 
 static void	add_node(t_treenode **node, t_treenode *add, t_type add_mode)
@@ -27,8 +49,7 @@ static void	add_node(t_treenode **node, t_treenode *add, t_type add_mode)
 		*node = add;
 }
 
-// Get a pipeline 
-static t_treenode	*get_table(t_token *l_token)
+static t_treenode	*get_table(t_token **l_token)
 {
 	t_treenode	*table;
 	t_cmd		*cmd;
@@ -36,12 +57,12 @@ static t_treenode	*get_table(t_token *l_token)
 
 	// check_redir if parentheses
 	table = NULL;
-	while (l_token && l_token->type != PIPE)
+	while (*l_token && (*l_token)->type != PIPE)
 	{
 		cmd = NULL;
-		add_mode = l_token->type;
+		add_mode = (*l_token)->type;
 		if (is_cmdsep(add_mode))
-			l_token = l_token->next;
+			*l_token = (*l_token)->next;
 		cmd = get_cmd(l_token);
 		if (!cmd) // malloc problem
 		{
@@ -49,7 +70,6 @@ static t_treenode	*get_table(t_token *l_token)
 			return (NULL);
 		}
 		add_node(&table, ft_treenew(cmd), add_mode);
-		l_token = next_cmd(l_token);
 	}
 	return (table);
 }
@@ -60,21 +80,22 @@ static t_treenode	*get_table(t_token *l_token)
 */
 t_treenode	**get_cmdtable(t_token *l_token)
 {
-	t_treenode	**cmdtable;
-	int			nb_pipeline;
-	int			i;
+	t_treenode		**cmdtable;
+	unsigned int	nb_pipeline;
+	unsigned int	i;
 
-	nb_pipeline = count_pipeline(l_token);
+	nb_pipeline = ft_count_pipeline(l_token);
 	cmdtable = ft_calloc(nb_pipeline + 1, sizeof(t_treenode *));
 	if (!cmdtable)
 		error_exit(NULL, &g_ms.l_token, "malloc");
 	i = 0;
 	while (l_token && i < nb_pipeline)
 	{
-		cmdtable[i] = get_table(l_token);
+		cmdtable[i] = get_table(&l_token);
 		if (!cmdtable[i])
 			error_exit(cmdtable, &g_ms.l_token, "malloc");
-		l_token = next_pipeline(l_token);
+		if (l_token)
+			l_token = l_token->next;
 		i++;
 	}
 	return (cmdtable);

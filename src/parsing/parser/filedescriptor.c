@@ -71,22 +71,23 @@ static bool	check_filename(char *filename)
 * - treats here_doc
 * - open the file(s)
 */
-bool	treat_redir(t_cmd *cmd, t_token *l_token, t_type type)
+bool	treat_redir(t_cmd *cmd, t_token **l_token, t_type type)
 {
-	reset_fd(cmd, l_token);
-	l_token = l_token->next;
-	if (!check_filename(l_token->token))
+	reset_fd(cmd, *l_token);
+	*l_token = (*l_token)->next;
+	if (!check_filename((*l_token)->token))
 		return (false);
-	l_token->token = expand_arg(l_token->token);
+	(*l_token)->token = expand_arg((*l_token)->token);
 	if (type == LESS)
-		cmd->fdin = open_file(l_token->token, READ);
+		cmd->fdin = open_file((*l_token)->token, READ);
 	else if (type == DLESS)
-		cmd->fdin = here_doc(l_token->token);
+		cmd->fdin = here_doc((*l_token)->token);
 	else if (type == GREAT)
-		cmd->fdout = open_file(l_token->token, TRUNC);
+		cmd->fdout = open_file((*l_token)->token, TRUNC);
 	else if (type == DGREAT)
-		cmd->fdout = open_file(l_token->token, APPEND);
+		cmd->fdout = open_file((*l_token)->token, APPEND);
 	if (cmd->fdin == -1 || cmd->fdout == -1)
-		return (error_expand(l_token->token, ERR_ENOENT, 1));
+		return (error_expand((*l_token)->token, ERR_ENOENT, 1));
+	*l_token = (*l_token)->next;
 	return (true);
 }

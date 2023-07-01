@@ -1,4 +1,4 @@
-#include "listft.h"
+#include "structft.h"
 #include <stdlib.h>
 
 // Deletes and frees all the nodes in a linked list.

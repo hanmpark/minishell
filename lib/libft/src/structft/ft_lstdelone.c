@@ -1,4 +1,4 @@
-#include "listft.h"
+#include "structft.h"
 #include <stdlib.h>
 
 // Deletes a single node from a linked list.

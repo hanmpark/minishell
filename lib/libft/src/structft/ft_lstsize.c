@@ -1,4 +1,4 @@
-#include "listft.h"
+#include "structft.h"
 
 // Counts the number of elements in a linked list.
 int	ft_lstsize(t_token *lst)

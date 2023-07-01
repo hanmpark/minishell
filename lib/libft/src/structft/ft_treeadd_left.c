@@ -1,4 +1,4 @@
-#include "listft.h"
+#include "structft.h"
 
 static void	recursive_add_left(t_treenode *node, t_treenode *new)
 {
@@ -18,6 +18,7 @@ static void	recursive_add_left(t_treenode *node, t_treenode *new)
 	node->initialized = 1;
 }
 
+// Adds a new node in each node's or_branch
 void	ft_treeadd_left(t_treenode **node, t_treenode *new)
 {
 	if (!*node)

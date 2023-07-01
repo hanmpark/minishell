@@ -30,9 +30,7 @@ SRC_PARSER = ${addprefix ${PARSER_PATH}, parser.c \
 											parentheses.c \
 											filedescriptor.c \
 											get_cmdtable.c \
-											get_cmd.c \
-											here_doc.c \
-											next_token.c}
+											here_doc.c}
 
 EXPANDER_PATH = ${PARSING_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c \

@@ -49,8 +49,8 @@ SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
 										ft_strisdigit.c \
 										ft_foundspace.c}
 
-LISTFT_PATH = ./src/listft/
-SRCS_LISTFT = ${addprefix ${LISTFT_PATH}, ft_lstadd_back.c \
+STRUCTFT_PATH = ./src/structft/
+SRCS_STRUCTFT = ${addprefix ${STRUCTFT_PATH}, ft_lstadd_back.c \
 											ft_lstadd_front.c \
 											ft_lstclear.c \
 											ft_lstdelone.c \
@@ -62,7 +62,9 @@ SRCS_LISTFT = ${addprefix ${LISTFT_PATH}, ft_lstadd_back.c \
 											ft_treeadd_left.c \
 											ft_treeadd_right.c \
 											ft_treereset.c \
-											ft_treeset_depth.c}
+											ft_treeset_depth.c \
+											ft_cmdnew.c \
+											ft_count_pipeline.c}
 
 MEMFT_PATH = ./src/memft/
 SRCS_MEMFT = ${addprefix ${MEMFT_PATH}, ft_bzero.c \
@@ -94,8 +96,8 @@ GNL_PATH = ./src/get_next_line/
 SRCS_GNL = ${addprefix ${GNL_PATH}, get_next_line_utils.c \
 									get_next_line.c}
 
-SRCS =	${SRCS_CHARFT} ${SRCS_ISFT} ${SRCS_LISTFT} ${SRCS_MEMFT} ${SRCS_PUTFT} ${SRCS_PRINTF} ${SRCS_GNL}
-OBJS =	${SRCS:.c=.o}
+SRCS = ${SRCS_CHARFT} ${SRCS_ISFT} ${SRCS_STRUCTFT} ${SRCS_MEMFT} ${SRCS_PUTFT} ${SRCS_PRINTF} ${SRCS_GNL}
+OBJS = ${SRCS:.c=.o}
 
 # --------------------------------- COMPILER --------------------------------- #
 CC = gcc

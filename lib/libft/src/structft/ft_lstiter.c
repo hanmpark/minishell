@@ -1,4 +1,4 @@
-#include "listft.h"
+#include "structft.h"
 
 // Applies a function to each element of a linked list.
 void	ft_lstiter(t_token *lst, void (*f)(void *))

@@ -1,4 +1,4 @@
-#include "listft.h"
+#include "structft.h"
 
 // Adds a new node at the beginning of a linked list.
 void	ft_lstadd_front(t_token **lst, t_token *new)

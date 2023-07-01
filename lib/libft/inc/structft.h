@@ -1,5 +1,5 @@
-#ifndef LISTFT_H
-# define LISTFT_H
+#ifndef STRUCTFT_H
+# define STRUCTFT_H
 
 # include <stdbool.h>
 
@@ -40,10 +40,13 @@ void		ft_lstclear(t_token **lst, void (*del)(void *));
 void		ft_lstiter(t_token *lst, void (*f)(void *));
 
 /* BINARY TREE MANIPULATION */
-t_treenode	*ft_treenew(t_cmd *cmd);
-void		ft_treeadd_left(t_treenode **node, t_treenode *new);
-void		ft_treeadd_right(t_treenode **node, t_treenode *new);
-void		ft_treereset(t_treenode *node);
-void		ft_treeset_depth(t_treenode *node);
+
+t_treenode		*ft_treenew(t_cmd *cmd);
+void			ft_treeadd_left(t_treenode **node, t_treenode *new);
+void			ft_treeadd_right(t_treenode **node, t_treenode *new);
+void			ft_treereset(t_treenode *node);
+void			ft_treeset_depth(t_treenode *node);
+t_cmd			*ft_cmdnew(void);
+unsigned int	ft_count_pipeline(t_token *l_token);
 
 #endif
