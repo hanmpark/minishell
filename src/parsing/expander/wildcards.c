@@ -25,7 +25,7 @@ static char	**init_entry()
 	return (files);
 }
 
-static int	count_cmp(char *pattern)
+static int	count_cmp(const char *pattern)
 {
 	int	len;
 
@@ -35,47 +35,87 @@ static int	count_cmp(char *pattern)
 	return (len);
 }
 
-static bool	runthrough(char *file, const char *pattern, int *i, int frontend)
+static int	check_frontend(t_wc *wc, const char *pattern)
 {
-	int	cmplen;
+	int	tmp;
 
-	cmplen = count_cmp(pattern);
-	if (!frontend)
-		if (!ft_strncmp(file + *i, pattern, cmplen))
-			return (true);
-	if (frontend == 1)
+	tmp = wc->i;
+	while (pattern[tmp] && pattern[tmp] != '*')
+		tmp++;
+	if (!pattern[tmp])
 	{
-		while (file[*i])
+		wc->i = tmp;
+		return (END);
+	}
+	else if (pattern[wc->i] && pattern[wc->i] == '*')
+	{
+		while (pattern[wc->i] && pattern[wc->i] == '*')
+			wc->i++;
+		return (FRONT);
+	}
+	else
+		return (NORM);
+}
+
+static bool	cmp_pattern(t_wc *wc, char *file, const char *pattern)
+{
+	if (wc->frontend == NORM)
+	{
+		if (!ft_strncmp(file + wc->j, pattern + wc->i, wc->cmplen))
 		{
-			if (!ft_strncmp(file + *i, pattern, cmplen))
+			wc->j += wc->cmplen;
+			return (true);
+		}
+	}
+	else if (wc->frontend == FRONT)
+	{
+		while (file[wc->j])
+		{
+			if (!ft_strncmp(file + wc->j, pattern + wc->i, wc->cmplen))
+			{
+				wc->j += wc->cmplen;
 				return (true);
-			*i++;
+			}
+			wc->j++;
+		}
+	}
+	else if (wc->frontend == END)
+	{
+		while (file[wc->j] && wc->j < (int)ft_strlen(file) - wc->cmplen)
+			wc->j++;
+		if (!ft_strncmp(file + wc->j, pattern + wc->i, wc->cmplen))
+		{
+			wc->j += wc->cmplen;
+			return (true);
 		}
 	}
 	return (false);
 }
 
+static void	init_wc(t_wc *wc)
+{
+	wc->cmplen = 0;
+	wc->frontend = 0;
+	wc->i = 0;
+	wc->j = 0;
+}
+
 static bool	check_pattern(char *file, const char *pattern)
 {
-	int	frontend;
-	int	i;
-	int	j;
+	t_wc	wc;
 
-	frontend = 0;
-	i = 0;
-	j = 0;
-	while (pattern[j])
+	init_wc(&wc);
+	while (pattern[wc.i])
 	{
-		if (pattern[j] == '*')
-		{
-			frontend = 1;
-			j++;
-		}
-		else if (!runthrough(file, pattern + j, &i, frontend))
+		wc.frontend = check_frontend(&wc, pattern);
+		if (!pattern[wc.i])
 			return (true);
-		j += count_cmp(pattern + j);
+		wc.cmplen = count_cmp(pattern + wc.i);
+		if (!cmp_pattern(&wc, file, pattern))
+			return (false);
+		wc.i += wc.cmplen;
 	}
-	return (false);
+	return (true);
 }
 
 static char	**find_pattern(char **files, const char *pattern)
