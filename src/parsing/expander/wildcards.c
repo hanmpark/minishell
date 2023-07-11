@@ -25,53 +25,57 @@ static char	**init_entry()
 	return (files);
 }
 
-static size_t	count_cmp(const char *pattern)
+static int	count_cmp(char *pattern)
 {
-	size_t	cmplen;
+	int	len;
 
-	cmplen = 0;
-	while (pattern[cmplen] && pattern[cmplen] != '*')
-		cmplen++;
-	return (cmplen);
+	len = 0;
+	while (pattern[len] && pattern[len] != '*')
+		len++;
+	return (len);
 }
 
-static bool	runthrough(char *file, const char *pattern, int *i, size_t cmplen)
+static bool	runthrough(char *file, const char *pattern, int *i, int frontend)
 {
-	bool	check;
+	int	cmplen;
 
-	check = true;
-	while (file[*i])
+	cmplen = count_cmp(pattern);
+	if (!frontend)
+		if (!ft_strncmp(file + *i, pattern, cmplen))
+			return (true);
+	if (frontend == 1)
 	{
-		if (ft_strncmp(file + *i, pattern, cmplen))
-			check = false;
-		if (check)
-			break ;
-		(*i)++;
+		while (file[*i])
+		{
+			if (!ft_strncmp(file + *i, pattern, cmplen))
+				return (true);
+			*i++;
+		}
 	}
-	return (check);
+	return (false);
 }
 
 static bool	check_pattern(char *file, const char *pattern)
 {
-	size_t	cmplen;
-	bool	check;
-	int		i;
-	int		j;
+	int	frontend;
+	int	i;
+	int	j;
 
+	frontend = 0;
 	i = 0;
 	j = 0;
-	check = true;
-	while (check && file[i] && pattern[j])
+	while (pattern[j])
 	{
-		cmplen = count_cmp(pattern + j);
-		while (pattern[j] && pattern[j] == '*')
+		if (pattern[j] == '*')
+		{
+			frontend = 1;
 			j++;
-		if (!pattern[j])
-			break ;
-		check = runthrough(file, pattern + j, &i, cmplen);
-		j += (int)cmplen;
+		}
+		else if (!runthrough(file, pattern + j, &i, frontend))
+			return (true);
+		j += count_cmp(pattern + j);
 	}
-	return (check);
+	return (false);
 }
 
 static char	**find_pattern(char **files, const char *pattern)
