@@ -1,24 +1,26 @@
 #include "minishell.h"
 #include "expander.h"
 
-static char	**join_quote(char **join, char *line, int *cur)
+static char	**join_quotes(char **join, char *line, int *cur)
 {
-	char	*str;
+	char	*str_quote;
 	char	*last_element;
 	int		len;
 
 	len = ft_arraylen(join);
+	if (!len)
+		join = ft_arrayadd(join, ft_strdup(""));
 	if (len > 0)
 		len--;
-	str = quote_str(line, cur);
+	str_quote = get_quotestr(line, cur);
 	if (!join[len])
 		last_element = ft_strdup("");
 	else
 		last_element = ft_strdup(join[len]);
 	free(join[len]);
-	join[len] = ft_strjoin(last_element, str);
+	join[len] = ft_strjoin(last_element, str_quote);
 	free(last_element);
-	free(str);
+	free(str_quote);
 	return (join);
 }
 
@@ -29,7 +31,7 @@ static char	**join_args(char **join, char *line, int *cur)
 
 	tmp = NULL;
 	if (line[*cur] == '\'' || line[*cur] == '"')
-		new_ar = join_quote(join, line, cur);
+		new_ar = join_quotes(join, line, cur);
 	else
 	{
 		tmp = word_str(line, cur);

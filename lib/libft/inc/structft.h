@@ -7,17 +7,18 @@ typedef struct	s_token
 {
 	char			*token;
 	int				type;
-	unsigned int	parenthese;
 	struct s_token	*next;
 }	t_token;
 
 typedef struct	s_cmd
 {
-	char	**args;
-	int		redir_in;
-	int		redir_out;
-	int		fdin;
-	int		fdout;
+	char			**args;
+	int				redir_in;
+	int				redir_out;
+	int				fdin;
+	int				fdout;
+	unsigned int	par_id;
+	int				par_last;
 }	t_cmd;
 
 typedef struct	s_treenode

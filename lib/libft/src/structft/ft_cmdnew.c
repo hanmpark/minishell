@@ -14,5 +14,7 @@ t_cmd	*ft_cmdnew(void)
 	cmd->redir_out = -1;
 	cmd->fdin = 0;
 	cmd->fdout = 1;
+	cmd->par_id = 0;
+	cmd->par_last = 0;
 	return (cmd);
 }

@@ -17,7 +17,7 @@ static char	*join_quotes(char *join, char *line, int *cur)
 	char	*add_token;
 
 	if (line[*cur] == '\'' || line[*cur] == '"')
-		str = quote_str(line, cur);
+		str = get_quotestr(line, cur);
 	else
 		str = word_str(line, cur);
 	add_token = ft_strjoin(join, str);

@@ -9,12 +9,11 @@
 // the tokens are then passed to the parser
 // the parser will check if the tokens are in the right order
 
-/* UPDATE (hanmin):
-* - ~ has to print the value of $HOME only if it's not a string and alone
-* - instead of doing part of the expander's job in the lexer
-* do it after the parser
-* - when doing the expander don't forget to treat the '*'
-* - don't forget about the error code !!!!
+/* UPDATE HANMIN:
+* Our minishell does not treat the following case
+* bash-3.2$ cat << EOF &&& echo haha
+* bash-3.2$ bash: syntax error near unexpected token `&'
+* bash-3.2$ EOF
 */
 
 /* Parser part:

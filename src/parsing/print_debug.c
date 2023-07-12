@@ -23,6 +23,7 @@ static void	print_command(char **args)
 	while (args[i])
 	{
 		printf("[%s] ", args[i]);
+		fflush(stdout);
 		i++;
 	}
 	printf("\n");
@@ -51,6 +52,8 @@ void	print_tree_rec(t_treenode *node, int level)
 	printf("redir_in = %d\n", node->cmd->redir_in);
 	print_tabs(level);
 	printf("redir_out = %d\n", node->cmd->redir_out);
+	print_tabs(level);
+	printf("parenthese_id = %d\n", node->cmd->par_id);
 	print_tabs(level);
 	printf("left\n");
 

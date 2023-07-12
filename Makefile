@@ -34,8 +34,7 @@ EXPANDER_PATH = ${PARSING_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c \
 												expand_tools.c \
 												expand_arg.c \
-												expand_cmd.c \
-												wildcards.c}
+												expand_cmd.c}
 
 EXIT_PATH = ${SRC_PATH}exit/
 SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \

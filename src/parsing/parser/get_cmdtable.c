@@ -10,14 +10,35 @@ static char	**get_cmdargs(t_token **cur)
 	args = NULL;
 	while (*cur && !is_redir((*cur)->type) && !is_cmdsep((*cur)->type))
 	{
-		if (!args)
+		if (!args && !is_par((*cur)->type))
 			args = expand_cmd(ft_strdup((*cur)->token));
-		else
+		else if (!is_par((*cur)->type))
 			args = ft_arrayadd(args, expand_arg(ft_strdup((*cur)->token)));
 		*cur = (*cur)->next;
 	}
 	return (args);
 }
+
+/*
+t_parfd	find_parfd(t_token *l_token)
+{
+	t_parfd	parfd;
+
+	parfd.redir_in = -1;
+	parfd.redir_out = -1;
+	parfd.fdin = FILENO_STDIN;
+	parfd.fdout = FILENO_STDOUT;
+	while (l_token && l_token->par_id > 0)
+		l_token = l_token->next;
+	if (l_token && is_redir(l_token->type))
+	{
+		l_token = l_token->next;
+		if (!check_filename(l_token->token))
+			return (NULL);
+		l_token->token = expand_arg(l_token->token);
+	}
+}
+*/
 
 static t_cmd	*get_cmd(t_token **l_token)
 {
@@ -26,6 +47,9 @@ static t_cmd	*get_cmd(t_token **l_token)
 	cmd = ft_cmdnew();
 	if (!cmd)
 		return (NULL);
+	if ((*l_token)->type == LPAR)
+		// do something...
+		// find if there is a common fdout / fdin
 	while (*l_token && !is_cmdsep((*l_token)->type))
 	{
 		if (is_redir((*l_token)->type))
@@ -55,7 +79,6 @@ static t_treenode	*get_table(t_token **l_token)
 	t_cmd		*cmd;
 	t_type		add_mode;
 
-	// check_redir if parentheses
 	table = NULL;
 	while (*l_token && (*l_token)->type != PIPE)
 	{
