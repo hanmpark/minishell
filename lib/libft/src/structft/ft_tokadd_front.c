@@ -1,7 +1,7 @@
 #include "structft.h"
 
 // Adds a new node at the beginning of a linked list.
-void	ft_lstadd_front(t_token **lst, t_token *new)
+void	ft_tokadd_front(t_token **lst, t_token *new)
 {
 	if (*lst)
 	{

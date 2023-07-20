@@ -33,7 +33,7 @@ bool	error_parsing(char *msg)
 	return (false);
 }
 
-void	error_exit(t_treenode **tree, t_token **l_token, char *msg)
+void	error_exit(t_treenode *tree, t_token **l_token, char *msg)
 {
 	perror(msg);
 	if (tree)

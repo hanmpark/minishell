@@ -23,7 +23,8 @@ int	main(int argc, char **argv, char **envp)
 		if (*g_ms.line)
 		{
 			add_history(g_ms.line);
-			g_ms.node = parsing();
+			g_ms.node = parsing(g_ms.line);
+			execution(g_ms.node);
 		}
 		if (g_ms.l_token)
 			free_tokens(&g_ms.l_token);

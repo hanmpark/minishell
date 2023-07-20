@@ -24,11 +24,14 @@ SRC_LEXER = ${addprefix ${LEXER_PATH}, tokenize.c \
 										is_type.c}
 
 PARSER_PATH = ${PARSING_PATH}parser/
-SRC_PARSER = ${addprefix ${PARSER_PATH}, order.c \
-											parentheses.c \
-											filedescriptor.c \
+SRC_PARSER = ${addprefix ${PARSER_PATH}, check_order.c \
+											parenthese.c \
+											redirection.c \
 											get_cmdtable.c \
 											here_doc.c}
+
+EXEC_PATH = ${SRC_PATH}execution/
+SRC_EXEC = ${addprefix ${EXEC_PATH}, execution.c}
 
 EXPANDER_PATH = ${PARSING_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c \

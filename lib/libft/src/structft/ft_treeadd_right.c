@@ -26,8 +26,6 @@ void	ft_treeadd_right(t_treenode **node, t_treenode *new)
 	else
 	{
 		ft_treereset(*node);
-		new->depth = 0;
 		recursive_add_right(*node, new);
-		ft_treeset_depth(*node);
 	}
 }

@@ -19,7 +19,7 @@ typedef struct	s_lexer
 	int			last;
 }	t_lex;
 
-t_treenode	**parsing(void);
+t_treenode	*parsing(char *line);
 
 bool		tokenize(t_lex *lex, char *line);
 char		*tokenize_string(t_lex *lex, char *str, char *line);
@@ -32,8 +32,8 @@ bool		is_par(t_type type);
 
 bool		check_order(t_token *l_token);
 bool		check_parentheses(t_token *l_token);
-t_treenode	**get_cmdtable(t_token *l_token);
-bool		treat_redir(t_cmd *cmd, t_token **l_token, t_type type);
+t_treenode	*get_cmdtable(t_token *l_token);
+bool		treat_redir(t_cmd *cmd, t_token **l_token);
 int			here_doc(char *limiter);
 
 #endif

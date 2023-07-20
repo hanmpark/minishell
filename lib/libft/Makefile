@@ -50,21 +50,18 @@ SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
 										ft_foundspace.c}
 
 STRUCTFT_PATH = ./src/structft/
-SRCS_STRUCTFT = ${addprefix ${STRUCTFT_PATH}, ft_lstadd_back.c \
-											ft_lstadd_front.c \
-											ft_lstclear.c \
-											ft_lstdelone.c \
-											ft_lstiter.c \
-											ft_lstlast.c \
-											ft_lstnew.c \
-											ft_lstsize.c \
+SRCS_STRUCTFT = ${addprefix ${STRUCTFT_PATH}, ft_tokadd_back.c \
+											ft_tokadd_front.c \
+											ft_toklast.c \
+											ft_toknew.c \
 											ft_treenew.c \
 											ft_treeadd_left.c \
 											ft_treeadd_right.c \
 											ft_treereset.c \
-											ft_treeset_depth.c \
+											ft_treeset_cycles.c \
 											ft_cmdnew.c \
-											ft_count_pipeline.c}
+											ft_countpipe.c \
+											ft_addnode.c}
 
 MEMFT_PATH = ./src/memft/
 SRCS_MEMFT = ${addprefix ${MEMFT_PATH}, ft_bzero.c \

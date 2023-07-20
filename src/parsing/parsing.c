@@ -20,9 +20,9 @@
 * Check the format of the line and creates binary tree(s) of command(s)
 * for better execution flow in the execution part.
 */
-static t_treenode	**parser(t_token *l_token)
+static t_treenode	*parser(t_token *l_token)
 {
-	t_treenode	**cmdtable;
+	t_treenode	*cmdtable;
 
 	cmdtable = NULL;
 	if (!check_order(l_token) || !check_parentheses(l_token))
@@ -62,12 +62,12 @@ static t_token	*lexer(char *line)
 * - deals with redirections
 * - creates the binary tree (or not if it is a simple command line)
 */
-t_treenode	**parsing(void)
+t_treenode	*parsing(char *line)
 {
-	t_treenode	**cmdtable;
+	t_treenode	*cmdtable;
 
 	cmdtable = NULL;
-	g_ms.l_token = lexer(g_ms.line);
+	g_ms.l_token = lexer(line);
 	if (!g_ms.l_token)
 		return (NULL);
 	print_tokens(g_ms.l_token);

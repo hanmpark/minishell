@@ -35,7 +35,7 @@ typedef enum	e_type
 typedef struct	s_minishell
 {
 	char				*line;
-	struct s_treenode	**node;
+	struct s_treenode	*node;
 	struct s_token		*l_token;
 	int					return_value;
 }	t_minishell;
@@ -46,7 +46,7 @@ char	*treat_env(char *cmd_line);
 void	free_tokens(t_token **l_token);
 
 // only for debugging purpose
-void	print_tree(t_treenode **node);
+void	print_tree(t_treenode *node);
 void	print_tokens(t_token *l_token);
 
 /* BUILTIN COMMANDS (kiki) */

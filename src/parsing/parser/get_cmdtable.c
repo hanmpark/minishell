@@ -3,15 +3,20 @@
 #include "parsing.h"
 #include "error.h"
 
-static char	**get_cmdargs(t_token **cur)
+static char	**get_cmdargs(t_token **cur, int *par_id)
 {
 	char	**args;
 
 	args = NULL;
+	if (*cur && (*cur)->type == PIPE)
+		*cur = (*cur)->next;
 	while (*cur && !is_redir((*cur)->type) && !is_cmdsep((*cur)->type))
 	{
 		if (!args && !is_par((*cur)->type))
+		{
 			args = expand_cmd(ft_strdup((*cur)->token));
+			*par_id = (*cur)->par_id;
+		}
 		else if (!is_par((*cur)->type))
 			args = ft_arrayadd(args, expand_arg(ft_strdup((*cur)->token)));
 		*cur = (*cur)->next;
@@ -19,81 +24,62 @@ static char	**get_cmdargs(t_token **cur)
 	return (args);
 }
 
-/*
-t_parfd	find_parfd(t_token *l_token)
+static bool	get_cmdline(t_token **l_tok, t_treenode *node, t_cmd *cmdline)
 {
-	t_parfd	parfd;
-
-	parfd.redir_in = -1;
-	parfd.redir_out = -1;
-	parfd.fdin = FILENO_STDIN;
-	parfd.fdout = FILENO_STDOUT;
-	while (l_token && l_token->par_id > 0)
-		l_token = l_token->next;
-	if (l_token && is_redir(l_token->type))
+	if (is_redir((*l_tok)->type))
 	{
-		l_token = l_token->next;
-		if (!check_filename(l_token->token))
-			return (NULL);
-		l_token->token = expand_arg(l_token->token);
+		node->par_id = (*l_tok)->par_id;
+		if (!treat_redir(cmdline, l_tok))
+			return (false);
 	}
+	else
+		cmdline->args = get_cmdargs(l_tok, &node->par_id);
+	return (true);
 }
-*/
 
-static t_cmd	*get_cmd(t_token **l_token)
+static t_cmd	**get_cmd(t_token **l_tok, t_treenode *node)
 {
-	t_cmd	*cmd;
+	t_cmd	**cmd;
+	int		i;
 
-	cmd = ft_cmdnew();
+	cmd = ft_calloc(node->nb_pipe + 1, sizeof(t_cmd *));
 	if (!cmd)
 		return (NULL);
-	if ((*l_token)->type == LPAR)
-		// do something...
-		// find if there is a common fdout / fdin
-	while (*l_token && !is_cmdsep((*l_token)->type))
+	i = 0;
+	while (*l_tok && (*l_tok)->type != AND_IF && (*l_tok)->type != OR_IF)
 	{
-		if (is_redir((*l_token)->type))
+		if (!cmd[i])
+			cmd[i] = ft_cmdnew();
+		if (!get_cmdline(l_tok, node, cmd[i]))
 		{
-			if (!treat_redir(cmd, l_token, (*l_token)->type))
-				return (cmd);
+			free_cmd(cmd);
+			return (NULL);
 		}
-		else
-			cmd->args = get_cmdargs(l_token);
+		if (*l_tok && (*l_tok)->type == PIPE)
+			i++;
 	}
 	return (cmd);
 }
 
-static void	add_node(t_treenode **node, t_treenode *add, t_type add_mode)
+static t_treenode	*node_to_tree(t_token **l_tok, t_treenode *table, t_token mode)
 {
-	if (add_mode == AND_IF)
-		ft_treeadd_right(node, add);
-	else if (add_mode == OR_IF)
-		ft_treeadd_left(node, add);
-	else
-		*node = add;
-}
+	t_treenode	*node;
 
-static t_treenode	*get_table(t_token **l_token)
-{
-	t_treenode	*table;
-	t_cmd		*cmd;
-	t_type		add_mode;
-
-	table = NULL;
-	while (*l_token && (*l_token)->type != PIPE)
+	node = ft_treenew();
+	if (!node)
+		return (NULL);
+	node->nb_pipe = ft_countpipe(*l_tok);
+	node->cmd = get_cmd(l_tok, node);
+	if (!node->cmd)
 	{
-		cmd = NULL;
-		add_mode = (*l_token)->type;
-		if (is_cmdsep(add_mode))
-			*l_token = (*l_token)->next;
-		cmd = get_cmd(l_token);
-		if (!cmd)
-		{
-			free_node(&table);
-			return (NULL);
-		}
-		add_node(&table, ft_treenew(cmd), add_mode);
+		free_tree(node);
+		free_tree(table);
+		return (NULL);
 	}
+	if (!table)
+		table = node;
+	else
+		table = ft_addnode(table, node, mode);
 	return (table);
 }
 
@@ -102,25 +88,20 @@ static t_treenode	*get_table(t_token **l_token)
 * - creates a binary tree for each pipeline
 * - expand the tokens
 */
-t_treenode	**get_cmdtable(t_token *l_token)
+t_treenode	*get_cmdtable(t_token *l_tok)
 {
-	t_treenode		**cmdtable;
-	unsigned int	nb_pipeline;
-	unsigned int	i;
+	t_treenode	*cmdtable;
+	t_token		add_mode;
 
-	nb_pipeline = ft_count_pipeline(l_token);
-	cmdtable = ft_calloc(nb_pipeline + 1, sizeof(t_treenode *));
-	if (!cmdtable)
-		error_exit(NULL, &g_ms.l_token, "malloc");
-	i = 0;
-	while (l_token && i < nb_pipeline)
+	cmdtable = NULL;
+	while (l_tok)
 	{
-		cmdtable[i] = get_table(&l_token);
-		if (!cmdtable[i])
-			error_exit(cmdtable, &g_ms.l_token, "malloc");
-		if (l_token)
-			l_token = l_token->next;
-		i++;
+		add_mode = *l_tok;
+		if (l_tok->type == AND_IF || l_tok->type == OR_IF)
+			l_tok = l_tok->next;
+		cmdtable = node_to_tree(&l_tok, cmdtable, add_mode);
+		if (!cmdtable)
+			error_exit(NULL, &g_ms.l_token, "malloc");
 	}
 	return (cmdtable);
 }

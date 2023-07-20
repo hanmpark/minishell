@@ -11,9 +11,10 @@ static int	right_token(int last_type, t_token *cur)
 		return (-1);
 	else if (is_cmdsep(cur->type) && (last_type != WORD && last_type != RPAR))
 		return (-1);
-	else if (last_type == RPAR && cur->type == WORD)
+	else if (last_type == RPAR && (cur->type == WORD || is_redir(cur->type)))
 		return (-1);
-	else if (cur->type == LPAR && (last_type != -1 && !is_cmdsep(last_type)))
+	else if (cur->type == LPAR && (last_type != -1 && !is_cmdsep(last_type) \
+		&& last_type != LPAR))
 		return (-2);
 	else if (cur->type == UNDEFINED)
 		return (-2);

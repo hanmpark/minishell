@@ -40,13 +40,19 @@ static void	reset_fd(t_cmd *cmd, t_token *l_token)
 	if (l_token->type == LESS || l_token->type == DLESS)
 	{
 		if (cmd->fdin != STDIN_FILENO)
+		{
 			close(cmd->fdin);
+			cmd->fdin = STDIN_FILENO;
+		}
 		cmd->redir_in = check_fd(l_token->token);
 	}
 	else if (l_token->type == GREAT || l_token->type == DGREAT)
 	{
 		if (cmd->fdout != STDOUT_FILENO)
+		{
 			close(cmd->fdout);
+			cmd->fdout = STDOUT_FILENO;
+		}
 		cmd->redir_out = check_fd(l_token->token);
 	}
 }
@@ -71,8 +77,11 @@ static bool	check_filename(char *filename)
 * - treats here_doc
 * - open the file(s)
 */
-bool	treat_redir(t_cmd *cmd, t_token **l_token, t_type type)
+bool	treat_redir(t_cmd *cmd, t_token **l_token)
 {
+	t_type	type;
+
+	type = (*l_token)->type;
 	reset_fd(cmd, *l_token);
 	*l_token = (*l_token)->next;
 	if (!check_filename((*l_token)->token))

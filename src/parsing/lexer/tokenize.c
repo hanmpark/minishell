@@ -32,7 +32,7 @@ static void	skip_sep(t_token **l_token, t_lex *lex, char *line)
 
 	skip = nbr_skip(line + lex->cur, lex->type);
 	if (lex->type != SPACE && line[lex->cur])
-		ft_lstadd_back(l_token, ft_lstnew(ft_substr(line, lex->cur, skip), \
+		ft_tokadd_back(l_token, ft_toknew(ft_substr(line, lex->cur, skip), \
 			lex->type));
 	if (!skip && line[lex->cur])
 		lex->cur++;
@@ -47,7 +47,7 @@ static bool	join_sep(t_token **l_token, t_lex *lex, char *line, char *join)
 
 	skip = nbr_skip(line + lex->cur, lex->type);
 	tmp = ft_substr(line, lex->cur, skip);
-	ft_lstadd_back(l_token, ft_lstnew(ft_strjoin(join, tmp), lex->type));
+	ft_tokadd_back(l_token, ft_toknew(ft_strjoin(join, tmp), lex->type));
 	if (!skip && line[lex->cur])
 		lex->cur++;
 	lex->cur += skip;
@@ -75,7 +75,7 @@ static bool	separate_token(t_token **l_token, t_lex *lex, char *line)
 	if (!token)
 		return (false);
 	if (*token)
-		ft_lstadd_back(l_token, ft_lstnew(token, WORD));
+		ft_tokadd_back(l_token, ft_toknew(token, WORD));
 	else if (!*token)
 		free(token);
 	skip_sep(l_token, lex, line);
