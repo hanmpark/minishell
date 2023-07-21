@@ -14,7 +14,7 @@ typedef struct	s_wildcards
 	int	j;
 }	t_wc;
 
-char	*treat_env(char *cmd_line);
+char	*treat_env(char *line);
 char	*expand_arg(char *line);
 char	**expand_cmd(char *line);
 char	*get_quotestr(char *line, int *cur);

@@ -28,23 +28,23 @@ static char	*replace_env(char *line, char *replace, int start)
 	return (str);
 }
 
-static char	*edit_line(char *cmd_line, int *i)
+static char	*edit_line(char *line, int *i)
 {
 	char	*env;
 	char	*tmp;
 	char	*line;
 
-	env = subenv(cmd_line + *i + 1);
+	env = subenv(line + *i + 1);
 	tmp = getenv(env);
 	free(env);
 	if (!tmp)
-		line = replace_env(cmd_line, "", *i);
+		line = replace_env(line, "", *i);
 	else
 	{
-		line = replace_env(cmd_line, tmp, *i);
+		line = replace_env(line, tmp, *i);
 		*i += (int)ft_strlen(tmp) - 1;
 	}
-	free(cmd_line);
+	free(line);
 	return (line);
 }
 
@@ -53,27 +53,27 @@ static char	*edit_line(char *cmd_line, int *i)
 *
 * eg: $LIGNAME = "" ≠ $LOGNAMe = "" ≠ $LOGNAME = "hanmpark"
 */
-char	*treat_env(char *cmd_line)
+char	*treat_env(char *line)
 {
 	int	i;
 
 	i = 0;
-	while (cmd_line[i])
+	while (line[i])
 	{
-		if (cmd_line[i] == '$' && ft_isenv(cmd_line[i + 1]))
-			cmd_line = edit_line(cmd_line, &i);
-		else if (!ft_strncmp(cmd_line, "~", ft_strlen(cmd_line)))
+		if (line[i] == '$' && ft_isenv(line[i + 1]))
+			line = edit_line(line, &i);
+		else if (!ft_strncmp(line, "~", ft_strlen(line)))
 		{
-			free(cmd_line);
-			cmd_line = edit_line(ft_strdup("$HOME"), &i);
+			free(line);
+			line = edit_line(ft_strdup("$HOME"), &i);
 		}
-		else if (!ft_strncmp(cmd_line, "$?", 2))
+		else if (!ft_strncmp(line, "$?", 2))
 		{
-			free(cmd_line);
-			cmd_line = ft_itoa(g_ms.return_value);
+			free(line);
+			line = ft_itoa(g_ms.return_value);
 		}
 		else
 			i++;
 	}
-	return (cmd_line);
+	return (line);
 }

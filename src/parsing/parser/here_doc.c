@@ -2,24 +2,40 @@
 #include "parsing.h"
 #include "error.h"
 
+static bool	found_quote(char *line)
+{
+	while (*line)
+	{
+		if (*line == '\'' || *line == '"')
+			return (true);
+		line++;
+	}
+	return (false);
+}
+
+static char	*expand_here_doc(bool is_quote, char *line)
+{
+	if (!is_quote)
+		return (treat_env(line));
+	return (line);
+}
+
 static void	check_doc(char *limiter, int *pfd)
 {
-	char	*new_limiter;
 	char	*line;
 
 	close(pfd[0]);
-	new_limiter = ft_strjoin(limiter, "\n");
-	free(limiter);
 	line = readline("> ");
-	while (line && ft_strncmp(line, new_limiter, ft_strlen(line)))
+	while (line && ft_strncmp(line, limiter, ft_strlen(line)))
 	{
+		line = expand_here_doc(found_quote(line), line);
 		write(pfd[1], line, ft_strlen(line));
 		free(line);
 		line = readline("> ");
 	}
 	if (line)
 		free(line);
-	free(new_limiter);
+	free(limiter);
 	close(pfd[1]);
 	exit(EXIT_SUCCESS);
 }
@@ -39,7 +55,7 @@ int	here_doc(char *limiter)
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
-		check_doc(limiter, pfd);
+		check_doc(ft_strjoin(limiter, "\n"), pfd);
 	close(pfd[1]);
 	waitpid(pid, NULL, 0);
 	return (pfd[0]);
