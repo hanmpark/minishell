@@ -45,10 +45,6 @@ static void	print_commands(t_cmd **cmd, int nb_pipe, int level)
 		printf("fdin = %d\n", cmd[i]->fdin);
 		print_tabs(level);
 		printf("fdout = %d\n", cmd[i]->fdout);
-		print_tabs(level);
-		printf("redir_in = %d\n", cmd[i]->redir_in);
-		print_tabs(level);
-		printf("redir_out = %d\n", cmd[i]->redir_out);
 		i++;
 	}
 }

@@ -14,8 +14,6 @@ typedef struct	s_token
 typedef struct	s_cmd
 {
 	char			**args;
-	int				redir_in;
-	int				redir_out;
 	int				fdin;
 	int				fdout;
 }	t_cmd;

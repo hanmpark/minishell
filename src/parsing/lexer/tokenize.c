@@ -68,8 +68,6 @@ static bool	separate_token(t_token **l_token, t_lex *lex, char *line)
 	char	*token;
 
 	token = ft_substr(line, lex->last, lex->cur - lex->last);
-	if (is_redir(lex->type) && ft_strisdigit(token))
-		return (join_sep(l_token, lex, line, token));
 	if (lex->type == QUOTE || lex->type == DQUOTE)
 		token = tokenize_string(lex, token, line);
 	if (!token)

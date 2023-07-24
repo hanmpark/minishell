@@ -10,8 +10,6 @@ t_cmd	*ft_cmdnew(void)
 	if (!cmd)
 		return (NULL);
 	cmd->args = NULL;
-	cmd->redir_in = -1;
-	cmd->redir_out = -1;
 	cmd->fdin = 0;
 	cmd->fdout = 1;
 	return (cmd);

@@ -18,23 +18,6 @@ static int	open_file(char	*filename, int mode)
 	return (fd);
 }
 
-static int	check_fd(char *token)
-{
-	char	*tmp;
-	int		fd;
-	int		i;
-
-	if (!ft_isdigit(*token))
-		return (-1);
-	i = 0;
-	while (token[i] && !is_redir(is_separator(token + i)))
-		i++;
-	tmp = ft_substr(token, 0, i);
-	fd = ft_atoi(tmp); // have to review atoi (if input is > MAX_INT)
-	free(tmp);
-	return (fd);
-}
-
 static void	reset_fd(t_cmd *cmd, t_token *l_token)
 {
 	if (l_token->type == LESS || l_token->type == DLESS)
@@ -44,7 +27,6 @@ static void	reset_fd(t_cmd *cmd, t_token *l_token)
 			close(cmd->fdin);
 			cmd->fdin = STDIN_FILENO;
 		}
-		cmd->redir_in = check_fd(l_token->token);
 	}
 	else if (l_token->type == GREAT || l_token->type == DGREAT)
 	{
@@ -53,7 +35,6 @@ static void	reset_fd(t_cmd *cmd, t_token *l_token)
 			close(cmd->fdout);
 			cmd->fdout = STDOUT_FILENO;
 		}
-		cmd->redir_out = check_fd(l_token->token);
 	}
 }
 
