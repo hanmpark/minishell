@@ -60,13 +60,8 @@ char	*treat_env(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '$' && ft_isenv(line[i + 1]))
+		if (line[i] == '$' && ft_isenv(line[i + 1]) || ft_ishome(line))
 			line = edit_line(line, &i);
-		else if (ft_ishome(line)) // DONT FORGET TO TREAT cd ~/////
-		{
-			free(line);
-			line = edit_line(ft_strdup("$HOME"), &i);
-		}
 		else if (!ft_strncmp(line, "$?", 2))
 		{
 			free(line);
