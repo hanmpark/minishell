@@ -62,7 +62,7 @@ char	*treat_env(char *line)
 	{
 		if (line[i] == '$' && ft_isenv(line[i + 1]))
 			line = edit_line(line, &i);
-		else if (!ft_strncmp(line, "~", ft_strlen(line)))
+		else if (ft_ishome(line)) // DONT FORGET TO TREAT cd ~/////
 		{
 			free(line);
 			line = edit_line(ft_strdup("$HOME"), &i);

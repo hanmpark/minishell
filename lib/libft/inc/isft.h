@@ -12,5 +12,6 @@ int	ft_isspace(char c);
 int	ft_isenv(char c);
 int	ft_strisdigit(char *str);
 int	ft_foundspace(char *str);
+int	ft_ishome(char *str);
 
 #endif

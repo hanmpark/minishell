@@ -47,7 +47,8 @@ SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
 										ft_isspace.c \
 										ft_isenv.c \
 										ft_strisdigit.c \
-										ft_foundspace.c}
+										ft_foundspace.c \
+										ft_ishome.c}
 
 STRUCTFT_PATH = ./src/structft/
 SRCS_STRUCTFT = ${addprefix ${STRUCTFT_PATH}, ft_tokadd_back.c \
