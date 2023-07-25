@@ -81,7 +81,10 @@ void	print_tree_rec(t_treenode *node, int level)
 */
 void	print_tree(t_treenode *node)
 {
+	printf("\n\033[38;5;62mTREE:\033[0m\n");
 	print_tree_rec(node, 0);
+	printf("\n");
+	printf("\033[38;5;182mCOMMAND OUTPUT:\033[0m\n");
 }
 
 // Prints out the tokens with their type (ONLY FOR DEBUG PURPOSE)
@@ -90,11 +93,12 @@ void	print_tokens(t_token *l_token)
 	int	count;
 
 	count = 0;
+	printf("\n\033[38;5;62mTOKENS:\033[0m\n");
 	while (l_token)
 	{
 		printf("[%d] token = [%s] type = %d\n", count, l_token->token, l_token->type);
 		l_token = l_token->next;
 		count++;
 	}
-	printf("\n\n");
+	printf("\n");
 }

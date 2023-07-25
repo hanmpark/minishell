@@ -2,66 +2,17 @@
 #include "execution.h"
 #include "error.h"
 
-/* Returns the PATH variable in envp as a string */
-char	*define_path(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strnstr(envp[i], "PATH", 4) != 0)
-			return (envp[i]);
-		i++;
-	}
-	return (NULL);
-}
-
-/* Looks for the command's path and returns it (if found) as a string */
-char	*define_cmdpath(char *cmd, char *env_path)
-{
-	char	**cmd_paths;
-	char	*right_path;
-	char	*dir_path;
-	int		i;
-
-	cmd_paths = ft_split(env_path + 5, ':');
-	i = 0;
-	while (cmd_paths[i])
-	{
-		dir_path = ft_strjoin(cmd_paths[i], "/");
-		right_path = ft_strjoin(dir_path, cmd);
-		free(dir_path);
-		if (access(right_path, F_OK | X_OK) == 0)
-		{
-			ft_freestr_array(cmd_paths);
-			return (right_path);
-		}
-		free(right_path);
-		i++;
-	}
-	ft_freestr_array(cmd_paths);
-	return (NULL);
-}
-
-/* Defines the cmd_args */
-char	**define_cmdargs(char **cmd_args, char *path)
-{
-	char	*cmd_path;
-
-	cmd_path = define_cmdpath(cmd_args[0], path);
-	if (cmd_path == NULL)
-		return (cmd_args);
-	free(cmd_args[0]);
-	cmd_args[0] = cmd_path;
-	return (cmd_args);
-}
-
 // Execute the sent command in the child process
 static void	child_process(t_cmd *cmd, char **envp, int *pfd)
 {
 	close(pfd[READ_END]);
-	dup2(pfd[WRITE_END], STDOUT_FILENO);
+	if (cmd->fdout != STDOUT_FILENO)
+	{
+		dup2(cmd->fdout, STDOUT_FILENO);
+		close(cmd->fdout);
+	}
+	else
+		dup2(pfd[WRITE_END], STDOUT_FILENO);
 	close(pfd[WRITE_END]);
 	if (!cmd->args)
 	{
@@ -70,15 +21,38 @@ static void	child_process(t_cmd *cmd, char **envp, int *pfd)
 	}
 	// builtins first
 	execve(cmd->args[0], cmd->args, envp);
-	cmd->args = define_cmdargs(cmd->args[0], define_path(envp));
+	cmd->args = define_path_to_cmd(cmd->args, get_path(envp));
 	if (execve(cmd->args[0], cmd->args, envp) == -1)
-		ft_arrayfree(cmd->args);
+		error_exit(g_ms.node, &g_ms.l_token, cmd->args[0]);
 }
 
-static void	set_infile(t_cmd *cmd)
+/* Creates a new child process to execute the last command */
+static bool	last_process(t_cmd *cmd, int *status, char **envp)
 {
-	dup2(cmd->fdin, STDIN_FILENO);
-	close(cmd->fdin);
+	int	pid;
+
+	pid = fork();
+	if (pid == -1)
+		return (false);
+	if (pid == CHILD_PROCESS)
+	{
+		if (cmd->fdout != STDOUT_FILENO)
+		{
+			dup2(cmd->fdout, STDOUT_FILENO);
+			close(cmd->fdout);
+		}
+		if (!cmd->args)
+		{
+			g_ms.return_value = 0;
+			exit(EXIT_SUCCESS);
+		}
+		execve(cmd->args[0], cmd->args, envp);
+		cmd->args = define_path_to_cmd(cmd->args, get_path(envp));
+		if (execve(cmd->args[0], cmd->args, envp) == -1)
+			error_exit(g_ms.node, &g_ms.l_token, cmd->args[0]);
+	}
+	waitpid(pid, status, 0);
+	return (true);
 }
 
 // Creates a new child process to execute the sent command in it
@@ -94,35 +68,60 @@ static bool	create_process(t_cmd *cmd, char **envp)
 		return (false);
 	if (pid == CHILD_PROCESS)
 		child_process(cmd, envp, pfd);
+	if (cmd->fdout != STDOUT_FILENO)
+		close(cmd->fdout);
+	else
+		dup2(pfd[READ_END], STDIN_FILENO);
 	close(pfd[WRITE_END]);
-	dup2(pfd[READ_END], STDIN_FILENO);
 	close(pfd[READ_END]);
 	return (true);
 }
 
-static bool	exec_node(t_cmd **cmd, int nb_pipe, char **envp)
+static bool	exec_node(t_cmd **cmd, int nb_pipe, int *status, char **envp)
 {
 	int	i;
 
 	i = 0;
 	while (i < nb_pipe)
 	{
-		set_infile(cmd[i]);
-		if (!create_process(cmd[i], envp))
+		if (cmd[i]->fdin != STDIN_FILENO)
+		{
+			dup2(cmd[i]->fdin, STDIN_FILENO);
+			close(cmd[i]->fdin);
+		}
+		if (i < nb_pipe - 1 && !create_process(cmd[i], envp))
 			return (false);
+		if (i == nb_pipe - 1 && !last_process(cmd[i], status, envp))
+			return (false);
+		dup2(g_ms.stdin_fileno, STDIN_FILENO);
+		dup2(g_ms.stdout_fileno, STDOUT_FILENO);
 		i++;
 	}
 	return (true);
 }
 
+static t_treenode	*next_command(t_treenode *node, int status)
+{
+	if (WIFEXITED(status))
+		g_ms.return_value = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_ms.return_value = 128 + WTERMSIG(status);
+	else if (WIFSTOPPED(status))
+		g_ms.return_value = 128 + WSTOPSIG(status);
+	if (g_ms.return_value != 0)
+		return (node->or_branch);
+	return (node->and_branch);
+}
+
 // Execute the commands
 bool	execute(t_treenode *node, char **envp)
 {
+	int	status;
+
 	while (node)
 	{
-		if (!exec_node(node->cmd, node->nb_pipe, envp))
-			return (false);
-		// check if we have to go in the or_branch or and_branch
+		exec_node(node->cmd, node->nb_pipe, &status, envp);
+		node = next_command(node, status);
 	}
 	return (true);
 }

@@ -32,7 +32,8 @@ SRC_PARSER = ${addprefix ${PARSER_PATH}, check_order.c \
 											here_doc.c}
 
 EXEC_PATH = ${SRC_PATH}execution/
-SRC_EXEC = ${addprefix ${EXEC_PATH}, execute.c}
+SRC_EXEC = ${addprefix ${EXEC_PATH}, execute.c \
+										define_path.c}
 
 EXPANDER_PATH = ${PARSING_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c \
@@ -49,7 +50,7 @@ EXIT_PATH = ${SRC_PATH}exit/
 SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \
 										error.c}
 
-SRC = ${SRC_PARSING} ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} ${SRC_PATH}main.c
+SRC = ${SRC_PARSING} ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} ${SRC_WILDCARDS} ${SRC_EXEC} ${SRC_PATH}main.c
 
 OBJ = ${SRC:.c=.o}
 

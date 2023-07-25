@@ -42,7 +42,7 @@ t_treenode	*get_table(t_token *l_tok)
 			l_tok = l_tok->next;
 		cmdtable = node_to_tree(&l_tok, cmdtable, add_mode);
 		if (!cmdtable)
-			error_exit(NULL, &g_ms.l_token, "malloc");
+			return (NULL);
 	}
 	return (cmdtable);
 }

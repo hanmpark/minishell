@@ -1,6 +1,5 @@
 #include "minishell.h"
 #include "expander.h"
-#include "expander.h"
 #include "parsing.h"
 #include "error.h"
 
