@@ -27,17 +27,23 @@ PARSER_PATH = ${PARSING_PATH}parser/
 SRC_PARSER = ${addprefix ${PARSER_PATH}, check_order.c \
 											parenthese.c \
 											redirection.c \
-											get_cmdtable.c \
+											get_table.c \
+											get_cmd.c \
 											here_doc.c}
 
 EXEC_PATH = ${SRC_PATH}execution/
-SRC_EXEC = ${addprefix ${EXEC_PATH}, execution.c}
+SRC_EXEC = ${addprefix ${EXEC_PATH}, execute.c}
 
 EXPANDER_PATH = ${PARSING_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c \
 												expand_tools.c \
 												expand_arg.c \
 												expand_cmd.c}
+
+WILDCARDS_PATH = ${EXPANDER_PATH}wildcards/
+SRC_WILDCARDS = ${addprefix ${WILDCARDS_PATH}, compare_file.c \
+												match_files.c \
+												wildcards.c}
 
 EXIT_PATH = ${SRC_PATH}exit/
 SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \

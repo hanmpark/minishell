@@ -40,7 +40,8 @@ void	error_exit(t_treenode *tree, t_token **l_token, char *msg)
 		free_tree(tree);
 	if (l_token)
 		free_tokens(l_token);
-	exit(1);
+	g_ms.return_value = 0;
+	exit(EXIT_SUCCESS);
 }
 
 bool	error_expand(char *error_token, char *msg, int error_code)

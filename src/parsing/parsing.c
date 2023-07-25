@@ -27,7 +27,7 @@ static t_treenode	*parser(t_token *l_token)
 	cmdtable = NULL;
 	if (!check_order(l_token) || !check_parentheses(l_token))
 		return (NULL);
-	cmdtable = get_cmdtable(l_token);
+	cmdtable = get_table(l_token);
 	if (!cmdtable)
 		return (NULL);
 	return (cmdtable);
