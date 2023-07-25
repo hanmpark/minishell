@@ -32,20 +32,20 @@ static char	*edit_line(char *line, int *i)
 {
 	char	*env;
 	char	*tmp;
-	char	*line;
+	char	*str;
 
 	env = subenv(line + *i + 1);
 	tmp = getenv(env);
 	free(env);
 	if (!tmp)
-		line = replace_env(line, "", *i);
+		str = replace_env(line, "", *i);
 	else
 	{
-		line = replace_env(line, tmp, *i);
+		str = replace_env(line, tmp, *i);
 		*i += (int)ft_strlen(tmp) - 1;
 	}
 	free(line);
-	return (line);
+	return (str);
 }
 
 /* If the environment variable exists, replace it by its value.
@@ -60,7 +60,7 @@ char	*treat_env(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '$' && ft_isenv(line[i + 1]) || ft_ishome(line))
+		if ((line[i] == '$' && ft_isenv(line[i + 1])) || ft_ishome(line))
 			line = edit_line(line, &i);
 		else if (!ft_strncmp(line, "$?", 2))
 		{

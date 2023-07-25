@@ -2,6 +2,7 @@
 #include "expander.h"
 #include "expander.h"
 #include "parsing.h"
+#include "error.h"
 
 static bool	is_wildcard(char *pattern)
 {

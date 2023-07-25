@@ -40,7 +40,8 @@ static void	skip_sep(t_token **l_token, t_lex *lex, char *line)
 	lex->last = lex->cur;
 }
 
-static bool	join_sep(t_token **l_token, t_lex *lex, char *line, char *join)
+// mis en commentaire temporairement car pas utiliser?
+/*static bool	join_sep(t_token **l_token, t_lex *lex, char *line, char *join)
 {
 	char	*tmp;
 	int		skip;
@@ -55,7 +56,7 @@ static bool	join_sep(t_token **l_token, t_lex *lex, char *line, char *join)
 	free(join);
 	free(tmp);
 	return (true);
-}
+}*/
 
 /* Creates tokens and their type:
 * - they are stored in linked lists

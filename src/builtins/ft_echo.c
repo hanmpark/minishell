@@ -44,9 +44,6 @@ static void	put_var(char *av)
 	}
 	else if (av[0] == '~' && av[1] == '\0') // print home directory
 		printf("%s", getenv("HOME"));
-	//else if (av[0] == '$' && av[1] == '?')
-	// must find a way to implement: $?
-	// $? is the exit status of the last command
 	else
 		printf("%s", av); // print the token
 }
@@ -62,8 +59,6 @@ void	ft_echo(int ac, char **av)
 	i += nl_opt; // adds up number of options, start from the next token
 	while (av[i] && i < ac)
 	{
-		// need to add condition for $? and $$
-		// as well as the pipes and ?redirections?
 		put_var(av[i]);
 		if (av[i + 1] && i + 1 < ac) // print space between arguments
 			printf(" ");
