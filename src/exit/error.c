@@ -39,9 +39,12 @@ void	error_exit(t_treenode *tree, t_token **l_token, char *msg)
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd(": command not found\n", 2);
 	if (tree)
-		free_tree(tree);
+		free_tree(tree, true);
 	if (l_token)
 		free_tokens(l_token);
+	close(g_ms.stdin_fileno);
+	close(g_ms.stdout_fileno);
+	free(g_ms.line);
 	exit(EXIT_FAILURE);
 }
 

@@ -21,14 +21,13 @@ static void	handle_line(char *line, char **envp)
 	g_ms.node = parsing(line);
 	if (!g_ms.node)
 	{
-		ft_putstr_fd("bash: fatal: malloc error\n", 2);
 		free_tokens(&g_ms.l_token);
 		free(line);
 		exit(EXIT_FAILURE);
 	}
 	free_tokens(&g_ms.l_token);
 	execute(g_ms.node, envp);
-	free_tree(g_ms.node);
+	free_tree(g_ms.node, false);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -47,6 +46,8 @@ int	main(int argc, char **argv, char **envp)
 		free(g_ms.line);
 		// system("leaks minishell");
 	}
+	close(g_ms.stdin_fileno);
+	close(g_ms.stdout_fileno);
 	printf("exit\n");
 	return (EXIT_SUCCESS);
 }

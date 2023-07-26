@@ -33,7 +33,8 @@ SRC_PARSER = ${addprefix ${PARSER_PATH}, check_order.c \
 
 EXEC_PATH = ${SRC_PATH}execution/
 SRC_EXEC = ${addprefix ${EXEC_PATH}, execute.c \
-										define_path.c}
+										define_path.c \
+										exec_cmd.c}
 
 EXPANDER_PATH = ${PARSING_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c \

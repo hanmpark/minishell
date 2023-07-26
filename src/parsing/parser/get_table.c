@@ -13,8 +13,8 @@ static t_treenode	*node_to_tree(t_token **l_tok, t_treenode *table, t_token mode
 	node->cmd = get_cmd(l_tok, node);
 	if (!node->cmd)
 	{
-		free_tree(node);
-		free_tree(table);
+		free_tree(node, true);
+		free_tree(table, true);
 		return (NULL);
 	}
 	if (!table)
