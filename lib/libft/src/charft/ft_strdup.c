@@ -13,7 +13,7 @@ char	*ft_strdup(const char *source)
 	dest = malloc(i * sizeof(char));
 	if (!dest)
 		return (0);
-	while (source[count])
+	while (source && source[count])
 	{
 		dest[count] = source[count];
 		count++;

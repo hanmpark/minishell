@@ -6,7 +6,7 @@ int	ft_arraylen(char **array)
 	int	len;
 
 	len = 0;
-	while (array[len])
+	while (array && array[len])
 		len++;
 	return (len);
 }

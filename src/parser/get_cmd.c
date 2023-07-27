@@ -12,16 +12,15 @@ static char	**get_args(t_token **cur, int *par_id)
 		*cur = (*cur)->next;
 	while (*cur && !is_redir((*cur)->type) && !is_cmdsep((*cur)->type))
 	{
-		if (!args && !is_par((*cur)->type))
+		if (!args)
 		{
-			args = expand_cmd(ft_strdup((*cur)->token));
 			*par_id = (*cur)->par_id;
+			args = expand_arg(ft_strdup((*cur)->token));
 		}
-		else if (!is_par((*cur)->type))
-			args = ft_arrayadd(args, expand_arg(ft_strdup((*cur)->token)));
+		else if (args && !is_par((*cur)->type))
+			args = ft_arrayjoin(args, expand_arg(ft_strdup((*cur)->token)));
 		*cur = (*cur)->next;
 	}
-	args = array_iter_globbing(args);
 	return (args);
 }
 

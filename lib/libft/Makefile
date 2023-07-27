@@ -36,7 +36,8 @@ SRCS_CHARFT = ${addprefix ${CHARFT_PATH}, ft_atoi.c \
 											ft_arraylen.c \
 											ft_arrayjoin.c \
 											ft_arraydup.c \
-											ft_arrayadd.c}
+											ft_arrayadd.c \
+											ft_arraynew.c}
 
 ISFT_PATH = ./src/isft/
 SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
@@ -47,7 +48,6 @@ SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
 										ft_isspace.c \
 										ft_isenv.c \
 										ft_strisdigit.c \
-										ft_foundspace.c \
 										ft_ishome.c}
 
 STRUCTFT_PATH = ./src/structft/

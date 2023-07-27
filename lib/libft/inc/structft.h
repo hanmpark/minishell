@@ -3,7 +3,7 @@
 
 # include <stdbool.h>
 
-typedef struct	s_token
+typedef struct s_token
 {
 	char			*token;
 	int				type;
@@ -11,14 +11,14 @@ typedef struct	s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	char			**args;
 	int				fdin;
 	int				fdout;
 }	t_cmd;
 
-typedef struct	s_treenode
+typedef struct s_treenode
 {
 	unsigned int		rec_cycles;
 	int					initialized;

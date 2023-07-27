@@ -2,7 +2,7 @@
 #include "expander.h"
 #include <dirent.h>
 
-static char	**init_entry()
+static char	**init_entry(void)
 {
 	struct dirent	*entry;
 	DIR				*dir;
@@ -22,18 +22,6 @@ static char	**init_entry()
 	}
 	closedir(dir);
 	return (files);
-}
-
-void	init_wc(t_wc *wc, const char *pattern)
-{
-	wc->cmpmode = 0;
-	wc->cmplen = 0;
-	wc->i = 0;
-	wc->j = 0;
-	if (pattern[0] && pattern[0] == '.')
-		wc->dotstart = 1;
-	else
-		wc->dotstart = 0;
 }
 
 static bool	is_wildcard(const char *pattern)
@@ -67,6 +55,25 @@ char	**asterix_globbing(const char *pattern)
 	return (files);
 }
 
+char	**glob_or_expand(char **ar, char *arg)
+{
+	char	**glob_array;
+	char	*exp_str;
+
+	glob_array = asterix_globbing(arg);
+	if (!glob_array || !*glob_array)
+	{
+		exp_str = treat_env(ft_strdup(arg), false);
+		if (exp_str && *exp_str)
+			ar = ft_arrayadd(ar, exp_str);
+		else if (exp_str && !*exp_str)
+			free(exp_str);
+	}
+	else
+		ar = ft_arrayjoin(ar, glob_array);
+	return (ar);
+}
+
 /* For each string in the array, checks if there is an asterix in the string.
 * If there is at least one, perform pattern matching on filenames
 * in the current directory.
@@ -74,23 +81,16 @@ char	**asterix_globbing(const char *pattern)
 char	**array_iter_globbing(char **args)
 {
 	int		i;
-	char	**tmp;
 	char	**res;
 
+	if (!args)
+		return (NULL);
 	i = -1;
 	res = ft_calloc(1, sizeof(char *));
 	if (!res)
 		return (NULL);
 	while (args[++i])
-	{
-		tmp = asterix_globbing(args[i]);
-		if (!tmp || !*tmp)
-			res = ft_arrayadd(res, treat_env(ft_strdup(args[i])));
-		else
-			res = ft_arrayjoin(res, tmp);
-		if (tmp && !*tmp)
-			free(tmp);
-	}
+		res = glob_or_expand(res, args[i]);
 	ft_arrayfree(args);
 	return (res);
 }

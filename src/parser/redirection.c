@@ -6,7 +6,7 @@
 
 static int	open_file(char	*filename, int mode)
 {
-	int fd;
+	int	fd;
 
 	fd = -1;
 	if (mode == READ)
@@ -38,18 +38,20 @@ static void	reset_fd(t_cmd *cmd, t_token *l_token)
 	}
 }
 
-static bool	check_filename(char *filename)
+static bool	check_filename(t_token *token)
 {
-	char	*tmp;
+	char	**expanded_token;
 
-	tmp = expand_arg(ft_strdup(filename));
-	if (!tmp || ft_foundspace(tmp))
+	expanded_token = expand_arg(ft_strdup(token->token));
+	if (!expanded_token || ft_arraylen(expanded_token) > 1)
 	{
-		if (tmp)
-			free(tmp);
-		return (error_expand(filename, ERR_AMB, 1));
+		if (expanded_token)
+			ft_arrayfree(expanded_token);
+		return (error_expand(token->token, ERR_AMB, 1));
 	}
-	free(tmp);
+	free(token->token);
+	token->token = ft_strdup(*expanded_token);
+	ft_arrayfree(expanded_token);
 	return (true);
 }
 
@@ -63,9 +65,8 @@ bool	treat_redir(t_cmd *cmd, t_token **l_token)
 	type = (*l_token)->type;
 	reset_fd(cmd, *l_token);
 	*l_token = (*l_token)->next;
-	if (!check_filename((*l_token)->token))
+	if (!check_filename(*l_token))
 		return (false);
-	(*l_token)->token = expand_arg((*l_token)->token);
 	if (type == LESS)
 		cmd->fdin = open_file((*l_token)->token, READ);
 	else if (type == DLESS)

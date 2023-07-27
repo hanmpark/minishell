@@ -5,7 +5,7 @@
 # define FRONT 1
 # define END 2
 
-typedef struct	s_asterix_globbing
+typedef struct s_asterix_globbing
 {
 	int	dotstart;
 	int	cmpmode;
@@ -14,16 +14,14 @@ typedef struct	s_asterix_globbing
 	int	j;
 }	t_wc;
 
-char	*treat_env(char *line);
-char	*expand_arg(char *line);
-char	**expand_cmd(char *line);
-char	*get_quotestr(char *line, int *cur);
-char	*word_str(char *line, int *cur);
+char	*treat_env(char *line, bool prevent_eval);
+char	**expand_arg(char *arg);
+char	*get_quotestr(char *arg, int *i);
+char	*word_str(char *arg, int *i);
 
 char	**array_iter_globbing(char **args);
 char	**asterix_globbing(const char *pattern);
 char	**match_files(char **files, const char *pattern);
-void	init_wc(t_wc *wc, const char *pattern);
 bool	compare_front(t_wc *wc, char *file, const char *pattern);
 bool	compare_end(t_wc *wc, char *file, const char *pattern);
 bool	compare_through(t_wc *wc, char *file, const char *pattern);

@@ -14,7 +14,7 @@
 # define NBR_TYPES 11
 # define NBR_UDF 10
 
-typedef enum	e_type
+typedef enum e_type
 {
 	DLESS,
 	DGREAT,
@@ -32,7 +32,7 @@ typedef enum	e_type
 	WORD
 }	t_type;
 
-typedef struct	s_minishell
+typedef struct s_minishell
 {
 	char				*line;
 	struct s_treenode	*node;

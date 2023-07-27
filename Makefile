@@ -14,19 +14,16 @@ LGREEN = \033[38;5;155m
 # ---------------------------- SOURCES / OBJECTS ----------------------------- #
 SRC_PATH = ./src/
 
-PARSING_PATH = ${SRC_PATH}parsing/
-SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c}
-
 DEBUG_PATH = ${SRC_PATH}debug/
 SRC_DEBUG = ${addprefix ${DEBUG_PATH}, print_tokens.c \
 										print_tree.c}
 
-LEXER_PATH = ${PARSING_PATH}lexer/
+LEXER_PATH = ${SRC_PATH}lexer/
 SRC_LEXER = ${addprefix ${LEXER_PATH}, tokenize.c \
 										tokenize_string.c \
 										is_type.c}
 
-PARSER_PATH = ${PARSING_PATH}parser/
+PARSER_PATH = ${SRC_PATH}parser/
 SRC_PARSER = ${addprefix ${PARSER_PATH}, check_order.c \
 											parenthese.c \
 											redirection.c \
@@ -34,28 +31,27 @@ SRC_PARSER = ${addprefix ${PARSER_PATH}, check_order.c \
 											get_cmd.c \
 											here_doc.c}
 
-EXEC_PATH = ${SRC_PATH}execution/
-SRC_EXEC = ${addprefix ${EXEC_PATH}, execute.c \
-										define_path.c \
-										exec_cmd.c}
-
-EXPANDER_PATH = ${PARSING_PATH}expander/
+EXPANDER_PATH = ${SRC_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c \
 												expand_tools.c \
-												expand_arg.c \
-												expand_cmd.c}
+												expand_arg.c}
 
 WILDCARDS_PATH = ${EXPANDER_PATH}wildcards/
 SRC_WILDCARDS = ${addprefix ${WILDCARDS_PATH}, compare_file.c \
 												match_files.c \
 												asterix.c}
 
+EXEC_PATH = ${SRC_PATH}execution/
+SRC_EXEC = ${addprefix ${EXEC_PATH}, execute.c \
+										define_path.c \
+										exec_cmd.c}
+
 EXIT_PATH = ${SRC_PATH}exit/
 SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \
 										error.c}
 
 SRC = ${SRC_PARSING} ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} \
-		${SRC_WILDCARDS} ${SRC_EXEC} ${SRC_DEBUG} ${SRC_PATH}main.c
+		${SRC_WILDCARDS} ${SRC_EXEC} ${SRC_DEBUG} ${SRC_PATH}main.c ${SRC_PATH}parsing.c
 
 OBJ = ${SRC:.c=.o}
 

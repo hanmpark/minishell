@@ -33,18 +33,18 @@ bool	error_bool(char *msg)
 	return (false);
 }
 
-void	error_exit(t_treenode *tree, t_token **l_token, char *msg, int exit)
+void	error_exit(t_treenode *tree, t_token **l_token, char *msg, int st)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(msg, 2);
-	if (exit == BIN_NOT_FOUND)
+	if (st == BIN_NOT_FOUND)
 		ft_putstr_fd(": command not found\n", 2);
 	free_tree(tree);
 	free_tokens(l_token);
 	close(g_ms.stdin_fileno);
 	close(g_ms.stdout_fileno);
 	set_termios(false);
-	exit(EXIT_FAILURE);
+	exit(st);
 }
 
 bool	error_expand(char *error_token, char *msg, int error_code)

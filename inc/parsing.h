@@ -5,13 +5,13 @@
 # define TRUNC 1
 # define APPEND 2
 
-typedef struct	s_separator
+typedef struct s_separator
 {
 	char	*cmpstr;
 	int		bytes;
 }	t_sep;
 
-typedef struct	s_lexer
+typedef struct s_lexer
 {
 	t_token		*l_token;
 	t_type		type;

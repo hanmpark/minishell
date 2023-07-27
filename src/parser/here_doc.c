@@ -17,21 +17,24 @@ static bool	found_quote(char *line)
 static char	*expand_here_doc(bool is_quote, char *line)
 {
 	if (!is_quote)
-		return (treat_env(line));
+		return (treat_env(line, false));
 	return (line);
 }
 
 static void	check_doc(char *limiter, int *pfd)
 {
 	char	*line;
+	char	*line_nl;
 
 	close(pfd[0]);
 	line = readline("> ");
 	while (line && ft_strncmp(line, limiter, ft_strlen(line)))
 	{
 		line = expand_here_doc(found_quote(line), line);
-		write(pfd[1], line, ft_strlen(line));
+		line_nl = ft_strjoin(line, "\n");
+		write(pfd[1], line_nl, ft_strlen(line_nl));
 		free(line);
+		free(line_nl);
 		line = readline("> ");
 	}
 	if (line)

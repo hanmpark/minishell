@@ -42,7 +42,7 @@ static void	handle_line(char *line, char **envp)
 	free_tokens(&g_ms.l_token);
 	free(line);
 	if (!g_ms.node)
-		exit(EXIT_FAILURE);
+		return ;
 	execute(g_ms.node, envp);
 	free_tree(g_ms.node);
 }

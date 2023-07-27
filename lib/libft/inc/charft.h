@@ -28,5 +28,6 @@ int		ft_arraylen(char **array);
 char	**ft_arrayjoin(char **ar1, char **ar2);
 char	**ft_arraydup(char **ar);
 char	**ft_arrayadd(char **ar, char *add);
+char	**ft_arraynew(char *str);
 
 #endif

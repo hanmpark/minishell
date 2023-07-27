@@ -43,14 +43,19 @@ static bool	check_file(char *file, const char *pattern)
 {
 	t_wc	wc;
 
-	init_wc(&wc, pattern);
+	wc.cmpmode = 0;
+	wc.cmplen = 0;
+	wc.i = 0;
+	wc.j = 0;
+	if (pattern[0] && pattern[0] == '.')
+		wc.dotstart = 1;
+	else
+		wc.dotstart = 0;
 	while (pattern[wc.i])
 	{
 		wc.cmpmode = cmp_mode(&wc, pattern);
 		while (pattern[wc.i] && pattern[wc.i] == '*')
 			wc.i++;
-		if (!pattern[wc.i])
-			return (true);
 		wc.cmplen = count_cmp(pattern + wc.i);
 		if (!is_match(&wc, file, pattern))
 			return (false);
