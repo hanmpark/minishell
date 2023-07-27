@@ -1,6 +1,6 @@
 #include "minishell.h"
 #include "parsing.h"
-#include "error.h"
+#include "exit.h"
 
 static bool	find_second_mark(t_lex *lex, char *line, char quote)
 {
@@ -47,8 +47,8 @@ static char	*get_string(t_lex *lex, char *str, char *line)
 	return (final_str);
 }
 
-/* When a quote is spotted in the line, as long as it is not separated
-* by another separator, take the whole string in the same token.
+/* When a quote is found in the line, as long as it is not closed or separated
+* by another separator, takes the whole string in the same token.
 *
 * eg: hello'wor'"ld" is in the same token
 */

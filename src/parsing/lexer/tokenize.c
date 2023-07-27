@@ -1,6 +1,6 @@
 #include "minishell.h"
 #include "parsing.h"
-#include "error.h"
+#include "exit.h"
 
 static int	nbr_skip(char *str, t_type type)
 {

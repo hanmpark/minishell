@@ -1,6 +1,6 @@
 #include "minishell.h"
 #include "execution.h"
-#include "error.h"
+#include "exit.h"
 
 // Returns the PATH variable in envp as a string
 char	*get_path(char **envp)

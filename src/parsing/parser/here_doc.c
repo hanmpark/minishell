@@ -1,6 +1,7 @@
 #include "minishell.h"
+#include "expander.h"
 #include "parsing.h"
-#include "error.h"
+#include "exit.h"
 
 static bool	found_quote(char *line)
 {
@@ -42,7 +43,7 @@ static void	check_doc(char *limiter, int *pfd)
 
 /* Here document which is symbolised by the '<<' token
 * - creates a new process to write the input into a pipe
-* - waits for user's input until the limiter is found
+* - waits for the user's input until the limiter is found
 */
 int	here_doc(char *limiter)
 {

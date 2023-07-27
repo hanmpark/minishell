@@ -2,7 +2,7 @@
 #include "expander.h"
 #include "parsing.h"
 #include "fcntl.h"
-#include "error.h"
+#include "exit.h"
 
 static int	open_file(char	*filename, int mode)
 {
@@ -54,9 +54,7 @@ static bool	check_filename(char *filename)
 }
 
 /* Treats the redirection for the command:
-* - treats the entry of the redirection as well (eg: 2>)
-* - treats here_doc
-* - open the file(s)
+* - opens file(s) and stores their file descriptors in the command structure
 */
 bool	treat_redir(t_cmd *cmd, t_token **l_token)
 {

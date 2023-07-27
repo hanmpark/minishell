@@ -1,47 +1,9 @@
 #include "minishell.h"
 #include "expander.h"
 #include "parsing.h"
-#include "error.h"
+#include "exit.h"
 
-static bool	is_wildcard(char *pattern)
-{
-	int	i;
-
-	i = 0;
-	while (pattern && pattern[i])
-	{
-		if (pattern[i] == '*')
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
-static char	**treat_wildcards(char **args)
-{
-	int		i;
-	char	**tmp;
-	char	**res;
-
-	i = -1;
-	res = ft_calloc(1, sizeof(char *));
-	if (!res)
-		return (NULL);
-	while (args[++i])
-	{
-		if (is_wildcard(args[i]))
-		{
-			tmp = wildcards(args[i]);
-			res = ft_arrayjoin(res, tmp);
-		}
-		else
-			res = ft_arrayadd(res, ft_strdup(args[i]));
-	}
-	ft_arrayfree(args);
-	return (res);
-}
-
-static char	**get_cmdargs(t_token **cur, int *par_id)
+static char	**get_args(t_token **cur, int *par_id)
 {
 	char	**args;
 
@@ -59,11 +21,11 @@ static char	**get_cmdargs(t_token **cur, int *par_id)
 			args = ft_arrayadd(args, expand_arg(ft_strdup((*cur)->token)));
 		*cur = (*cur)->next;
 	}
-	args = treat_wildcards(args);
+	args = array_iter_globbing(args);
 	return (args);
 }
 
-static bool	get_cmdline(t_token **l_tok, t_treenode *node, t_cmd *cmdline)
+static bool	set_cmd(t_token **l_tok, t_treenode *node, t_cmd *cmdline)
 {
 	if (is_redir((*l_tok)->type))
 	{
@@ -72,11 +34,16 @@ static bool	get_cmdline(t_token **l_tok, t_treenode *node, t_cmd *cmdline)
 			return (false);
 	}
 	else
-		cmdline->args = get_cmdargs(l_tok, &node->par_id);
+		cmdline->args = get_args(l_tok, &node->par_id);
 	return (true);
 }
 
-t_cmd	**get_cmd(t_token **l_tok, t_treenode *node)
+/* Creates an array of simple commands (t_cmd *):
+* - store as many simple commands there are in between the logical operators
+* - for each command, treats the redirection if there is any and stores them
+* in the command structure (t_cmd *)
+*/
+t_cmd	**get_simple_cmd(t_token **l_tok, t_treenode *node)
 {
 	t_cmd	**cmd;
 	int		i;
@@ -89,7 +56,7 @@ t_cmd	**get_cmd(t_token **l_tok, t_treenode *node)
 	{
 		if (!cmd[i])
 			cmd[i] = ft_cmdnew();
-		if (!get_cmdline(l_tok, node, cmd[i]))
+		if (!set_cmd(l_tok, node, cmd[i]))
 		{
 			free_cmd(cmd);
 			return (NULL);

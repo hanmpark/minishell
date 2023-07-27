@@ -49,9 +49,7 @@ static char	*edit_line(char *line, int *i)
 }
 
 /* If the environment variable exists, replace it by its value.
-* Else, deletes it from the command line.
-*
-* eg: $LIGNAME = "" ≠ $LOGNAMe = "" ≠ $LOGNAME = "hanmpark"
+* Else, deletes it from the line.
 */
 char	*treat_env(char *line)
 {
@@ -65,7 +63,7 @@ char	*treat_env(char *line)
 		else if (!ft_strncmp(line, "$?", 2))
 		{
 			free(line);
-			line = ft_itoa(g_ms.return_value);
+			line = ft_itoa(g_ms.exit_status);
 		}
 		else
 			i++;

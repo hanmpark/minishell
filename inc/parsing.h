@@ -33,7 +33,7 @@ bool		is_par(t_type type);
 bool		check_order(t_token *l_token);
 bool		check_parentheses(t_token *l_token);
 t_treenode	*get_table(t_token *l_token);
-t_cmd		**get_cmd(t_token **l_tok, t_treenode *node);
+t_cmd		**get_simple_cmd(t_token **l_tok, t_treenode *node);
 bool		treat_redir(t_cmd *cmd, t_token **l_token);
 int			here_doc(char *limiter);
 

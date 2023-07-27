@@ -1,5 +1,6 @@
 #include "minishell.h"
 #include "parsing.h"
+#include "exit.h"
 #include <stdbool.h>
 
 // Note for self (Kian):
@@ -59,7 +60,7 @@ static t_token	*lexer(char *line)
 /* Parses the given line:
 * - creates tokens
 * - checks the order of the token (parentheses, redirection, etc.)
-* - deals with redirections
+* - deals with redirections and stores it in t_cmd *
 * - creates the binary tree (or not if it is a simple command line)
 */
 t_treenode	*parsing(char *line)
@@ -70,10 +71,13 @@ t_treenode	*parsing(char *line)
 	g_ms.l_token = lexer(line);
 	if (!g_ms.l_token)
 		return (NULL);
-	print_tokens(g_ms.l_token);
 	cmdtable = parser(g_ms.l_token);
 	if (!cmdtable)
 		return (NULL);
-	print_tree(cmdtable);
+	if (g_ms.is_debug)
+	{
+		print_tokens(g_ms.l_token);
+		print_tree(cmdtable);
+	}
 	return (cmdtable);
 }

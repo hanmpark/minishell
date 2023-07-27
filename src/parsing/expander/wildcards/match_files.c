@@ -3,14 +3,14 @@
 
 static int	cmp_mode(t_wc *wc, const char *pattern)
 {
-	int	tmp;
+	int	i;
 
-	tmp = wc->i;
-	while (pattern[tmp] && pattern[tmp] == '*')
-		tmp++;
-	while (pattern[tmp] && pattern[tmp] != '*')
-		tmp++;
-	if (!pattern[tmp])
+	i = 0;
+	while (pattern[i] && pattern[i] == '*')
+		i++;
+	while (pattern[i] && pattern[i] != '*')
+		i++;
+	if (!pattern[i])
 		return (END);
 	else if (pattern[wc->i] && pattern[wc->i] == '*')
 		return (THROUGH);
@@ -59,6 +59,9 @@ static bool	check_file(char *file, const char *pattern)
 	return (true);
 }
 
+/* Checks for each file in the current directory if it matches the pattern.
+* In the end, only returns the files that matched with the pattern.
+*/
 char	**match_files(char **files, const char *pattern)
 {
 	char	**new_files;

@@ -46,3 +46,33 @@ char	*expand_arg(char *line)
 	free(line);
 	return (str);
 }
+
+char	**test(char *line)
+{
+	char	**array;
+	char	*str;
+	int		i;
+
+	i = 0;
+	array = NULL;
+	while (line[i] && (line[i] != '\'' && line[i] != '"'))
+		i++;
+	str = treat_env(ft_substr(line, 0, i));
+	if (!line[i])
+	{
+		free(line);
+		if (!*str)
+		{
+			free(str);
+			return (NULL);
+		}
+		array = asterix_globbing(str);
+		if (!array)
+			array = ft_arrayadd(array, str);
+		return (array);
+	}
+	while (line[i])
+		str = join_quotes(str, line, &i);
+	free(line);
+	return (ft_arrayadd(array, str));
+}

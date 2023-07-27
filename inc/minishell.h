@@ -39,13 +39,13 @@ typedef struct	s_minishell
 	struct s_token		*l_token;
 	int					stdin_fileno;
 	int					stdout_fileno;
-	int					return_value;
+	int					exit_status;
+	bool				is_debug;
 }	t_minishell;
 
 struct s_minishell	g_ms;
 
-char	*treat_env(char *cmd_line);
-void	free_tokens(t_token **l_token);
+void	set_termios(bool set);
 
 // only for debugging purpose
 void	print_tree(t_treenode *node);

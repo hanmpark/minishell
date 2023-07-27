@@ -45,6 +45,5 @@ void			ft_treereset(t_treenode *node);
 void			ft_treeset_cycles(t_treenode *node);
 t_cmd			*ft_cmdnew(void);
 int				ft_countpipe(t_token *l_token);
-t_treenode		*ft_addnode(t_treenode *table, t_treenode *add, t_token mode);
 
 #endif

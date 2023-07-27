@@ -1,6 +1,6 @@
 #include "minishell.h"
 #include "parsing.h"
-#include "error.h"
+#include "exit.h"
 
 static t_token	*check_in_parentheses(t_token *l_token, int *par_id)
 {
@@ -32,9 +32,7 @@ static t_token	*check_in_parentheses(t_token *l_token, int *par_id)
 
 /* Checks if the parentheses are:
 * - closed
-* NOTE: the subject of the minishell explicitly says to manage parentheses
-* for priorities only. Thus, commands found between parentheses will not
-* create a subshell.
+* - contain at least a logical operator '&&' or '||'
 */
 bool	check_parentheses(t_token *l_token)
 {

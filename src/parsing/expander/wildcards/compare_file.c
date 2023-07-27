@@ -3,6 +3,8 @@
 
 static bool	filecmp(t_wc *wc, char *file, const char *pattern)
 {
+	if (!wc->dotstart && file[0] == '.')
+		return (false);
 	if (!ft_strncmp(file + wc->j, pattern + wc->i, wc->cmplen))
 	{
 		wc->j += wc->cmplen;
@@ -27,8 +29,6 @@ bool	compare_through(t_wc *wc, char *file, const char *pattern)
 {
 	while (file[wc->j])
 	{
-		if (wc->dotstart && file[0] == '.')
-			return (false);
 		if (filecmp(wc, file, pattern))
 			return (true);
 		wc->j++;

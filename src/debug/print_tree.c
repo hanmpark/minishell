@@ -12,7 +12,7 @@ static void	print_tabs(int numtabs)
 	}
 }
 
-static void	print_command(char **args)
+static void	print_single_cmd(char **args)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ static void	print_command(char **args)
 	printf("\n");
 }
 
-static void	print_commands(t_cmd **cmd, int nb_pipe, int level)
+static void	print_cmds(t_cmd **cmd, int nb_pipe, int level)
 {
 	int	i;
 
@@ -40,16 +40,18 @@ static void	print_commands(t_cmd **cmd, int nb_pipe, int level)
 	while (i < nb_pipe)
 	{
 		print_tabs(level);
-		print_command(cmd[i]->args);
+		print_single_cmd(cmd[i]->args);
 		print_tabs(level);
 		printf("fdin = %d\n", cmd[i]->fdin);
 		print_tabs(level);
 		printf("fdout = %d\n", cmd[i]->fdout);
 		i++;
+		if (i < nb_pipe)
+			printf("----- PIPE -----\n");
 	}
 }
 
-void	print_tree_rec(t_treenode *node, int level)
+static void	print_tree_rec(t_treenode *node, int level)
 {
 	if (node == NULL)
 	{
@@ -58,18 +60,16 @@ void	print_tree_rec(t_treenode *node, int level)
 		return ;
 	}
 	if (node->cmd)
-		print_commands(node->cmd, node->nb_pipe, level);
+		print_cmds(node->cmd, node->nb_pipe, level);
 	print_tabs(level);
 	printf("rec_cycles = %d\n", node->rec_cycles);
 	print_tabs(level);
 	printf("par_id = %d\n", node->par_id);
 	print_tabs(level);
 	printf("left\n");
-
 	print_tree_rec(node->or_branch, level + 1);
 	print_tabs(level);
 	printf("right\n");
-
 	print_tree_rec(node->and_branch, level + 1);
 	print_tabs(level);
 	printf("done\n");
@@ -85,20 +85,4 @@ void	print_tree(t_treenode *node)
 	print_tree_rec(node, 0);
 	printf("\n");
 	printf("\033[38;5;182mCOMMAND OUTPUT:\033[0m\n");
-}
-
-// Prints out the tokens with their type (ONLY FOR DEBUG PURPOSE)
-void	print_tokens(t_token *l_token)
-{
-	int	count;
-
-	count = 0;
-	printf("\n\033[38;5;62mTOKENS:\033[0m\n");
-	while (l_token)
-	{
-		printf("[%d] token = [%s] type = %d\n", count, l_token->token, l_token->type);
-		l_token = l_token->next;
-		count++;
-	}
-	printf("\n");
 }

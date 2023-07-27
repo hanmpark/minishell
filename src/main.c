@@ -1,16 +1,36 @@
 #include "minishell.h"
 #include "execution.h"
 #include "parsing.h"
-#include "error.h"
+#include "exit.h"
+#include <termios.h>
 
-static void	init_global_struct(void)
+void	set_termios(bool set)
 {
+	struct termios	termios;
+
+	tcgetattr(STDIN_FILENO, &termios);
+	if (set == true)
+		termios.c_lflag &= ~ECHOCTL;
+	else
+		termios.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &termios);
+}
+
+static bool	init_minishell(int argc, char **argv)
+{
+	g_ms.is_debug = false;
+	if (argc == 2 && !ft_strncmp(argv[1], "debug", ft_strlen(argv[1])))
+		g_ms.is_debug = true;
+	else if (argc != 1)
+		return (false);
+	set_termios(true);
 	g_ms.l_token = NULL;
 	g_ms.line = NULL;
 	g_ms.node = NULL;
-	g_ms.return_value = 0;
+	g_ms.exit_status = 0;
 	g_ms.stdin_fileno = dup(STDIN_FILENO);
 	g_ms.stdout_fileno = dup(STDOUT_FILENO);
+	return (true);
 }
 
 static void	handle_line(char *line, char **envp)
@@ -19,35 +39,32 @@ static void	handle_line(char *line, char **envp)
 		return ;
 	add_history(line);
 	g_ms.node = parsing(line);
-	if (!g_ms.node)
-	{
-		free_tokens(&g_ms.l_token);
-		free(line);
-		exit(EXIT_FAILURE);
-	}
 	free_tokens(&g_ms.l_token);
+	free(line);
+	if (!g_ms.node)
+		exit(EXIT_FAILURE);
 	execute(g_ms.node, envp);
-	free_tree(g_ms.node, false);
+	free_tree(g_ms.node);
 }
 
+/* To see the tokens and the tree:
+*	./minishell debug
+*/
 int	main(int argc, char **argv, char **envp)
 {
-	if (argc != 1)
+	if (!init_minishell(argc, argv))
 		return (EXIT_FAILURE);
-	(void)argv;
-	(void)envp;
-	init_global_struct();
 	while ("apagnan")
 	{
 		g_ms.line = readline("minishell$ ");
 		if (!g_ms.line)
 			break ;
 		handle_line(g_ms.line, envp);
-		free(g_ms.line);
 		// system("leaks minishell");
 	}
 	close(g_ms.stdin_fileno);
 	close(g_ms.stdout_fileno);
-	printf("exit\n");
+	write(1, "exit\n", 5);
+	set_termios(false);
 	return (EXIT_SUCCESS);
 }

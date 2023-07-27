@@ -51,14 +51,16 @@ char	**expand_cmd(char *line)
 	while (line[cur] && (line[cur] != '\'' && line[cur] != '"'))
 		cur++;
 	last_element = treat_env(ft_substr(line, 0, cur));
+	cmd = ft_split(last_element, ' ');
+	free(last_element);
+	if (cmd && ft_arraylen(cmd) > 1)
+		cmd = array_iter_globbing(cmd);
 	if (!line[cur] && !*last_element)
 	{
 		free(last_element);
 		free(line);
 		return (NULL);
 	}
-	cmd = ft_split(last_element, ' ');
-	free(last_element);
 	while (line[cur])
 		cmd = join_args(cmd, line, &cur);
 	free(line);

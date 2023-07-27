@@ -1,12 +1,12 @@
 #include "minishell.h"
 #include "execution.h"
-#include "error.h"
+#include "exit.h"
 
 static void	execute_cmd(char **cmd, char **envp)
 {
 	if (!cmd)
 	{
-		g_ms.return_value = 0;
+		g_ms.exit_status = 0;
 		exit(EXIT_SUCCESS);
 	}
 	// have to treat builtins here
@@ -14,7 +14,7 @@ static void	execute_cmd(char **cmd, char **envp)
 	execve(cmd[0], cmd, envp);
 	cmd = define_path_to_cmd(cmd, get_path(envp));
 	if (execve(cmd[0], cmd, envp) == -1)
-		error_exit(g_ms.node, &g_ms.l_token, cmd[0]);
+		error_exit(g_ms.node, &g_ms.l_token, cmd[0], BIN_NOT_FOUND);
 }
 
 // Execute the sent command in the child process

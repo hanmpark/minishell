@@ -1,16 +1,16 @@
 #include "minishell.h"
 #include "execution.h"
-#include "error.h"
+#include "exit.h"
 
 static t_treenode	*next_command(t_treenode *node, int status)
 {
 	if (WIFEXITED(status))
-		g_ms.return_value = WEXITSTATUS(status);
+		g_ms.exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		g_ms.return_value = 128 + WTERMSIG(status);
+		g_ms.exit_status = 128 + WTERMSIG(status);
 	else if (WIFSTOPPED(status))
-		g_ms.return_value = 128 + WSTOPSIG(status);
-	if (g_ms.return_value != 0)
+		g_ms.exit_status = 128 + WSTOPSIG(status);
+	if (g_ms.exit_status != 0)
 		return (node->or_branch);
 	return (node->and_branch);
 }

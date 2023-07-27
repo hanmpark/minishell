@@ -15,8 +15,11 @@ LGREEN = \033[38;5;155m
 SRC_PATH = ./src/
 
 PARSING_PATH = ${SRC_PATH}parsing/
-SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c \
-											print_debug.c}
+SRC_PARSING = ${addprefix ${PARSING_PATH}, parsing.c}
+
+DEBUG_PATH = ${SRC_PATH}debug/
+SRC_DEBUG = ${addprefix ${DEBUG_PATH}, print_tokens.c \
+										print_tree.c}
 
 LEXER_PATH = ${PARSING_PATH}lexer/
 SRC_LEXER = ${addprefix ${LEXER_PATH}, tokenize.c \
@@ -45,13 +48,14 @@ SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c \
 WILDCARDS_PATH = ${EXPANDER_PATH}wildcards/
 SRC_WILDCARDS = ${addprefix ${WILDCARDS_PATH}, compare_file.c \
 												match_files.c \
-												wildcards.c}
+												asterix.c}
 
 EXIT_PATH = ${SRC_PATH}exit/
 SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \
 										error.c}
 
-SRC = ${SRC_PARSING} ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} ${SRC_WILDCARDS} ${SRC_EXEC} ${SRC_PATH}main.c
+SRC = ${SRC_PARSING} ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} \
+		${SRC_WILDCARDS} ${SRC_EXEC} ${SRC_DEBUG} ${SRC_PATH}main.c
 
 OBJ = ${SRC:.c=.o}
 

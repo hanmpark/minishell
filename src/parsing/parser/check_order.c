@@ -1,6 +1,6 @@
 #include "minishell.h"
 #include "parsing.h"
-#include "error.h"
+#include "exit.h"
 
 static int	right_token(int last_type, t_token *cur)
 {
@@ -21,11 +21,7 @@ static int	right_token(int last_type, t_token *cur)
 	return (cur->type);
 }
 
-/* Checks the order of the tokens
-* - file after a redir
-* - something before and after cmdseps
-* - if there is an undefined token, returns false
-*/
+// Checks the order of the tokens
 bool	check_order(t_token *l_token)
 {
 	int	last_type;
@@ -41,8 +37,8 @@ bool	check_order(t_token *l_token)
 		l_token = l_token->next;
 	}
 	if (is_cmdsep(last_type))
-		return (error_parsing(ERR_MISS));
+		return (error_bool(ERR_MISS));
 	else if (is_redir(last_type))
-		return (error_parsing(ERR_REDIR));
+		return (error_bool(ERR_REDIR));
 	return (true);
 }

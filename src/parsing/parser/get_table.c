@@ -1,7 +1,29 @@
 #include "minishell.h"
 #include "parsing.h"
-#include "error.h"
+#include "exit.h"
 
+static t_treenode	*ft_addnode(t_treenode *table, t_treenode *add, t_token mode)
+{
+	if (!table)
+		return (NULL);
+	if (table->par_id == mode.par_id || !mode.par_id)
+	{
+		if (mode.type == 3)
+			ft_treeadd_right(&table, add);
+		else if (mode.type == 2)
+			ft_treeadd_left(&table, add);
+		return (table);
+	}
+	if (ft_addnode(table->and_branch, add, mode) || \
+		ft_addnode(table->or_branch, add, mode))
+		return (table);
+	return (table);
+}
+
+/* Add the command table to the tree depending on:
+* - the parentheses' priorities
+* - the logical operators "&&" or "||"
+*/
 static t_treenode	*node_to_tree(t_token **l_tok, t_treenode *table, t_token mode)
 {
 	t_treenode	*node;
@@ -10,11 +32,11 @@ static t_treenode	*node_to_tree(t_token **l_tok, t_treenode *table, t_token mode
 	if (!node)
 		return (NULL);
 	node->nb_pipe = ft_countpipe(*l_tok);
-	node->cmd = get_cmd(l_tok, node);
+	node->cmd = get_simple_cmd(l_tok, node);
 	if (!node->cmd)
 	{
-		free_tree(node, true);
-		free_tree(table, true);
+		free_tree(node);
+		free_tree(table);
 		return (NULL);
 	}
 	if (!table)

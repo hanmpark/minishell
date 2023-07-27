@@ -61,8 +61,7 @@ SRCS_STRUCTFT = ${addprefix ${STRUCTFT_PATH}, ft_tokadd_back.c \
 											ft_treereset.c \
 											ft_treeset_cycles.c \
 											ft_cmdnew.c \
-											ft_countpipe.c \
-											ft_addnode.c}
+											ft_countpipe.c}
 
 MEMFT_PATH = ./src/memft/
 SRCS_MEMFT = ${addprefix ${MEMFT_PATH}, ft_bzero.c \

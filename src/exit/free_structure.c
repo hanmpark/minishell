@@ -19,16 +19,16 @@ void	free_tokens(t_token **l_token)
 	*l_token = NULL;
 }
 
-void	free_cmd(t_cmd **cmd, bool close_fd)
+void	free_cmd(t_cmd **cmd)
 {
 	int	i;
 
 	i = 0;
 	while (cmd && cmd[i])
 	{
-		if (close_fd && cmd[i]->fdin != STDIN_FILENO && cmd[i]->fdin != -1)
+		if (cmd[i]->fdin != STDIN_FILENO && cmd[i]->fdin != -1)
 			close(cmd[i]->fdin);
-		if (close_fd && cmd[i]->fdout != STDOUT_FILENO && cmd[i]->fdout != -1)
+		if (cmd[i]->fdout != STDOUT_FILENO && cmd[i]->fdout != -1)
 			close(cmd[i]->fdout);
 		ft_arrayfree(cmd[i]->args);
 		free(cmd[i]);
@@ -38,15 +38,15 @@ void	free_cmd(t_cmd **cmd, bool close_fd)
 		free(cmd);
 }
 
-static void	free_node(t_treenode **node, bool close_fd)
+static void	free_node(t_treenode **node)
 {
 	if (!(*node))
 		return ;
-	free_node(&(*node)->and_branch, close_fd);
-	free_node(&(*node)->or_branch, close_fd);
+	free_node(&(*node)->and_branch);
+	free_node(&(*node)->or_branch);
 	if ((*node)->rec_cycles == 1)
 	{
-		free_cmd((*node)->cmd, close_fd);
+		free_cmd((*node)->cmd);
 		free(*node);
 		*node = NULL;
 	}
@@ -54,10 +54,10 @@ static void	free_node(t_treenode **node, bool close_fd)
 		(*node)->rec_cycles--;
 }
 
-void	free_tree(t_treenode *tree, bool close_fd)
+void	free_tree(t_treenode *tree)
 {
 	if (!tree)
 		return ;
 	ft_treeset_cycles(tree);
-	free_node(&tree, close_fd);
+	free_node(&tree);
 }
