@@ -39,7 +39,8 @@ SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c \
 WILDCARDS_PATH = ${EXPANDER_PATH}wildcards/
 SRC_WILDCARDS = ${addprefix ${WILDCARDS_PATH}, compare_file.c \
 												match_files.c \
-												asterix.c}
+												asterix_globbing.c \
+												init_entry_files.c}
 
 EXEC_PATH = ${SRC_PATH}execution/
 SRC_EXEC = ${addprefix ${EXEC_PATH}, execute.c \

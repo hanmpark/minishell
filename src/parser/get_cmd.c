@@ -12,7 +12,7 @@ static char	**get_args(t_token **cur, int *par_id)
 		*cur = (*cur)->next;
 	while (*cur && !is_redir((*cur)->type) && !is_cmdsep((*cur)->type))
 	{
-		if (!args)
+		if (!args && !is_par((*cur)->type))
 		{
 			*par_id = (*cur)->par_id;
 			args = expand_arg(ft_strdup((*cur)->token));

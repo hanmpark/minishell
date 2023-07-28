@@ -3,28 +3,31 @@
 
 static int	cmp_mode(t_wc *wc, const char *pattern)
 {
-	int	i;
+	bool	is_start;
+	int		i;
 
-	i = 0;
-	while (pattern[i] && pattern[i] == '*')
-		i++;
+	is_start = false;
+	if (wc->i == 0)
+		is_start = true;
+	if (is_start && pattern[wc->i] != '*')
+		return (GLOB_FRONT);
+	while (pattern[wc->i] && pattern[wc->i] == '*')
+		wc->i++;
+	i = wc->i;
 	while (pattern[i] && pattern[i] != '*')
 		i++;
 	if (!pattern[i])
-		return (END);
-	else if (pattern[wc->i] && pattern[wc->i] == '*')
-		return (THROUGH);
-	else
-		return (FRONT);
+		return (GLOB_END);
+	return (GLOB_MID);
 }
 
 static bool	is_match(t_wc *wc, char *file, const char *pattern)
 {
-	if (wc->cmpmode == FRONT)
+	if (wc->cmpmode == GLOB_FRONT)
 		return (compare_front(wc, file, pattern));
-	else if (wc->cmpmode == THROUGH)
-		return (compare_through(wc, file, pattern));
-	else if (wc->cmpmode == END)
+	else if (wc->cmpmode == GLOB_MID)
+		return (compare_mid(wc, file, pattern));
+	else if (wc->cmpmode == GLOB_END)
 		return (compare_end(wc, file, pattern));
 	return (false);
 }
@@ -54,8 +57,6 @@ static bool	check_file(char *file, const char *pattern)
 	while (pattern[wc.i])
 	{
 		wc.cmpmode = cmp_mode(&wc, pattern);
-		while (pattern[wc.i] && pattern[wc.i] == '*')
-			wc.i++;
 		wc.cmplen = count_cmp(pattern + wc.i);
 		if (!is_match(&wc, file, pattern))
 			return (false);
@@ -81,6 +82,11 @@ char	**match_files(char **files, const char *pattern)
 		if (check_file(files[i], pattern))
 			new_files = ft_arrayadd(new_files, ft_strdup(files[i]));
 		i++;
+	}
+	if (!*new_files)
+	{
+		free(new_files);
+		new_files = NULL;
 	}
 	ft_arrayfree(files);
 	return (new_files);

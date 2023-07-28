@@ -25,7 +25,7 @@ bool	compare_end(t_wc *wc, char *file, const char *pattern)
 	return (filecmp(wc, file, pattern));
 }
 
-bool	compare_through(t_wc *wc, char *file, const char *pattern)
+bool	compare_mid(t_wc *wc, char *file, const char *pattern)
 {
 	while (file[wc->j])
 	{

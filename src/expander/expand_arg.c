@@ -31,11 +31,11 @@ static char	**convert_to_array(char *str, bool is_quote)
 	if (is_quote == false)
 	{
 		array = ft_split(str, ' ');
-		free(str);
+		array = array_iter_globbing(array);
 	}
 	else
-		array = ft_arraynew(str);
-	array = array_iter_globbing(array);
+		array = ft_arraynew(treat_env(ft_strdup(str), false));
+	free(str);
 	return (array);
 }
 
