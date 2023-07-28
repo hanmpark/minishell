@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+
+// Frees the tokens that was used in the parsing part
 void	free_tokens(t_token **l_token)
 {
 	t_token	*current;
@@ -19,6 +21,7 @@ void	free_tokens(t_token **l_token)
 	*l_token = NULL;
 }
 
+// Clears the t_cmd structure by closing file descriptors and freeing arrays
 void	free_cmd(t_cmd **cmd)
 {
 	int	i;
@@ -54,6 +57,10 @@ static void	free_node(t_treenode **node)
 		(*node)->rec_cycles--;
 }
 
+/* Free the entire tree:
+* - each existing node is cleared
+* - every structure that the node contains is cleared
+*/
 void	free_tree(t_treenode *tree)
 {
 	if (!tree)
