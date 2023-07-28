@@ -40,12 +40,12 @@ static void	put_var(char *av)
 	{
 		var = getenv(av + 1);
 		if (var)
-			printf("%s", var);
+			ft_printf("%s", var);
 	}
 	else if (av[0] == '~' && av[1] == '\0') // print home directory
-		printf("%s", getenv("HOME"));
+		ft_printf("%s", getenv("HOME"));
 	else
-		printf("%s", av); // print the token
+		ft_printf("%s", av); // print the token
 }
 
 void	ft_echo(int ac, char **av)
@@ -61,11 +61,11 @@ void	ft_echo(int ac, char **av)
 	{
 		put_var(av[i]);
 		if (av[i + 1] && i + 1 < ac) // print space between arguments
-			printf(" ");
+			ft_printf(" ");
 		i++;
 	}
 	if (nl_opt == 0) // print newline if -n option was not specified
-		printf("\n");
+		ft_printf("\n");
 }
 
 // main function to test the ft_echo builtin

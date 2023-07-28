@@ -3,29 +3,29 @@
 static void	print_type(t_type type)
 {
 	if (type == DLESS)
-		printf("DLESS\n");
+		ft_printf("DLESS\n");
 	else if (type == DGREAT)
-		printf("DGREAT\n");
+		ft_printf("DGREAT\n");
 	else if (type == OR_IF)
-		printf("OR_IF\n");
+		ft_printf("OR_IF\n");
 	else if (type == AND_IF)
-		printf("AND_IF\n");
+		ft_printf("AND_IF\n");
 	else if (type == LESS)
-		printf("LESS\n");
+		ft_printf("LESS\n");
 	else if (type == GREAT)
-		printf("GREAT\n");
+		ft_printf("GREAT\n");
 	else if (type == PIPE)
-		printf("PIPE\n");
+		ft_printf("PIPE\n");
 	else if (type == LPAR)
-		printf("LPAR\n");
+		ft_printf("LPAR\n");
 	else if (type == RPAR)
-		printf("RPAR\n");
+		ft_printf("RPAR\n");
 	else if (type == QUOTE)
-		printf("QUOTE\n");
+		ft_printf("QUOTE\n");
 	else if (type == DQUOTE)
-		printf("DQUOTE\n");
+		ft_printf("DQUOTE\n");
 	else if (type == WORD)
-		printf("WORD\n");
+		ft_printf("WORD\n");
 }
 
 // Prints out the tokens with their type (ONLY FOR DEBUG PURPOSE)
@@ -34,13 +34,13 @@ void	print_tokens(t_token *l_token)
 	int	count;
 
 	count = 0;
-	printf("\n\033[38;5;62mTOKENS:\033[0m\n");
+	ft_printf("\n\033[38;5;62mTOKENS:\033[0m\n");
 	while (l_token)
 	{
-		printf("[%d] token = [%s] type = ", count, l_token->token);
+		ft_printf("[%d] token = [%s] type = ", count, l_token->token);
 		print_type(l_token->type);
 		l_token = l_token->next;
 		count++;
 	}
-	printf("\n");
+	ft_printf("\n");
 }

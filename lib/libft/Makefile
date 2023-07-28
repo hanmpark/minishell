@@ -89,11 +89,7 @@ SRCS_PRINTF = ${addprefix ${PRINTF_PATH}, def_flags.c \
 											treat_charflags.c \
 											treat_intflags.c}
 
-GNL_PATH = ./src/get_next_line/
-SRCS_GNL = ${addprefix ${GNL_PATH}, get_next_line_utils.c \
-									get_next_line.c}
-
-SRCS = ${SRCS_CHARFT} ${SRCS_ISFT} ${SRCS_STRUCTFT} ${SRCS_MEMFT} ${SRCS_PUTFT} ${SRCS_PRINTF} ${SRCS_GNL}
+SRCS = ${SRCS_CHARFT} ${SRCS_ISFT} ${SRCS_STRUCTFT} ${SRCS_MEMFT} ${SRCS_PUTFT} ${SRCS_PRINTF}
 OBJS = ${SRCS:.c=.o}
 
 # --------------------------------- COMPILER --------------------------------- #

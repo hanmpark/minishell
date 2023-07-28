@@ -7,7 +7,7 @@ static void	print_tabs(int numtabs)
 	i = 0;
 	while (i < numtabs)
 	{
-		printf("\t");
+		ft_printf("\t");
 		i++;
 	}
 }
@@ -18,18 +18,18 @@ static void	print_single_cmd(char **args)
 
 	if (!args)
 	{
-		printf("NULL\n");
+		ft_printf("NULL\n");
 		return ;
 	}
-	printf("command = ");
+	ft_printf("command = ");
 	i = 0;
 	while (args[i])
 	{
-		printf("[%s] ", args[i]);
+		ft_printf("[%s] ", args[i]);
 		fflush(stdout);
 		i++;
 	}
-	printf("\n");
+	ft_printf("\n");
 }
 
 static void	print_cmds(t_cmd **cmd, int nb_pipe, int level)
@@ -42,12 +42,12 @@ static void	print_cmds(t_cmd **cmd, int nb_pipe, int level)
 		print_tabs(level);
 		print_single_cmd(cmd[i]->args);
 		print_tabs(level);
-		printf("fdin = %d\n", cmd[i]->fdin);
+		ft_printf("fdin = %d\n", cmd[i]->fdin);
 		print_tabs(level);
-		printf("fdout = %d\n", cmd[i]->fdout);
+		ft_printf("fdout = %d\n", cmd[i]->fdout);
 		i++;
 		if (i < nb_pipe)
-			printf("----- PIPE -----\n");
+			ft_printf("----- PIPE -----\n");
 	}
 }
 
@@ -56,23 +56,23 @@ static void	print_tree_rec(t_treenode *node, int level)
 	if (node == NULL)
 	{
 		print_tabs(level);
-		printf("---<empty>---\n");
+		ft_printf("---<empty>---\n");
 		return ;
 	}
 	if (node->cmd)
 		print_cmds(node->cmd, node->nb_pipe, level);
 	print_tabs(level);
-	printf("rec_cycles = %d\n", node->rec_cycles);
+	ft_printf("rec_cycles = %d\n", node->rec_cycles);
 	print_tabs(level);
-	printf("par_id = %d\n", node->par_id);
+	ft_printf("par_id = %d\n", node->par_id);
 	print_tabs(level);
-	printf("left\n");
+	ft_printf("left\n");
 	print_tree_rec(node->or_branch, level + 1);
 	print_tabs(level);
-	printf("right\n");
+	ft_printf("right\n");
 	print_tree_rec(node->and_branch, level + 1);
 	print_tabs(level);
-	printf("done\n");
+	ft_printf("done\n");
 }
 
 /* Prints out the contents of a binary tree structure
@@ -81,8 +81,8 @@ static void	print_tree_rec(t_treenode *node, int level)
 */
 void	print_tree(t_treenode *node)
 {
-	printf("\n\033[38;5;62mTREE:\033[0m\n");
+	ft_printf("\n\033[38;5;62mTREE:\033[0m\n");
 	print_tree_rec(node, 0);
-	printf("\n");
-	printf("\033[38;5;182mCOMMAND OUTPUT:\033[0m\n");
+	ft_printf("\n");
+	ft_printf("\033[38;5;182mCOMMAND OUTPUT:\033[0m\n");
 }

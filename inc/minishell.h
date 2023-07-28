@@ -5,6 +5,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <readline/readline.h>
+# include "../lib/libft/inc/ft_printf.h"
 # include "../lib/libft/inc/structft.h"
 # include "../lib/libft/inc/charft.h"
 # include "../lib/libft/inc/memft.h"
