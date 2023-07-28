@@ -51,7 +51,7 @@ SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \
 										error.c}
 
 SRC = ${SRC_PARSING} ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} \
-		${SRC_WILDCARDS} ${SRC_EXEC} ${SRC_DEBUG} ${SRC_PATH}main.c ${SRC_PATH}parsing.c
+		${SRC_WILDCARDS} ${SRC_EXEC} ${SRC_DEBUG} ${SRC_PATH}main.c ${SRC_PATH}handle_line.c
 
 OBJ = ${SRC:.c=.o}
 

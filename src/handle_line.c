@@ -1,20 +1,22 @@
 #include "minishell.h"
+#include "execution.h"
 #include "parsing.h"
 #include "exit.h"
 #include <stdbool.h>
 
-// Note for self (Kian):
-// The lexer is the first step of the parsing process
-// the tokens are stored in a linked list of t_token
-// the tokens are separated by their type
-// the tokens are then passed to the parser
-// the parser will check if the tokens are in the right order
+/* Note for self (Kian):
+* The lexer is the first step of the parsing process
+* the tokens are stored in a linked list of t_token
+* the tokens are separated by their type
+* the tokens are then passed to the parser
+* the parser will check if the tokens are in the right order
+*/
 
 /* UPDATE HANMIN:
 * Our minishell does not treat the following case
 * bash-3.2$ cat << EOF &&& echo haha
-* bash-3.2$ bash: syntax error near unexpected token `&'
-* bash-3.2$ EOF
+* it should open the here_doc anyway when the error occurs
+* after the here_doc call
 */
 
 /* Parser part:
@@ -63,7 +65,7 @@ static t_token	*lexer(char *line)
 * - deals with redirections and stores it in t_cmd *
 * - creates the binary tree (or not if it is a simple command line)
 */
-t_treenode	*parsing(char *line)
+static t_treenode	*parsing(char *line)
 {
 	t_treenode	*cmdtable;
 
@@ -80,4 +82,23 @@ t_treenode	*parsing(char *line)
 		print_tree(cmdtable);
 	}
 	return (cmdtable);
+}
+
+/* Handles the given line:
+* - parse the line first (lexer, parser, expander)
+* - stores all the important data to an AST (t_treenode)
+* - if everything is okay, execute the line
+*/
+void	handle_line(char *line, char **envp)
+{
+	if (!*line)
+		return ;
+	add_history(line);
+	g_ms.node = parsing(line);
+	free_tokens(&g_ms.l_token);
+	free(line);
+	if (!g_ms.node)
+		return ;
+	execute(g_ms.node, envp);
+	free_tree(g_ms.node);
 }

@@ -19,7 +19,7 @@ typedef struct s_lexer
 	int			last;
 }	t_lex;
 
-t_treenode	*parsing(char *line);
+void		handle_line(char *line, char **envp);
 
 bool		tokenize(t_lex *lex, char *line);
 char		*tokenize_string(t_lex *lex, char *str, char *line);

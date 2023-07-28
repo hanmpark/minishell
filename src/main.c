@@ -1,5 +1,4 @@
 #include "minishell.h"
-#include "execution.h"
 #include "parsing.h"
 #include "exit.h"
 #include <termios.h>
@@ -31,20 +30,6 @@ static bool	init_minishell(int argc, char **argv)
 	g_ms.stdin_fileno = dup(STDIN_FILENO);
 	g_ms.stdout_fileno = dup(STDOUT_FILENO);
 	return (true);
-}
-
-static void	handle_line(char *line, char **envp)
-{
-	if (!*line)
-		return ;
-	add_history(line);
-	g_ms.node = parsing(line);
-	free_tokens(&g_ms.l_token);
-	free(line);
-	if (!g_ms.node)
-		return ;
-	execute(g_ms.node, envp);
-	free_tree(g_ms.node);
 }
 
 /* To see the tokens and the tree:
