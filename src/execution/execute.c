@@ -23,10 +23,7 @@ static bool	exec_node(t_cmd **cmd, int nb_pipe, int *status, char **envp)
 	while (i < nb_pipe)
 	{
 		if (cmd[i]->fdin != STDIN_FILENO)
-		{
 			dup2(cmd[i]->fdin, STDIN_FILENO);
-			close(cmd[i]->fdin);
-		}
 		if (i < nb_pipe - 1 && !exec_cmd(cmd[i], envp))
 			return (false);
 		if (i == nb_pipe - 1 && !exec_last_cmd(cmd[i], status, envp))

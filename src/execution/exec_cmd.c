@@ -26,6 +26,8 @@ static void	treat_child_process(t_cmd *cmd, char **envp, int *pfd)
 		dup2(cmd->fdout, STDOUT_FILENO);
 		close(cmd->fdout);
 	}
+	if (cmd->fdin != STDIN_FILENO)
+		close(cmd->fdin);
 	else
 		dup2(pfd[WRITE_END], STDOUT_FILENO);
 	close(pfd[WRITE_END]);
@@ -47,11 +49,11 @@ bool	exec_last_cmd(t_cmd *cmd, int *status, char **envp)
 			dup2(cmd->fdout, STDOUT_FILENO);
 			close(cmd->fdout);
 		}
+		if (cmd->fdin != STDIN_FILENO)
+			close(cmd->fdin);
 		execute_cmd(cmd->args, envp);
 	}
 	waitpid(pid, status, 0);
-	if (cmd->fdout != STDOUT_FILENO)
-		close(cmd->fdout);
 	return (true);
 }
 
@@ -68,8 +70,6 @@ bool	exec_cmd(t_cmd *cmd, char **envp)
 		return (false);
 	if (pid == CHILD_PROCESS)
 		treat_child_process(cmd, envp, pfd);
-	if (cmd->fdout != STDOUT_FILENO)
-		close(cmd->fdout);
 	else
 		dup2(pfd[READ_END], STDIN_FILENO);
 	close(pfd[WRITE_END]);
