@@ -62,10 +62,6 @@ static void	print_tree_rec(t_treenode *node, int level)
 	if (node->cmd)
 		print_cmds(node->cmd, node->nb_pipe, level);
 	print_tabs(level);
-	ft_printf("rec_cycles = %d\n", node->rec_cycles);
-	print_tabs(level);
-	ft_printf("par_id = %d\n", node->par_id);
-	print_tabs(level);
 	ft_printf("left\n");
 	print_tree_rec(node->or_branch, level + 1);
 	print_tabs(level);
