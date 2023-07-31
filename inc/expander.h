@@ -14,14 +14,14 @@ typedef struct s_astglob
 	int	j;
 }	t_ag;
 
-// EXPANDING //
+/* EXPANDING */
 
 char	*treat_env(char *line, bool prevent_eval);
 char	**expand_arg(char *arg);
 char	*get_quotestr(char *arg, int *i);
 char	*word_str(char *arg, int *i);
 
-// TREATING THE ASTERIX WILDCARD //
+/* TREATING THE ASTERIX WILDCARD */
 
 char	**init_entry_files(void);
 char	**array_iter_globbing(char **args);

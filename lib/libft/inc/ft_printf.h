@@ -33,6 +33,7 @@ typedef struct s_printer
 int		ft_printf(const char *format, ...);
 
 /* PRINT */
+
 void	print_str(t_parseflags *tab);
 void	print_c(t_parseflags *tab);
 void	print_decimal(t_parseflags *tab);
@@ -42,18 +43,23 @@ void	print_xx(t_parseflags *tab);
 void	print_p(t_parseflags *tab);
 
 /* FORMAT HEXADECIMAL */
+
 char	*format_hexa(const char *hexadecimal, unsigned int nbr);
 char	*format_pointer(const char *hexadecimal, unsigned long long nbr);
 
 /* FLAGS */
+
 void	def_flags(t_parseflags *tab, const char *format, int *i);
+
 /* SPECIFIER FILTERS FOR FLAGS */
+
 void	c_wflags(t_parseflags *tab, int c);
 void	str_wflags(t_parseflags *tab, char *str, int len);
 void	nbr_wflags(t_parseflags *tab, char *str, int sign, int len);
 void	prct_wflags(t_parseflags *tab);
 
 /* TREAT_FLAGS */
+
 void	widthstr(t_parseflags *tab, char *str, int len);
 void	widthc(t_parseflags *tab, char c);
 void	widthnbr(t_parseflags *tab, char *str, int sign, int len);

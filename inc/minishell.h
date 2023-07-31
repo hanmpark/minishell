@@ -49,7 +49,7 @@ struct s_minishell	g_ms;
 
 void	set_termios(bool set);
 
-// FOR DEBUGGING PURPOSE //
+/* FOR DEBUGGING PURPOSE */
 
 void	print_tree(t_treenode *node);
 void	print_tokens(t_token *l_token);
