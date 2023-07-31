@@ -23,6 +23,11 @@ static bool	is_path_cmd(char *cmd)
 	return (false);
 }
 
+/* Execute the cmd:
+* - checks if the cmd is a builtin
+* - checks if the cmd needs its absolute path
+* - checks if it is already an executable
+*/
 static void	exec_cmd(char **cmd_args, char **envp)
 {
 	if (!cmd_args)

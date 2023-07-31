@@ -16,9 +16,9 @@
 # define ERR_MISS "minishell: syntax error missing token\n"
 
 # define NO_HANDLE 1
-# define ORDER_WRONG 258
-# define BIN_NOT_FOUND 127
 # define NOT_EXECUTABLE 126
+# define BIN_NOT_FOUND 127
+# define ORDER_WRONG 258
 
 bool	error_token(char *token, char *err_msg, int st);
 void	error_exit(char *err_src, char *msg, int st);
