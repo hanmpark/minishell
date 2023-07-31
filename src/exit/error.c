@@ -28,6 +28,10 @@ bool	error_token(char *token, char *err_msg, int st)
 	return (false);
 }
 
+/* Handling error messages and its exit status:
+* - outputs the error message
+* - exits with the most adapted exit status
+*/
 void	error_exit(char *err_src, char *msg, int st)
 {
 	char	*cat_str;

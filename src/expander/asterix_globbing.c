@@ -19,7 +19,7 @@ static bool	is_wildcard(const char *pattern)
 	return (yes);
 }
 
-char	**asterix_globbing(const char *pattern)
+static char	**asterix_globbing(const char *pattern)
 {
 	char	**files;
 
@@ -32,7 +32,7 @@ char	**asterix_globbing(const char *pattern)
 	return (files);
 }
 
-char	**glob_or_expand(char **ar, char *arg)
+static char	**glob_or_expand(char **ar, char *arg)
 {
 	char	**glob_array;
 	char	*exp_str;

@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "expander.h"
 
-static bool	filecmp(t_wc *wc, char *file, const char *pattern)
+static bool	filecmp(t_ag *wc, char *file, const char *pattern)
 {
 	if (!wc->dotstart && file[0] == '.')
 		return (false);
@@ -13,19 +13,19 @@ static bool	filecmp(t_wc *wc, char *file, const char *pattern)
 	return (false);
 }
 
-bool	compare_front(t_wc *wc, char *file, const char *pattern)
+bool	compare_front(t_ag *wc, char *file, const char *pattern)
 {
 	return (filecmp(wc, file, pattern));
 }
 
-bool	compare_end(t_wc *wc, char *file, const char *pattern)
+bool	compare_end(t_ag *wc, char *file, const char *pattern)
 {
 	while (file[wc->j] && wc->j < (int)ft_strlen(file) - wc->cmplen)
 		wc->j++;
 	return (filecmp(wc, file, pattern));
 }
 
-bool	compare_mid(t_wc *wc, char *file, const char *pattern)
+bool	compare_mid(t_ag *wc, char *file, const char *pattern)
 {
 	while (file[wc->j])
 	{

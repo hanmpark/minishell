@@ -17,7 +17,7 @@ char	*get_path(char **envp)
 	return (NULL);
 }
 
-// Looks for the command's path and returns it (if found) as a string
+// Looks for the command's path and returns it as a string
 static char	*find_right_path(char *cmd, char *env_path)
 {
 	char	**cmd_paths;

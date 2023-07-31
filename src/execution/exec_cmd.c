@@ -23,12 +23,6 @@ static bool	is_path_cmd(char *cmd)
 	return (false);
 }
 
-/* 4 possible errors:
-* - Command not found
-* - No such file or directory
-* - Permission denied
-* - is a directory
-*/
 static void	exec_cmd(char **cmd_args, char **envp)
 {
 	if (!cmd_args)

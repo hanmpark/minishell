@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "expander.h"
 
-static int	cmp_mode(t_wc *wc, const char *pattern)
+static int	cmp_mode(t_ag *wc, const char *pattern)
 {
 	bool	is_start;
 	int		i;
@@ -21,7 +21,7 @@ static int	cmp_mode(t_wc *wc, const char *pattern)
 	return (GLOB_MID);
 }
 
-static bool	is_match(t_wc *wc, char *file, const char *pattern)
+static bool	is_match(t_ag *wc, char *file, const char *pattern)
 {
 	if (wc->cmpmode == GLOB_FRONT)
 		return (compare_front(wc, file, pattern));
@@ -44,7 +44,7 @@ static int	count_cmp(const char *pattern)
 
 static bool	check_file(char *file, const char *pattern)
 {
-	t_wc	wc;
+	t_ag	wc;
 
 	wc.cmpmode = 0;
 	wc.cmplen = 0;
@@ -76,13 +76,10 @@ char	**match_files(char **files, const char *pattern)
 	new_files = ft_calloc(1, sizeof(char *));
 	if (!new_files)
 		return (NULL);
-	i = 0;
-	while (files[i])
-	{
+	i = -1;
+	while (files[++i])
 		if (check_file(files[i], pattern))
 			new_files = ft_arrayadd(new_files, ft_strdup(files[i]));
-		i++;
-	}
 	if (!*new_files)
 	{
 		free(new_files);
