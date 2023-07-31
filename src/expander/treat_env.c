@@ -48,8 +48,9 @@ static char	*edit_line(char *line, char *env, int *i)
 	return (edited_line);
 }
 
-/* If the environment variable exists, replace it by its value.
-* Else, deletes it from the line.
+/* Treats the environment variable(s):
+* - if the environment variable exists, replace it by its value.
+* - else, deletes it from the line.
 */
 char	*treat_env(char *line, bool prevent_eval)
 {

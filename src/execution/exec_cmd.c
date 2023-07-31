@@ -2,77 +2,45 @@
 #include "execution.h"
 #include "exit.h"
 
-static void	execute_cmd(char **cmd, char **envp)
+static void	execute_cmd(char **cmd_args, char **envp)
 {
-	if (!cmd)
+	if (!cmd_args)
 	{
 		g_ms.exit_status = 0;
 		exit(EXIT_SUCCESS);
 	}
 	// have to treat builtins here
 	// before executing the command, we have to check if it's a builtin first
-	execve(cmd[0], cmd, envp);
-	cmd = define_path_to_cmd(cmd, get_path(envp));
-	if (execve(cmd[0], cmd, envp) == -1)
-		error_exit(g_ms.node, &g_ms.l_token, cmd[0], BIN_NOT_FOUND);
+	execve(cmd_args[0], cmd_args, envp);
+	cmd_args = define_path_to_cmd(cmd_args, get_path(envp));
+	if (execve(cmd_args[0], cmd_args, envp) == -1)
+		error_exit(g_ms.node, &g_ms.l_token, cmd_args[0], BIN_NOT_FOUND);
 }
 
 // Execute the sent command in the child process
-static void	treat_child_process(t_cmd *cmd, char **envp, int *pfd)
+static void	treat_child_process(t_cmd **cmd, char **envp, int id, bool is_last)
 {
-	close(pfd[READ_END]);
-	if (cmd->fdout != STDOUT_FILENO)
+	if (id > 0)
 	{
-		dup2(cmd->fdout, STDOUT_FILENO);
-		close(cmd->fdout);
+		close(cmd[id - 1]->pipe[WRITE_END]);
+		dup2(cmd[id - 1]->pipe[READ_END], STDIN_FILENO);
+		close(cmd[id - 1]->pipe[READ_END]);
 	}
-	if (cmd->fdin != STDIN_FILENO)
-		close(cmd->fdin);
-	else
-		dup2(pfd[WRITE_END], STDOUT_FILENO);
-	close(pfd[WRITE_END]);
-	execute_cmd(cmd->args, envp);
-}
-
-// Creates a new child process to execute the last command
-bool	exec_last_cmd(t_cmd *cmd, int *status, char **envp)
-{
-	int	pid;
-
-	pid = fork();
-	if (pid == -1)
-		return (false);
-	if (pid == CHILD_PROCESS)
-	{
-		if (cmd->fdout != STDOUT_FILENO)
-		{
-			dup2(cmd->fdout, STDOUT_FILENO);
-			close(cmd->fdout);
-		}
-		if (cmd->fdin != STDIN_FILENO)
-			close(cmd->fdin);
-		execute_cmd(cmd->args, envp);
-	}
-	waitpid(pid, status, 0);
-	return (true);
+	set_iostream(cmd[id], is_last);
+	execute_cmd(cmd[id]->args, envp);
 }
 
 // Creates a new child process to execute the sent command in it
-bool	exec_cmd(t_cmd *cmd, char **envp)
+pid_t	exec_cmd(t_cmd **cmd, char **envp, int id, bool is_last)
 {
-	int	pid;
-	int	pfd[2];
+	pid_t	pid;
 
-	if (pipe(pfd) == -1)
-		return (false);
+	if (!is_last && pipe(cmd[id]->pipe) == -1)
+		return (-1);
 	pid = fork();
 	if (pid == -1)
-		return (false);
+		return (-1);
 	if (pid == CHILD_PROCESS)
-		treat_child_process(cmd, envp, pfd);
-	else
-		dup2(pfd[READ_END], STDIN_FILENO);
-	close(pfd[WRITE_END]);
-	close(pfd[READ_END]);
-	return (true);
+		treat_child_process(cmd, envp, id, is_last);
+	return (pid);
 }

@@ -10,6 +10,9 @@ t_cmd	*ft_cmdnew(void)
 	if (!cmd)
 		return (NULL);
 	cmd->args = NULL;
+	cmd->pid = 0;
+	cmd->pipe[0] = -1;
+	cmd->pipe[1] = -1;
 	cmd->fdin = 0;
 	cmd->fdout = 1;
 	return (cmd);

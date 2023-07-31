@@ -1,8 +1,8 @@
 #include "minishell.h"
 #include "expander.h"
 #include "parsing.h"
-#include "fcntl.h"
 #include "exit.h"
+#include <fcntl.h>
 
 static int	open_file(char	*filename, int mode)
 {
@@ -56,6 +56,7 @@ static bool	check_filename(t_token *token)
 }
 
 /* Treats the redirection for the command:
+* - before setting the file descriptors, resets them
 * - opens file(s) and stores their file descriptors in the command structure
 */
 bool	treat_redir(t_cmd *cmd, t_token **l_token)

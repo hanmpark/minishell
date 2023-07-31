@@ -62,8 +62,8 @@ static t_token	*lexer(char *line)
 /* Parses the given line:
 * - creates tokens
 * - checks the order of the token (parentheses, redirection, etc.)
-* - deals with redirections and stores it in t_cmd *
-* - creates the binary tree (or not if it is a simple command line)
+* - deals with redirections and stores it in the command structure (t_cmd)
+* - creates the binary tree
 */
 static t_treenode	*parsing(char *line)
 {
@@ -87,7 +87,7 @@ static t_treenode	*parsing(char *line)
 /* Handles the given line:
 * - parse the line first (lexer, parser, expander)
 * - stores all the important data to an AST (t_treenode)
-* - if everything is okay, execute the line
+* - if everything is parsed, execute the line
 */
 void	handle_line(char *line, char **envp)
 {

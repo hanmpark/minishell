@@ -26,10 +26,13 @@ SRC_LEXER = ${addprefix ${LEXER_PATH}, tokenize.c \
 PARSER_PATH = ${SRC_PATH}parser/
 SRC_PARSER = ${addprefix ${PARSER_PATH}, check_order.c \
 											parenthese.c \
-											redirection.c \
 											get_table.c \
 											get_cmd.c \
 											here_doc.c}
+
+REDIR_PATH = ${SRC_PATH}redirection/
+SRC_REDIR = ${addprefix ${REDIR_PATH}, file_descriptors.c \
+										set_iostream.c}
 
 EXPANDER_PATH = ${SRC_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c \
@@ -51,8 +54,9 @@ EXIT_PATH = ${SRC_PATH}exit/
 SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \
 										error.c}
 
-SRC = ${SRC_PARSING} ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} \
-		${SRC_WILDCARDS} ${SRC_EXEC} ${SRC_DEBUG} ${SRC_PATH}main.c ${SRC_PATH}handle_line.c
+SRC = ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} \
+		${SRC_WILDCARDS} ${SRC_EXEC} ${SRC_DEBUG} ${SRC_REDIR} \
+		${SRC_PATH}main.c ${SRC_PATH}handle_line.c
 
 OBJ = ${SRC:.c=.o}
 

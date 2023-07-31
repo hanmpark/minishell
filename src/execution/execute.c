@@ -15,22 +15,30 @@ static t_treenode	*next_command(t_treenode *node, int status)
 	return (node->and_branch);
 }
 
-static bool	exec_node(t_cmd **cmd, int nb_pipe, int *status, char **envp)
+static void	close_pipes(t_cmd **cmd)
 {
 	int	i;
 
 	i = 0;
-	while (i < nb_pipe)
+	while (cmd && cmd[i + 1])
 	{
-		if (cmd[i]->fdin != STDIN_FILENO)
-			dup2(cmd[i]->fdin, STDIN_FILENO);
-		if (i < nb_pipe - 1 && !exec_cmd(cmd[i], envp))
-			return (false);
-		if (i == nb_pipe - 1 && !exec_last_cmd(cmd[i], status, envp))
-			return (false);
-		dup2(g_ms.stdout_fileno, STDOUT_FILENO);
+		close(cmd[i]->pipe[READ_END]);
+		close(cmd[i]->pipe[WRITE_END]);
 		i++;
 	}
+}
+
+static bool	exec_node(t_cmd **cmd, int nb_pipe, int *status, char **envp)
+{
+	int	i;
+
+	i = -1;
+	while (++i < nb_pipe)
+		cmd[i]->pid = exec_cmd(cmd, envp, i, i == nb_pipe - 1);
+	close_pipes(cmd);
+	i = -1;
+	while (cmd[++i])
+		waitpid(cmd[i]->pid, status, 0);
 	return (true);
 }
 
@@ -39,7 +47,7 @@ static bool	exec_node(t_cmd **cmd, int nb_pipe, int *status, char **envp)
 * - depending on the status of the last command,
 * it will move on to the and_branch or the or_branch node
 */
-bool	execute(t_treenode *node, char **envp)
+void	execute(t_treenode *node, char **envp)
 {
 	int	status;
 
@@ -49,5 +57,4 @@ bool	execute(t_treenode *node, char **envp)
 		dup2(g_ms.stdin_fileno, STDIN_FILENO);
 		node = next_command(node, status);
 	}
-	return (true);
 }

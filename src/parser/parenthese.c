@@ -30,9 +30,9 @@ static t_token	*check_in_parentheses(t_token *l_token, int *par_id)
 	return (l_token);
 }
 
-/* Checks if the parentheses are:
-* - closed
-* - contain at least a logical operator '&&' or '||'
+/* Checks parentheses:
+* - if they are closed
+* - if they have at least one logical operators ('&&' and '||')
 */
 bool	check_parentheses(t_token *l_token)
 {
