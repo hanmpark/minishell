@@ -17,19 +17,6 @@ static void	execute_cmd(char **cmd_args, char **envp)
 		error_exit(g_ms.node, &g_ms.l_token, cmd_args[0], BIN_NOT_FOUND);
 }
 
-// Execute the sent command in the child process
-static void	treat_child_process(t_cmd **cmd, char **envp, int id, bool is_last)
-{
-	if (id > 0)
-	{
-		close(cmd[id - 1]->pipe[WRITE_END]);
-		dup2(cmd[id - 1]->pipe[READ_END], STDIN_FILENO);
-		close(cmd[id - 1]->pipe[READ_END]);
-	}
-	set_iostream(cmd[id], is_last);
-	execute_cmd(cmd[id]->args, envp);
-}
-
 // Creates a new child process to execute the sent command in it
 pid_t	exec_cmd(t_cmd **cmd, char **envp, int id, bool is_last)
 {
@@ -41,6 +28,9 @@ pid_t	exec_cmd(t_cmd **cmd, char **envp, int id, bool is_last)
 	if (pid == -1)
 		return (-1);
 	if (pid == CHILD_PROCESS)
-		treat_child_process(cmd, envp, id, is_last);
+	{
+		set_iostream(cmd, id, is_last);
+		execute_cmd(cmd[id]->args, envp);
+	}
 	return (pid);
 }

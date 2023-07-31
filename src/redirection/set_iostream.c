@@ -22,12 +22,18 @@ static bool	set_redirection(t_cmd *cmd)
 * - else sets the pipe as the I/O stream
 * - the last command is not piped
 */
-void	set_iostream(t_cmd *cmd, bool is_last)
+void	set_iostream(t_cmd **cmd, int id, bool is_last)
 {
+	if (id > 0)
+	{
+		close(cmd[id - 1]->pipe[WRITE_END]);
+		dup2(cmd[id - 1]->pipe[READ_END], STDIN_FILENO);
+		close(cmd[id - 1]->pipe[READ_END]);
+	}
 	if (!is_last)
-		close(cmd->pipe[READ_END]);
-	if (!set_redirection(cmd) && !is_last)
-		dup2(cmd->pipe[WRITE_END], STDOUT_FILENO);
+		close(cmd[id]->pipe[READ_END]);
+	if (!set_redirection(cmd[id]) && !is_last)
+		dup2(cmd[id]->pipe[WRITE_END], STDOUT_FILENO);
 	if (!is_last)
-		close(cmd->pipe[WRITE_END]);
+		close(cmd[id]->pipe[WRITE_END]);
 }
