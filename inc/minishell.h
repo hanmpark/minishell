@@ -42,6 +42,7 @@ typedef struct s_minishell
 	int					stdout_fileno;
 	int					exit_status;
 	bool				is_debug;
+	char				**env_var;
 }	t_minishell;
 
 struct s_minishell	g_ms;

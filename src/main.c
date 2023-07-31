@@ -15,7 +15,7 @@ void	set_termios(bool set)
 	tcsetattr(STDIN_FILENO, TCSANOW, &termios);
 }
 
-static bool	init_minishell(int argc, char **argv)
+static bool	init_minishell(int argc, char **argv, char **envp)
 {
 	g_ms.is_debug = false;
 	if (argc == 2 && !ft_strcmp(argv[1], "debug"))
@@ -29,6 +29,7 @@ static bool	init_minishell(int argc, char **argv)
 	g_ms.exit_status = 0;
 	g_ms.stdin_fileno = dup(STDIN_FILENO);
 	g_ms.stdout_fileno = dup(STDOUT_FILENO);
+	g_ms.env_var = ft_arraydup(envp);
 	return (true);
 }
 
@@ -37,7 +38,7 @@ static bool	init_minishell(int argc, char **argv)
 */
 int	main(int argc, char **argv, char **envp)
 {
-	if (!init_minishell(argc, argv))
+	if (!init_minishell(argc, argv, envp))
 		return (EXIT_FAILURE);
 	while ("apagnan")
 	{

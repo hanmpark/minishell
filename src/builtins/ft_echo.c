@@ -39,7 +39,7 @@ int	ft_echo(char **av)
 
 	i = 1;
 	nl_opt = 0;
-	n_option( av, &nl_opt); // check if -n option is present
+	n_option(av, &nl_opt); // check if -n option is present
 	i += nl_opt; // adds up number of options, start from the next token
 	while (av[i])
 	{
