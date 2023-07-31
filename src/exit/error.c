@@ -2,61 +2,63 @@
 #include "parsing.h"
 #include "exit.h"
 #include <stdbool.h>
+#include <sys/stat.h>
 
-bool	error_token(char *token, bool handle)
+/* Handling error messages and its exit status:
+* - exits with 1 usually if it's not something we have to handle
+* - exits with 258 for other parsing errors
+*/
+bool	error_token(char *token, char *err_msg, int st)
 {
-	if (handle)
-		ft_putstr_fd(ERR_TOKEN, 2);
+	if (ft_strrchr(err_msg, '`'))
+	{
+		ft_putstr_fd(err_msg, 2);
+		ft_putstr_fd(token, 2);
+		ft_putstr_fd(ERR_CTOKEN, 2);
+	}
+	else if (!token)
+		ft_putstr_fd(err_msg, 2);
 	else
-		ft_putstr_fd(ERR_NOHANDLE, 2);
-	ft_putstr_fd(token, 2);
-	ft_putstr_fd(ERR_CTOKEN, 2);
-	g_ms.exit_status = 258;
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(token, 2);
+		ft_putstr_fd(err_msg, 2);
+	}
+	g_ms.exit_status = st;
 	return (false);
 }
 
-char	*error_quote(t_type type)
+void	error_exit(char *err_src, char *msg, int st)
 {
-	ft_putstr_fd(ERR_TOKEN, 2);
-	if (type == QUOTE)
-		ft_putstr_fd("'", 2);
-	else
-		ft_putstr_fd("\"", 2);
-	ft_putstr_fd(ERR_CTOKEN, 2);
-	g_ms.exit_status = 258;
-	return (NULL);
-}
+	char	*cat_str;
+	char	*tmp;
 
-bool	error_bool(char *msg)
-{
-	ft_putstr_fd(msg, 2);
-	return (false);
-}
-
-void	error_exit(t_treenode *tree, t_token **l_token, char *msg, int st)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(msg, 2);
-	if (st == BIN_NOT_FOUND)
-		ft_putstr_fd(": command not found\n", 2);
-	free_tree(tree);
-	free_tokens(l_token);
+	tmp = ft_strjoin("minishell: ", err_src);
+	cat_str = ft_strjoin(tmp, msg);
+	free(tmp);
+	ft_putstr_fd(cat_str, 2);
+	free(cat_str);
+	free_tree(g_ms.node);
+	free_tokens(&g_ms.l_token);
 	close(g_ms.stdin_fileno);
 	close(g_ms.stdout_fileno);
 	set_termios(false);
 	exit(st);
 }
 
-bool	error_expand(char *error_token, char *msg, int error_code)
+void	error_not_found(char *cmd)
 {
-	ft_putstr_fd("minishell: ", 2);
-	if (msg)
-	{
-		ft_putstr_fd(error_token, 2);
-		ft_putstr_fd(msg, 2);
-	}
-	else
-		perror(error_token);
-	g_ms.exit_status = error_code;
-	return (false);
+	if (ft_strchr(cmd, '/'))
+		error_exit(cmd, ERR_ENOENT, BIN_NOT_FOUND);
+	error_exit(cmd, ERR_NOTFOUND, BIN_NOT_FOUND);
+}
+
+void	error_not_executable(char *cmd)
+{
+	struct stat	stat;
+
+	lstat(cmd, &stat);
+	if (S_ISDIR(stat.st_mode))
+		error_exit(cmd, ERR_ISDIR, NOT_EXECUTABLE);
+	error_exit(cmd, ERR_PERM, NOT_EXECUTABLE);
 }

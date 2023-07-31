@@ -1,6 +1,7 @@
 #include "charft.h"
 #include "memft.h"
 
+// Duplicates an array of strings
 char	**ft_arraydup(char **ar)
 {
 	char	**dup;

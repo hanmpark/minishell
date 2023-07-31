@@ -6,19 +6,24 @@
 static char	**get_args(t_token **cur, int *par_id)
 {
 	char	**args;
+	char	**tmp;
 
 	args = NULL;
 	if (*cur && (*cur)->type == PIPE)
 		*cur = (*cur)->next;
 	while (*cur && !is_redir((*cur)->type) && !is_cmdsep((*cur)->type))
 	{
-		if (!args && !is_par((*cur)->type))
+		if (!is_par((*cur)->type))
 		{
-			*par_id = (*cur)->par_id;
-			args = expand_arg(ft_strdup((*cur)->token));
+			tmp = expand_arg(ft_strdup((*cur)->token));
+			if (!args)
+			{
+				*par_id = (*cur)->par_id;
+				args = tmp;
+			}
+			else if (tmp)
+				args = ft_arrayjoin(args, tmp);
 		}
-		else if (args && !is_par((*cur)->type))
-			args = ft_arrayjoin(args, expand_arg(ft_strdup((*cur)->token)));
 		*cur = (*cur)->next;
 	}
 	return (args);

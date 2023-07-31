@@ -46,10 +46,10 @@ bool	check_parentheses(t_token *l_token)
 			l_token->par_id = ++par_id;
 			l_token = check_in_parentheses(l_token->next, &par_id);
 			if (!l_token)
-				return (error_token("(", true));
+				return (error_token("(", ERR_TOKEN, NO_HANDLE));
 		}
 		else if (l_token->type == RPAR)
-			return (error_token(")", true));
+			return (error_token(")", ERR_TOKEN, NO_HANDLE));
 		l_token = l_token->next;
 	}
 	return (true);

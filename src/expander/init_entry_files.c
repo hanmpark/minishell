@@ -34,8 +34,7 @@ static int	get_swap_index(char **files, int i)
 	swap = i;
 	while (files[i])
 	{
-		if (ft_strncmp(files[swap], files[i], \
-			ft_strlen(files[i]) + ft_strlen(files[swap])) > 0)
+		if (ft_strcmp(files[swap], files[i]) > 0)
 			swap = i;
 		i++;
 	}

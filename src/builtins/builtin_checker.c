@@ -1,20 +1,42 @@
 #include "minishell.h"
+#include "builtins.h"
+
+int	builtin_checker(char **cmd)
+{
+	if (!ft_strcmp(cmd[0], "echo"))
+		return (1);
+	else if (!ft_strcmp(cmd[0], "cd"))
+		return (1);
+	else if (!ft_strcmp(cmd[0], "pwd"))
+		return (1);
+	// else if (!ft_strcmp(cmd[0], "export"))
+	// 	return (ft_export(cmd, envp));
+	// else if (!ft_strcmp(cmd[0], "unset"))
+	// 	return (ft_unset(cmd));
+	// else if (!ft_strcmp(cmd[0], "env"))
+	// 	return (ft_env(cmd, envp));
+	// else if (!ft_strcmp(cmd[0], "exit"))
+	// 	return (ft_exit(cmd));
+	return (0);
+}
 
 // check for each builtin commands
-void	builtin_cmds(void)
+int	builtin_cmds(char **cmd, char **envp)
 {
-	if (!ft_strncmp(g_ms.l_token->token, "echo", 5))
-		ft_echo(g_ms.l_token);
-	else if (!ft_strncmp(g_ms.l_token->token, "cd", 3))
-		ft_cd(g_ms.l_token);
-	else if (!ft_strncmp(g_ms.l_token->token, "pwd", 4))
-		ft_pwd(g_ms.l_token);
-	else if (!ft_strncmp(g_ms.l_token->token, "export", 7))
-		ft_export(g_ms.l_token);
-	else if (!ft_strncmp(g_ms.l_token->token, "unset", 6))
-		ft_unset(g_ms.l_token);
-	else if (!ft_strncmp(g_ms.l_token->token, "env", 4))
-		ft_env(g_ms.l_token);
-	else if (!ft_strncmp(g_ms.l_token->token, "exit", 5))
-		ft_exit(g_ms.l_token);
+	(void)envp;
+	if (!ft_strcmp(cmd[0], "echo"))
+		return (ft_echo(cmd));
+	else if (!ft_strcmp(cmd[0], "cd"))
+		return (ft_cd(cmd));
+	else if (!ft_strcmp(cmd[0], "pwd"))
+		return (ft_pwd());
+	// else if (!ft_strcmp(cmd[0], "export"))
+	// 	return (ft_export(cmd, envp));
+	// else if (!ft_strcmp(cmd[0], "unset"))
+	// 	return (ft_unset(cmd));
+	// else if (!ft_strcmp(cmd[0], "env"))
+	// 	return (ft_env(cmd, envp));
+	// else if (!ft_strcmp(cmd[0], "exit"))
+	// 	return (ft_exit(cmd));
+	return (0);
 }

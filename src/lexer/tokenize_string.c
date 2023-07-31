@@ -21,7 +21,12 @@ static bool	move_to_end(t_lex *lex, char *line)
 		if (lex->type == DQUOTE || lex->type == QUOTE)
 		{
 			if (!find_second_mark(lex, line, line[lex->cur]))
-				return (false);
+			{
+				if (lex->type == DQUOTE)
+					return (error_token("\"", ERR_TOKEN, NO_HANDLE));
+				else if (lex->type == QUOTE)
+					return (error_token("'", ERR_TOKEN, NO_HANDLE));
+			}
 		}
 		else
 			lex->cur++;
@@ -57,6 +62,6 @@ char	*tokenize_string(t_lex *lex, char *str, char *line)
 	lex->last = lex->cur;
 	str = get_string(lex, str, line);
 	if (!str)
-		return (error_quote(lex->type));
+		return (NULL);
 	return (str);
 }

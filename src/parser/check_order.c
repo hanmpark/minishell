@@ -31,14 +31,14 @@ bool	check_order(t_token *l_token)
 	{
 		last_type = right_token(last_type, l_token);
 		if (last_type == -1)
-			return (error_token(l_token->token, true));
+			return (error_token(l_token->token, ERR_TOKEN, ORDER_WRONG));
 		if (last_type == -2)
-			return (error_token(l_token->token, false));
+			return (error_token(l_token->token, ERR_NOHANDLE, NO_HANDLE));
 		l_token = l_token->next;
 	}
 	if (is_cmdsep(last_type))
-		return (error_bool(ERR_MISS));
+		return (error_token(NULL, ERR_MISS, NO_HANDLE));
 	else if (is_redir(last_type))
-		return (error_bool(ERR_REDIR));
+		return (error_token(NULL, ERR_REDIR, ORDER_WRONG));
 	return (true);
 }

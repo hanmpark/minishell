@@ -12,7 +12,7 @@ static char	*subenv(char *str)
 	return (env);
 }
 
-static char	*replace_env(char *line, char *replace, int start)
+static char	*replace_env(char *line, char *replace, bool exit, int start)
 {
 	char	*tmp;
 	char	*edited_line;
@@ -21,8 +21,11 @@ static char	*replace_env(char *line, char *replace, int start)
 	tmp = ft_strjoin(edited_line, replace);
 	free(edited_line);
 	start++;
-	while (line[start] && ft_isenv(line[start]))
+	if (exit)
 		start++;
+	else
+		while (line[start] && (ft_isenv(line[start])))
+			start++;
 	edited_line = ft_strjoin(tmp, line + start);
 	free(tmp);
 	return (edited_line);
@@ -38,12 +41,23 @@ static char	*edit_line(char *line, char *env, int *i)
 	env_value = getenv(env_name);
 	free(env_name);
 	if (!env_value)
-		edited_line = replace_env(line, "", *i);
+		edited_line = replace_env(line, "", false, *i);
 	else
 	{
-		edited_line = replace_env(line, env_value, *i);
+		edited_line = replace_env(line, env_value, false, *i);
 		*i += (int)ft_strlen(env_value) - 1;
 	}
+	free(line);
+	return (edited_line);
+}
+
+static char	*edit_line_exit(char *line, char *exit_st, int *i)
+{
+	char	*edited_line;
+
+	edited_line = replace_env(line, exit_st, true, *i);
+	*i += (int)ft_strlen(exit_st) - 1;
+	free(exit_st);
 	free(line);
 	return (edited_line);
 }
@@ -61,13 +75,8 @@ char	*treat_env(char *line, bool prevent_eval)
 	{
 		if (line[i] == '$' && (ft_isenv(line[i + 1]) || prevent_eval))
 			line = edit_line(line, line + i + 1, &i);
-		else if (ft_ishome(line))
-			line = edit_line(line, "HOME", &i);
-		else if (!ft_strncmp(line, "$?", 2))
-		{
-			free(line);
-			line = ft_itoa(g_ms.exit_status);
-		}
+		else if (line[i] == '$' && line[i + 1] && line[i + 1] == '?')
+			line = edit_line_exit(line, ft_itoa(g_ms.exit_status), &i);
 		else
 			i++;
 	}

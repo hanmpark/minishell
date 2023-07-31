@@ -1,14 +1,17 @@
 #include "minishell.h"
 
 // pwd builtin
-void	ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	buf[4096];
 
 	if (getcwd(buf, 4096) == NULL)
-		return ;
-	ft_putendl_fd(buf, 1);
-	// need to add 0 value for success command execution: $? = 0
+	{
+		perror("minishell: pwd:");
+		return (1);
+	}
+	ft_putendl_fd(buf, STDOUT_FILENO);
+	return (0);
 }
 
 /* Note to self:

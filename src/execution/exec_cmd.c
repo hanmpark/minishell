@@ -1,24 +1,52 @@
 #include "minishell.h"
 #include "execution.h"
+#include "builtins.h"
 #include "exit.h"
 
-static void	execute_cmd(char **cmd_args, char **envp)
+static bool	find_path_cmd(char **cmd_args, char **envp)
+{
+	char	**path_cmd;
+
+	path_cmd = define_path_cmd(cmd_args, get_path(envp));
+	if (execve(path_cmd[0], path_cmd, envp) == -1)
+	{
+		ft_arrayfree(path_cmd);
+		return (false);
+	}
+	return (true);
+}
+
+static bool	is_path_cmd(char *cmd)
+{
+	if (ft_strchr(cmd, '/') && access(cmd, F_OK) == 0)
+		return (true);
+	return (false);
+}
+
+/* 4 possible errors:
+* - Command not found
+* - No such file or directory
+* - Permission denied
+* - is a directory
+*/
+static void	exec_cmd(char **cmd_args, char **envp)
 {
 	if (!cmd_args)
 	{
 		g_ms.exit_status = 0;
 		exit(EXIT_SUCCESS);
 	}
-	// have to treat builtins here
-	// before executing the command, we have to check if it's a builtin first
-	execve(cmd_args[0], cmd_args, envp);
-	cmd_args = define_path_to_cmd(cmd_args, get_path(envp));
+	if (builtin_checker(cmd_args))
+		exit(builtin_cmds(cmd_args, envp));
+	if (!find_path_cmd(cmd_args, envp))
+		if (!is_path_cmd(cmd_args[0]))
+			error_not_found(cmd_args[0]);
 	if (execve(cmd_args[0], cmd_args, envp) == -1)
-		error_exit(g_ms.node, &g_ms.l_token, cmd_args[0], BIN_NOT_FOUND);
+		error_not_executable(cmd_args[0]);
 }
 
 // Creates a new child process to execute the sent command in it
-pid_t	exec_cmd(t_cmd **cmd, char **envp, int id, bool is_last)
+pid_t	parse_exec(t_cmd **cmd, char **envp, int id, bool is_last)
 {
 	pid_t	pid;
 
@@ -30,7 +58,7 @@ pid_t	exec_cmd(t_cmd **cmd, char **envp, int id, bool is_last)
 	if (pid == CHILD_PROCESS)
 	{
 		set_iostream(cmd, id, is_last);
-		execute_cmd(cmd[id]->args, envp);
+		exec_cmd(cmd[id]->args, envp);
 	}
 	return (pid);
 }

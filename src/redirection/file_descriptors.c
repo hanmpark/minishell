@@ -47,7 +47,7 @@ static bool	check_filename(t_token *token)
 	{
 		if (expanded_token)
 			ft_arrayfree(expanded_token);
-		return (error_expand(token->token, ERR_AMB, 1));
+		return (error_token(token->token, ERR_AMB, 1));
 	}
 	free(token->token);
 	token->token = ft_strdup(*expanded_token);
@@ -77,7 +77,7 @@ bool	treat_redir(t_cmd *cmd, t_token **l_token)
 	else if (type == DGREAT)
 		cmd->fdout = open_file((*l_token)->token, APPEND);
 	if (cmd->fdin == -1 || cmd->fdout == -1)
-		return (error_expand((*l_token)->token, ERR_ENOENT, 1));
+		return (error_token((*l_token)->token, ERR_ENOENT, 1));
 	*l_token = (*l_token)->next;
 	return (true);
 }

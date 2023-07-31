@@ -18,8 +18,7 @@ void	set_termios(bool set)
 static bool	init_minishell(int argc, char **argv)
 {
 	g_ms.is_debug = false;
-	if (argc == 2 && ft_strlen(argv[1]) == 5 && \
-		!ft_strncmp(argv[1], "debug", 5))
+	if (argc == 2 && !ft_strcmp(argv[1], "debug"))
 		g_ms.is_debug = true;
 	else if (argc != 1)
 		return (false);

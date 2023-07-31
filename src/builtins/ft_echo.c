@@ -4,13 +4,13 @@
 // for testing you can try use the command below:
 // gcc -I../../inc/ ft_echo.c
 
-static void n_option(int ac, char **av, int *nl_opt)
+static void n_option(char **av, int *nl_opt)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (av[++i] && i < ac)
+	while (av[++i])
 	{
 		if (av[i][0] != '-')
 			break ;
@@ -32,40 +32,25 @@ static void n_option(int ac, char **av, int *nl_opt)
 	}
 }
 
-static void	put_var(char *av)
-{
-	char	*var;
-
-	if (av[0] == '$' && av[1] != '\0') // print environment variables
-	{
-		var = getenv(av + 1);
-		if (var)
-			ft_printf("%s", var);
-	}
-	else if (av[0] == '~' && av[1] == '\0') // print home directory
-		ft_printf("%s", getenv("HOME"));
-	else
-		ft_printf("%s", av); // print the token
-}
-
-void	ft_echo(int ac, char **av)
+int	ft_echo(char **av)
 {
 	int	i;
 	int	nl_opt; // newline option
 
 	i = 1;
 	nl_opt = 0;
-	n_option(ac, av, &nl_opt); // check if -n option is present
+	n_option( av, &nl_opt); // check if -n option is present
 	i += nl_opt; // adds up number of options, start from the next token
-	while (av[i] && i < ac)
+	while (av[i])
 	{
-		put_var(av[i]);
-		if (av[i + 1] && i + 1 < ac) // print space between arguments
+		ft_printf("%s", av[i]);
+		if (av[i + 1]) // print space between arguments
 			ft_printf(" ");
 		i++;
 	}
 	if (nl_opt == 0) // print newline if -n option was not specified
 		ft_printf("\n");
+	return (0);
 }
 
 // main function to test the ft_echo builtin

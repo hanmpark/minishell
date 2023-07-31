@@ -27,20 +27,18 @@ PARSER_PATH = ${SRC_PATH}parser/
 SRC_PARSER = ${addprefix ${PARSER_PATH}, check_order.c \
 											parenthese.c \
 											get_table.c \
-											get_cmd.c \
-											here_doc.c}
+											get_cmd.c}
 
 REDIR_PATH = ${SRC_PATH}redirection/
 SRC_REDIR = ${addprefix ${REDIR_PATH}, file_descriptors.c \
-										set_iostream.c}
+										set_iostream.c \
+										here_doc.c}
 
 EXPANDER_PATH = ${SRC_PATH}expander/
 SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c \
 												expand_tools.c \
-												expand_arg.c}
-
-WILDCARDS_PATH = ${EXPANDER_PATH}wildcards/
-SRC_WILDCARDS = ${addprefix ${WILDCARDS_PATH}, compare_file.c \
+												expand_arg.c \
+												compare_file.c \
 												match_files.c \
 												asterix_globbing.c \
 												init_entry_files.c}
@@ -50,13 +48,18 @@ SRC_EXEC = ${addprefix ${EXEC_PATH}, execute.c \
 										define_path.c \
 										exec_cmd.c}
 
+BUILTINS_PATH = ${SRC_PATH}builtins/
+SRC_BUILTINS = ${addprefix ${BUILTINS_PATH}, builtin_checker.c \
+												ft_cd.c \
+												ft_echo.c \
+												ft_pwd.c}
+
 EXIT_PATH = ${SRC_PATH}exit/
 SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \
 										error.c}
 
-SRC = ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} \
-		${SRC_WILDCARDS} ${SRC_EXEC} ${SRC_DEBUG} ${SRC_REDIR} \
-		${SRC_PATH}main.c ${SRC_PATH}handle_line.c
+SRC = ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} ${SRC_EXEC} \
+	${SRC_BUILTINS} ${SRC_DEBUG} ${SRC_REDIR} ${SRC_PATH}main.c ${SRC_PATH}handle_line.c
 
 OBJ = ${SRC:.c=.o}
 

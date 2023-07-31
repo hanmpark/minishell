@@ -34,7 +34,7 @@ static bool	exec_node(t_cmd **cmd, int nb_pipe, int *status, char **envp)
 
 	i = -1;
 	while (++i < nb_pipe)
-		cmd[i]->pid = exec_cmd(cmd, envp, i, i == nb_pipe - 1);
+		cmd[i]->pid = parse_exec(cmd, envp, i, i == nb_pipe - 1);
 	close_pipes(cmd);
 	i = -1;
 	while (cmd[++i])

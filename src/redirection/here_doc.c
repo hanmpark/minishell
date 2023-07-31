@@ -30,7 +30,7 @@ static void	check_doc(char *limiter, int *pfd)
 	line = readline("> ");
 	while (line && ft_strncmp(line, limiter, ft_strlen(line)))
 	{
-		line = expand_here_doc(found_quote(line), line);
+		line = expand_here_doc(found_quote(limiter), line);
 		line_nl = ft_strjoin(line, "\n");
 		write(pfd[1], line_nl, ft_strlen(line_nl));
 		free(line);
