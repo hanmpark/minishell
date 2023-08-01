@@ -39,7 +39,7 @@ The *minishell* program reads commands from the user, parses them, and executes 
 ## Global structure (Abstract Syntax Tree)
 > "Binary trees sounds cool" - me
 
-![code_struct](https://github.com/hanmpark/minishell/minishell_glob_struct.png)
+![code_struct](https://github.com/hanmpark/minishell/blob/main/minishell_glob_struct.png)
 
 ## Usage
 
