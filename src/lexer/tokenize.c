@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:53:05 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/01 09:00:13 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,6 @@ static void	skip_sep(t_token **l_token, t_lex *lex, char *line)
 	lex->cur += skip;
 	lex->last = lex->cur;
 }
-
-// mis en commentaire temporairement car pas utiliser?
-/*static bool	join_sep(t_token **l_token, t_lex *lex, char *line, char *join)
-{
-	char	*tmp;
-	int		skip;
-
-	skip = nbr_skip(line + lex->cur, lex->type);
-	tmp = ft_substr(line, lex->cur, skip);
-	ft_tokadd_back(l_token, ft_toknew(ft_strjoin(join, tmp), lex->type));
-	if (!skip && line[lex->cur])
-		lex->cur++;
-	lex->cur += skip;
-	lex->last = lex->cur;
-	free(join);
-	free(tmp);
-	return (true);
-}*/
 
 /* Creates tokens and their type:
 * - they are stored in linked lists
