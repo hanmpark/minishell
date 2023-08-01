@@ -21,7 +21,6 @@
 # define ORDER_WRONG 258
 
 bool	error_token(char *token, char *err_msg, int st);
-void	error_exit(char *err_src, char *msg, int st);
 void	error_not_found(char *cmd);
 void	error_not_executable(char *cmd);
 

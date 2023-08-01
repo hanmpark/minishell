@@ -32,7 +32,7 @@ bool	error_token(char *token, char *err_msg, int st)
 * - outputs the error message
 * - exits with the most adapted exit status
 */
-void	error_exit(char *err_src, char *msg, int st)
+static void	error_exit(char *err_src, char *msg, int st)
 {
 	char	*cat_str;
 	char	*tmp;
