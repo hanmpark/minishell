@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:25 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:54:26 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/01 09:59:04 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void	print_tree_rec(t_treenode *node, int level)
 */
 void	print_tree(t_treenode *node)
 {
-	ft_printf("\n\033[38;5;62mTREE:\033[0m\n");
+	ft_printf("\033[38;5;62mTREE:\033[0m\n");
 	print_tree_rec(node, 0);
 	ft_printf("\n");
 	ft_printf("\033[38;5;182mCOMMAND OUTPUT:\033[0m\n");
