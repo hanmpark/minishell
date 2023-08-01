@@ -1,23 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_line.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/01 08:52:31 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/08/01 08:55:25 by hanmpark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "execution.h"
 #include "parsing.h"
 #include "exit.h"
+
 #include <stdbool.h>
-
-/* Note for self (Kian):
-* The lexer is the first step of the parsing process
-* the tokens are stored in a linked list of t_token
-* the tokens are separated by their type
-* the tokens are then passed to the parser
-* the parser will check if the tokens are in the right order
-*/
-
-/* UPDATE HANMIN:
-* Our minishell does not treat the following case
-* bash-3.2$ cat << EOF &&& echo haha
-* it should open the here_doc anyway when the error occurs
-* after the here_doc call
-*/
 
 /* Parser part:
 * Check the format of the line and creates binary tree(s) of command(s)

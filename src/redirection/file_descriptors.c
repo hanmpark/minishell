@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_descriptors.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/01 08:52:45 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/08/01 08:55:34 by hanmpark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "expander.h"
 #include "parsing.h"
 #include "exit.h"
+
 #include <fcntl.h>
 
 static int	open_file(char	*filename, int mode)
