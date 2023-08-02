@@ -33,8 +33,9 @@ The *minishell* program reads commands from the user, parses them, and executes 
 - `exit` without any option
 
 ### What our shell does not manage
-- unclosed quotation marks or special characters that are not requested in the subject line, such as `\` (backslash) or `;` (semicolon)
-- anything else that was not mentioned above
+> [!IMPORTANT]
+> - unclosed quotation marks or special characters that are not requested in the subject line, such as `\` (backslash) or `;` (semicolon)
+> - anything else that was not mentioned above
 
 ## Global structure (Abstract Syntax Tree)
 > "Binary trees sounds cool" - me
