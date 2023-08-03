@@ -1,5 +1,5 @@
 #include "minishell.h"
-#include "builtins.h"
+#include "builtin.h"
 
 int	builtin_checker(char **cmd)
 {

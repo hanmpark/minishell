@@ -1,5 +1,5 @@
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
 int	builtin_checker(char **cmd);
 int	builtin_cmds(char **cmd, char **envp);
