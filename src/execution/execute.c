@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:10 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:54:12 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:53:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 static t_treenode	*next_command(t_treenode *node, int status)
 {
 	if (WIFEXITED(status))
-		g_ms.exit_status = WEXITSTATUS(status);
+		g_exit = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		g_ms.exit_status = 128 + WTERMSIG(status);
+		g_exit = 128 + WTERMSIG(status);
 	else if (WIFSTOPPED(status))
-		g_ms.exit_status = 128 + WSTOPSIG(status);
-	if (g_ms.exit_status != 0)
+		g_exit = 128 + WSTOPSIG(status);
+	if (g_exit != 0)
 		return (node->or_branch);
 	return (node->and_branch);
 }
@@ -66,7 +66,6 @@ void	execute(t_treenode *node, char **envp)
 	while (node)
 	{
 		exec_node(node->cmd, node->nb_pipe, &status, envp);
-		dup2(g_ms.stdin_fileno, STDIN_FILENO);
 		node = next_command(node, status);
 	}
 }

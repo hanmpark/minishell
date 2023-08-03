@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:55:25 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:51:38 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,27 @@ static t_token	*lexer(char *line)
 * - deals with redirections and stores it in the command structure (t_cmd)
 * - creates the binary tree
 */
-static t_treenode	*parsing(char *line)
+static t_treenode	*parsing(char *line, bool is_debug)
 {
 	t_treenode	*cmdtable;
+	t_token		*l_token;
 
 	cmdtable = NULL;
-	g_ms.l_token = lexer(line);
-	if (!g_ms.l_token)
+	l_token = lexer(line);
+	if (!l_token)
 		return (NULL);
-	cmdtable = parser(g_ms.l_token);
+	cmdtable = parser(l_token);
 	if (!cmdtable)
-		return (NULL);
-	if (g_ms.is_debug)
 	{
-		print_tokens(g_ms.l_token);
+		free_tokens(&l_token);
+		return (NULL);
+	}
+	if (is_debug)
+	{
+		print_tokens(l_token);
 		print_tree(cmdtable);
 	}
+	free_tokens(&l_token);
 	return (cmdtable);
 }
 
@@ -87,16 +92,17 @@ static t_treenode	*parsing(char *line)
 * - stores all the important data to an AST (t_treenode)
 * - if everything is parsed, execute the line
 */
-void	handle_line(char *line, char **envp)
+void	handle_line(char *line, char **envp, bool is_debug)
 {
+	t_treenode	*tree;
+
 	if (!*line)
 		return ;
 	add_history(line);
-	g_ms.node = parsing(line);
-	free_tokens(&g_ms.l_token);
+	tree = parsing(line, is_debug);
 	free(line);
-	if (!g_ms.node)
+	if (!tree)
 		return ;
-	execute(g_ms.node, envp);
-	free_tree(g_ms.node);
+	execute(tree, envp);
+	free_tree(tree);
 }

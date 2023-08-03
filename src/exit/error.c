@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:46 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:54:09 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:56:13 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	error_token(char *token, char *err_msg, int st)
 		ft_putstr_fd(token, 2);
 		ft_putstr_fd(err_msg, 2);
 	}
-	g_ms.exit_status = st;
+	g_exit = st;
 	return (false);
 }
 
@@ -54,10 +54,6 @@ static void	error_exit(char *err_src, char *msg, int st)
 	free(tmp);
 	ft_putstr_fd(cat_str, 2);
 	free(cat_str);
-	free_tree(g_ms.node);
-	free_tokens(&g_ms.l_token);
-	close(g_ms.stdin_fileno);
-	close(g_ms.stdout_fileno);
 	set_termios(false);
 	exit(st);
 }

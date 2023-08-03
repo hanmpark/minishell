@@ -15,22 +15,21 @@ void	set_termios(bool set)
 	tcsetattr(STDIN_FILENO, TCSANOW, &termios);
 }
 
-static bool	init_minishell(int argc, char **argv, char **envp)
+static t_minishell	*init_minishell(int argc, char **argv, char **envp)
 {
-	g_ms.is_debug = false;
+	t_minishell *mnsh;
+
+	mnsh = malloc(sizeof(t_minishell));
+	mnsh->is_debug = false;
 	if (argc == 2 && !ft_strcmp(argv[1], "debug"))
-		g_ms.is_debug = true;
+		mnsh->is_debug = true;
 	else if (argc != 1)
 		return (false);
 	set_termios(true);
-	g_ms.l_token = NULL;
-	g_ms.line = NULL;
-	g_ms.node = NULL;
-	g_ms.exit_status = 0;
-	g_ms.stdin_fileno = dup(STDIN_FILENO);
-	g_ms.stdout_fileno = dup(STDOUT_FILENO);
-	g_ms.env_var = ft_arraydup(envp);
-	return (true);
+	mnsh->line = NULL;
+	mnsh->env_var = ft_arraydup(envp);
+	g_exit = 0;
+	return (mnsh);
 }
 
 /* To see the tokens and the tree:
@@ -38,18 +37,21 @@ static bool	init_minishell(int argc, char **argv, char **envp)
 */
 int	main(int argc, char **argv, char **envp)
 {
-	if (!init_minishell(argc, argv, envp))
+	t_minishell	*mnsh;
+
+	mnsh = init_minishell(argc, argv, envp);
+	if (!mnsh)
 		return (EXIT_FAILURE);
 	while ("apagnan")
 	{
-		g_ms.line = readline("minishell$ ");
-		if (!g_ms.line)
+		mnsh->line = readline("minishell$ ");
+		if (!mnsh->line)
 			break ;
-		handle_line(g_ms.line, envp);
+		handle_line(mnsh->line, envp, mnsh->is_debug);
 		// system("leaks minishell");
 	}
-	close(g_ms.stdin_fileno);
-	close(g_ms.stdout_fileno);
+	ft_arrayfree(mnsh->env_var);
+	free(mnsh);
 	write(1, "exit\n", 5);
 	set_termios(false);
 	return (EXIT_SUCCESS);

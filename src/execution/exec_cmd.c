@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:14 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:54:19 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:42:22 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	exec_cmd(char **cmd_args, char **envp)
 {
 	if (!cmd_args)
 	{
-		g_ms.exit_status = 0;
+		g_exit = 0;
 		exit(EXIT_SUCCESS);
 	}
 	if (builtin_checker(cmd_args))

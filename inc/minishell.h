@@ -36,16 +36,11 @@ typedef enum e_type
 typedef struct s_minishell
 {
 	char				*line;
-	struct s_treenode	*node;
-	struct s_token		*l_token;
-	int					stdin_fileno;
-	int					stdout_fileno;
-	int					exit_status;
 	bool				is_debug;
 	char				**env_var;
 }	t_minishell;
 
-struct s_minishell	g_ms;
+int	g_exit;
 
 void	set_termios(bool set);
 
