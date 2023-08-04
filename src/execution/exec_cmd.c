@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:14 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/04 11:25:01 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:09:57 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,41 +40,43 @@ static bool	is_path_cmd(char *cmd)
 * - checks if the cmd needs its absolute path
 * - checks if it is already an executable
 */
-static void	exec_cmd(char **cmd_args, char **envp)
+static void	exec_cmd(char **cmd_args, char ***envp)
 {
 	if (!cmd_args)
-	{
-		g_exit = 0;
 		exit(EXIT_SUCCESS);
-	}
 	if (builtin_checker(cmd_args))
 		exit(builtin_cmds(cmd_args, envp));
-	if (!find_path_cmd(cmd_args, envp))
+	if (!find_path_cmd(cmd_args, *envp))
 		if (!is_path_cmd(cmd_args[0]))
 			error_not_found(cmd_args[0]);
-	if (execve(cmd_args[0], cmd_args, envp) == -1)
+	if (execve(cmd_args[0], cmd_args, *envp) == -1)
 		error_not_executable(cmd_args[0]);
 }
 
-// Creates a new child process to execute the sent command in it
-pid_t	parse_exec(t_cmd **cmd, char **envp, int id, bool is_last)
+pid_t	fork_cmd(t_cmd *cmd, char ***envp, bool is_last)
 {
 	pid_t	pid;
 
-	if (is_last && id == 0 && builtin_checker(cmd[id]->args))
-	{
-		g_exit = builtin_cmds(cmd[id]->args, envp);
-		return (-1);
-	}
-	if (!is_last && pipe(cmd[id]->pipe) == -1)
+	if (!is_last && pipe(cmd->pipe) == -1)
 		return (-1);
 	pid = fork();
-	if (pid == -1)
-		return (-1);
 	if (pid == CHILD_PROCESS)
 	{
-		set_iostream(cmd, id, is_last);
-		exec_cmd(cmd[id]->args, envp);
+		set_pipe_output(cmd, is_last);
+		exec_cmd(cmd->args, envp);
 	}
+	set_pipe_input(cmd, is_last);
 	return (pid);
+}
+
+// Creates a new child process to execute the sent command in it
+pid_t	parse_exec(t_cmd *cmd, char ***envp, int id, bool is_last)
+{
+	set_redirection(cmd);
+	if (is_last && id == 0 && builtin_checker(cmd->args))
+	{
+		g_exit = builtin_cmds(cmd->args, envp);
+		return (-1);
+	}
+	return (fork_cmd(cmd, envp, is_last));
 }

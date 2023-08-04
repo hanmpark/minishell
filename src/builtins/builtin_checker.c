@@ -3,6 +3,8 @@
 
 int	builtin_checker(char **cmd)
 {
+	if (!cmd)
+		return (0);
 	if (!ft_strcmp(cmd[0], "echo"))
 		return (1);
 	else if (!ft_strcmp(cmd[0], "cd"))
@@ -21,7 +23,7 @@ int	builtin_checker(char **cmd)
 }
 
 // check for each builtin commands
-int	builtin_cmds(char **cmd, char **envp)
+int	builtin_cmds(char **cmd, char ***envp)
 {
 	if (!ft_strcmp(cmd[0], "echo"))
 		return (ft_echo(cmd));

@@ -6,28 +6,12 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:38 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/04 11:27:47 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:14:22 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "execution.h"
-
-static bool	set_redirection(t_cmd *cmd)
-{
-	if (cmd->fdin != STDIN_FILENO)
-	{
-		dup2(cmd->fdin, STDIN_FILENO);
-		close(cmd->fdin);
-	}
-	if (cmd->fdout != STDOUT_FILENO)
-	{
-		dup2(cmd->fdout, STDOUT_FILENO);
-		close(cmd->fdout);
-		return (true);
-	}
-	return (false);
-}
 
 void	close_pipes(t_cmd **cmd)
 {
@@ -44,23 +28,43 @@ void	close_pipes(t_cmd **cmd)
 	}
 }
 
-/* Sets the I/O stream for the next command:
-* - if there is/are redirection(s) in the command line, sets them in priority
-* - else sets the pipe as the I/O stream
-* - the last command is not piped
-*/
-void	set_iostream(t_cmd **cmd, int id, bool is_last)
+void	set_redirection(t_cmd *cmd)
 {
-	if (id > 0)
+	if (cmd->fdin != STDIN_FILENO)
 	{
-		close(cmd[id - 1]->pipe[WRITE_END]);
-		dup2(cmd[id - 1]->pipe[READ_END], STDIN_FILENO);
-		close(cmd[id - 1]->pipe[READ_END]);
+		dup2(cmd->fdin, STDIN_FILENO);
+		close(cmd->fdin);
 	}
-	if (!is_last)
-		close(cmd[id]->pipe[READ_END]);
-	if (!set_redirection(cmd[id]) && !is_last)
-		dup2(cmd[id]->pipe[WRITE_END], STDOUT_FILENO);
-	if (!is_last)
-		close(cmd[id]->pipe[WRITE_END]);
+	if (cmd->fdout != STDOUT_FILENO)
+	{
+		dup2(cmd->fdout, STDOUT_FILENO);
+		close(cmd->fdout);
+	}
+}
+
+/* Sets the command's input stream:
+* if the command is piped to the next command,
+* set the pipe's READ_END as the STDIN for the next command
+*/
+void	set_pipe_input(t_cmd *simple_cmd, bool is_last_cmd)
+{
+	if (is_last_cmd)
+		return ;
+	close(simple_cmd->pipe[WRITE_END]);
+	dup2(simple_cmd->pipe[READ_END], STDIN_FILENO);
+	close(simple_cmd->pipe[READ_END]);
+}
+
+/* Sets the command's output stream:
+* if the command is piped to the next command,
+* writes the command's output into the pipe's WRITE_END
+*/
+void	set_pipe_output(t_cmd *simple_cmd, bool is_last_cmd)
+{
+	if (is_last_cmd)
+		return ;
+	close(simple_cmd->pipe[READ_END]);
+	if (simple_cmd->fdout == STDOUT_FILENO)
+		dup2(simple_cmd->pipe[WRITE_END], STDOUT_FILENO);
+	close(simple_cmd->pipe[WRITE_END]);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/03 21:18:29 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:01:04 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static t_treenode	*parsing(char *line, bool is_debug)
 * - stores all the important data to an AST (t_treenode)
 * - if everything is parsed, execute the line
 */
-void	handle_line(char *line, char **envp, bool is_debug)
+void	handle_line(char *line, char ***envp, bool is_debug)
 {
 	t_treenode	*tree;
 
