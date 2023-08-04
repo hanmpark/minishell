@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:14 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/03 21:15:15 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/04 11:25:01 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ pid_t	parse_exec(t_cmd **cmd, char **envp, int id, bool is_last)
 {
 	pid_t	pid;
 
+	if (is_last && id == 0 && builtin_checker(cmd[id]->args))
+	{
+		g_exit = builtin_cmds(cmd[id]->args, envp);
+		return (-1);
+	}
 	if (!is_last && pipe(cmd[id]->pipe) == -1)
 		return (-1);
 	pid = fork();

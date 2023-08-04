@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:10 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/03 17:53:25 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/04 11:25:05 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,6 @@ static t_treenode	*next_command(t_treenode *node, int status)
 	return (node->and_branch);
 }
 
-static void	close_pipes(t_cmd **cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd && cmd[i + 1])
-	{
-		close(cmd[i]->pipe[READ_END]);
-		close(cmd[i]->pipe[WRITE_END]);
-		i++;
-	}
-}
-
 static bool	exec_node(t_cmd **cmd, int nb_pipe, int *status, char **envp)
 {
 	int	i;
@@ -50,7 +37,10 @@ static bool	exec_node(t_cmd **cmd, int nb_pipe, int *status, char **envp)
 	close_pipes(cmd);
 	i = -1;
 	while (cmd[++i])
-		waitpid(cmd[i]->pid, status, 0);
+	{
+		if (cmd[i]->pid != -1)
+			waitpid(cmd[i]->pid, status, 0);
+	}
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:38 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:52:40 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/04 11:27:47 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,21 @@ static bool	set_redirection(t_cmd *cmd)
 		return (true);
 	}
 	return (false);
+}
+
+void	close_pipes(t_cmd **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd && cmd[i + 1])
+	{
+		if (cmd[i]->pipe[READ_END] != -1)
+			close(cmd[i]->pipe[READ_END]);
+		if (cmd[i]->pipe[WRITE_END] != -1)
+			close(cmd[i]->pipe[WRITE_END]);
+		i++;
+	}
 }
 
 /* Sets the I/O stream for the next command:

@@ -47,7 +47,7 @@ int	main(int argc, char **argv, char **envp)
 		mnsh->line = readline("minishell$ ");
 		if (!mnsh->line)
 			break ;
-		handle_line(mnsh->line, envp, mnsh->is_debug);
+		handle_line(mnsh->line, mnsh->env_var, mnsh->is_debug);
 		// system("leaks minishell");
 	}
 	ft_arrayfree(mnsh->env_var);
