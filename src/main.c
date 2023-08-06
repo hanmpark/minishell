@@ -32,8 +32,13 @@ static t_minishell	*init_minishell(int argc, char **argv, char **envp)
 	return (mnsh);
 }
 
-/* To see the tokens and the tree:
-*	./minishell debug
+/*
+* Minishell's main:
+* A command-line interpreter that can execute
+* basic shell commands and provide a shell-like environment.
+*
+* To see how the tokens are created and see the AST:
+* ./minishell debug
 */
 int	main(int argc, char **argv, char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:37 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:53:38 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:47:05 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static char	**glob_or_expand(char **ar, char *arg)
 	return (ar);
 }
 
-/* For each string in the array, checks if there is an asterix in the string.
+/*
+* For each string in the array, checks if there is an asterix in the string.
 * If there is at least one, perform pattern matching on filenames
 * in the current directory.
 */

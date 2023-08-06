@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:18 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:53:20 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:36:56 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ static bool	check_file(char *file, const char *pattern)
 	return (true);
 }
 
-/* Checks for each file in the current directory if it matches the pattern.
+/*
+* Checks for each file in the current directory if it matches the pattern.
 * In the end, only returns the files that matched with the pattern.
 */
 char	**match_files(char **files, const char *pattern)

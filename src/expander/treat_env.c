@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:15 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/03 17:42:22 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:36:38 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ static char	*edit_line_exit(char *line, char *exit_st, int *i)
 	return (edited_line);
 }
 
-/* Treats the environment variable(s):
+/*
+* Treats the environment variable(s):
 * - if the environment variable exists, replace it by its value.
 * - else, deletes it from the line.
 */

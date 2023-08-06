@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:42 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:52:44 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 18:12:16 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,12 @@ static void	check_doc(char *limiter, int *pfd)
 	exit(EXIT_SUCCESS);
 }
 
-/* Here document which is symbolised by the '<<' token
-* - creates a new process to write the input into a pipe
-* - waits for the user's input until the limiter is found
+/*
+* Here document ('<<'):
+* - passes the input(s) to a command as if it were read from a file.
+* - creates a new process to handle the input and waits for the user's input
+* until the specified limiter is found. Once the limiter is encountered,
+* the process finishes writing the input, and the command proceeds.
 */
 int	here_doc(char *limiter)
 {

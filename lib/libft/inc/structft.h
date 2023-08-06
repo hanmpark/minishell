@@ -15,7 +15,6 @@ typedef struct s_cmd
 {
 	char	**args;
 	int		pid;
-	int		pipe[2];
 	int		fdin;
 	int		fdout;
 }	t_cmd;

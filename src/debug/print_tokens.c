@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:54 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:54:56 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:49:45 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	print_type(t_type type)
 		ft_printf("WORD\n");
 }
 
-// Prints out the tokens with their type (ONLY FOR DEBUG PURPOSE)
+// Prints out the tokens with their type (ONLY FOR DEBUGGING PURPOSE)
 void	print_tokens(t_token *l_token)
 {
 	int	count;

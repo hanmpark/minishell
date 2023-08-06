@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:52:57 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:33:03 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static bool	set_cmd(t_token **l_tok, t_treenode *node, t_cmd *cmdline)
 	if (is_redir((*l_tok)->type))
 	{
 		node->par_id = (*l_tok)->par_id;
-		if (!treat_redir(cmdline, l_tok))
+		if (!handle_redirection(cmdline, l_tok))
 			return (false);
 	}
 	else
@@ -54,10 +54,11 @@ static bool	set_cmd(t_token **l_tok, t_treenode *node, t_cmd *cmdline)
 	return (true);
 }
 
-/* Creates an array of simple commands (t_cmd *):
-* - store as many simple commands there are in between the logical operators
+/*
+* Creates an array of simple commands:
+* - store as many simple commands there are in between the logical operators.
 * - for each command, treats the redirection if there is any and stores them
-* in the command structure (t_cmd *)
+* in the command structure.
 */
 t_cmd	**get_simple_cmd(t_token **l_tok, t_treenode *node)
 {

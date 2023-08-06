@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:14 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/05 01:09:57 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 20:30:21 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static bool	find_path_cmd(char **cmd_args, char **envp)
 	char	**path_cmd;
 
 	path_cmd = define_path_cmd(cmd_args, get_path(envp));
-	if (execve(path_cmd[0], path_cmd, envp) == -1)
+	if (execve(path_cmd[0], path_cmd, envp) == EXEC_FAIL)
 	{
 		ft_arrayfree(path_cmd);
 		return (false);
@@ -35,10 +35,11 @@ static bool	is_path_cmd(char *cmd)
 	return (false);
 }
 
-/* Execute the cmd:
-* - checks if the cmd is a builtin
-* - checks if the cmd needs its absolute path
-* - checks if it is already an executable
+/*
+* Executes the command:
+* - checks if the command is a builtin.
+* - checks if the command needs its absolute path.
+* - checks if the command is already an executable.
 */
 static void	exec_cmd(char **cmd_args, char ***envp)
 {
@@ -49,34 +50,48 @@ static void	exec_cmd(char **cmd_args, char ***envp)
 	if (!find_path_cmd(cmd_args, *envp))
 		if (!is_path_cmd(cmd_args[0]))
 			error_not_found(cmd_args[0]);
-	if (execve(cmd_args[0], cmd_args, *envp) == -1)
+	if (execve(cmd_args[0], cmd_args, *envp) == EXEC_FAIL)
 		error_not_executable(cmd_args[0]);
 }
 
 pid_t	fork_cmd(t_cmd *cmd, char ***envp, bool is_last)
 {
 	pid_t	pid;
+	int		pfd[2];
 
-	if (!is_last && pipe(cmd->pipe) == -1)
-		return (-1);
+	if (!is_last && pipe(pfd) == PIPE_FAIL)
+	{
+		perror("minishell: pipe");
+		return (PIPE_FAIL);
+	}
 	pid = fork();
+	if (pid == FORK_FAIL)
+	{
+		perror("minishell: fork");
+		return (FORK_FAIL);
+	}
 	if (pid == CHILD_PROCESS)
 	{
-		set_pipe_output(cmd, is_last);
+		set_pipe_output(cmd->fdout, pfd, is_last);
 		exec_cmd(cmd->args, envp);
 	}
-	set_pipe_input(cmd, is_last);
+	set_pipe_input(pfd, is_last);
 	return (pid);
 }
 
-// Creates a new child process to execute the sent command in it
+/*
+* Executes a pipeline:
+* - executes the given command either as a built-in command
+* or in a new child process.
+* - manages input/output redirection if needed.
+*/
 pid_t	parse_exec(t_cmd *cmd, char ***envp, int id, bool is_last)
 {
 	set_redirection(cmd);
 	if (is_last && id == 0 && builtin_checker(cmd->args))
 	{
 		g_exit = builtin_cmds(cmd->args, envp);
-		return (-1);
+		return (NO_CHILD_PROCESS);
 	}
 	return (fork_cmd(cmd, envp, is_last));
 }

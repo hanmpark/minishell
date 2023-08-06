@@ -6,28 +6,18 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:38 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/05 01:14:22 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:57:39 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "execution.h"
 
-void	close_pipes(t_cmd **cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd && cmd[i + 1])
-	{
-		if (cmd[i]->pipe[READ_END] != -1)
-			close(cmd[i]->pipe[READ_END]);
-		if (cmd[i]->pipe[WRITE_END] != -1)
-			close(cmd[i]->pipe[WRITE_END]);
-		i++;
-	}
-}
-
+/*
+* Sets the command's I/O stream when a redirection is encountered:
+* if the command contains opened file descriptor(s), sets them
+* as the STDIN/STDOUT.
+*/
 void	set_redirection(t_cmd *cmd)
 {
 	if (cmd->fdin != STDIN_FILENO)
@@ -42,29 +32,31 @@ void	set_redirection(t_cmd *cmd)
 	}
 }
 
-/* Sets the command's input stream:
+/*
+* Sets the command's input stream:
 * if the command is piped to the next command,
-* set the pipe's READ_END as the STDIN for the next command
+* set the pipe's READ_END as the STDIN for the next command.
 */
-void	set_pipe_input(t_cmd *simple_cmd, bool is_last_cmd)
+void	set_pipe_input(int *pfd, bool is_last_cmd)
 {
 	if (is_last_cmd)
 		return ;
-	close(simple_cmd->pipe[WRITE_END]);
-	dup2(simple_cmd->pipe[READ_END], STDIN_FILENO);
-	close(simple_cmd->pipe[READ_END]);
+	close(pfd[WRITE_END]);
+	dup2(pfd[READ_END], STDIN_FILENO);
+	close(pfd[READ_END]);
 }
 
-/* Sets the command's output stream:
+/*
+* Sets the command's output stream:
 * if the command is piped to the next command,
-* writes the command's output into the pipe's WRITE_END
+* writes the command's output into the pipe's WRITE_END.
 */
-void	set_pipe_output(t_cmd *simple_cmd, bool is_last_cmd)
+void	set_pipe_output(int fdout, int *pfd, bool is_last_cmd)
 {
 	if (is_last_cmd)
 		return ;
-	close(simple_cmd->pipe[READ_END]);
-	if (simple_cmd->fdout == STDOUT_FILENO)
-		dup2(simple_cmd->pipe[WRITE_END], STDOUT_FILENO);
-	close(simple_cmd->pipe[WRITE_END]);
+	close(pfd[READ_END]);
+	if (fdout == STDOUT_FILENO)
+		dup2(pfd[WRITE_END], STDOUT_FILENO);
+	close(pfd[WRITE_END]);
 }

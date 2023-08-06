@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:25 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 09:59:04 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:49:33 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ static void	print_tree_rec(t_treenode *node, int level)
 	ft_printf("done\n");
 }
 
-/* Prints out the contents of a binary tree structure
+/*
+* Prints out the contents of a binary tree structure
 * with tabs to make it easier to apprehend.
 * Only for debugging purpose.
 */

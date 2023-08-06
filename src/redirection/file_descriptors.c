@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:55:34 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 18:32:33 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ static void	reset_fd(t_cmd *cmd, t_token *l_token)
 	}
 }
 
+/*
+* Checks file name:
+* if the file name contains space / NULL after being expaneded,
+* returns an error.
+*/
 static bool	check_filename(t_token *token)
 {
 	char	**expanded_token;
@@ -68,11 +73,16 @@ static bool	check_filename(t_token *token)
 	return (true);
 }
 
-/* Treats the redirection for the command:
-* - before setting the file descriptors, resets them
-* - opens file(s) and stores their file descriptors in the command structure
+/*
+* Handles the redirection(s) of a command:
+* - extracts token type: get the type of the current token to identify
+* the redirection type.
+* - resets file descriptors: resets command file descriptors to their defaults.
+* - checks file name: verifies the next token contains a valid file name.
+* - opens the specified file updating the command structure's
+* file descriptors accordingly.
 */
-bool	treat_redir(t_cmd *cmd, t_token **l_token)
+bool	handle_redirection(t_cmd *cmd, t_token **l_token)
 {
 	t_type	type;
 

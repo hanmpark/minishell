@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:46 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/03 17:56:13 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 20:26:02 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 
 #include <sys/stat.h>
 
-/* Handling error messages and its exit status:
-* - exits with 1 usually if it's not something we have to handle
-* - exits with 258 for other parsing errors
+/*
+* Handling error messages and its exit status:
+* - exits with 1 usually if it's not something we have to handle.
+* - exits with 258 for other parsing errors.
 */
 bool	error_token(char *token, char *err_msg, int st)
 {
@@ -40,10 +41,6 @@ bool	error_token(char *token, char *err_msg, int st)
 	return (false);
 }
 
-/* Handling error messages and its exit status:
-* - outputs the error message
-* - exits with the most adapted exit status
-*/
 static void	error_exit(char *err_src, char *msg, int st)
 {
 	char	*cat_str;
@@ -58,6 +55,11 @@ static void	error_exit(char *err_src, char *msg, int st)
 	exit(st);
 }
 
+/*
+* Handling error messages and its exit status for commands that does not exist:
+* - outputs the error message.
+* - exits with the most adapted exit status.
+*/
 void	error_not_found(char *cmd)
 {
 	if (ft_strchr(cmd, '/'))
@@ -65,6 +67,12 @@ void	error_not_found(char *cmd)
 	error_exit(cmd, ERR_NOTFOUND, BIN_NOT_FOUND);
 }
 
+/*
+* Handling error messages and its exit status for commands
+* that are not executable:
+* - outputs the error message.
+* - exits with the most adapted exit status.
+*/
 void	error_not_executable(char *cmd)
 {
 	struct stat	stat;

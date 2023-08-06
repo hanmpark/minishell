@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:07 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:53:09 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:35:35 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,9 @@ static char	*get_string(t_lex *lex, char *str, char *line)
 	return (final_str);
 }
 
-/* When a quote is found in the line, as long as it is not closed or separated
+/*
+* When a quote is found in the line, as long as it is not closed or separated
 * by another separator, takes the whole string in the same token.
-*
-* eg: hello'wor'"ld" is in the same token
 */
 char	*tokenize_string(t_lex *lex, char *str, char *line)
 {

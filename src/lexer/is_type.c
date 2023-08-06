@@ -6,14 +6,15 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:11 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:53:13 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:36:20 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-/* In the given string, checks if the following characters match with
+/*
+* In the given string, checks if the following characters match with
 * one of the following undefined token that minishell does not have to handle.
 */
 int	is_undefined(char *str)
@@ -30,7 +31,8 @@ int	is_undefined(char *str)
 	return (0);
 }
 
-/* In the given string, checks if the following characters match with
+/*
+* In the given string, checks if the following characters match with
 * one of the following separators.
 */
 t_type	is_separator(char *str)
