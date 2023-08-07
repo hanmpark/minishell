@@ -31,6 +31,7 @@ SRC_PARSER = ${addprefix ${PARSER_PATH}, checker.c \
 REDIR_PATH = ${SRC_PATH}redirection/
 SRC_REDIR = ${addprefix ${REDIR_PATH}, file_descriptors.c \
 										set_iostream.c \
+										format_limiter.c \
 										here_doc.c}
 
 EXPANDER_PATH = ${SRC_PATH}expander/

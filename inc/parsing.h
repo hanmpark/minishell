@@ -37,6 +37,7 @@ bool		check_filename(t_token *token);
 t_treenode	*get_table(t_token *l_token);
 t_cmd		**get_simple_cmd(t_token **l_tok, t_treenode *node);
 bool		handle_redirection(t_cmd *cmd, t_token **l_token);
-int			here_doc(char *limiter);
+int			here_doc(char *token);
+char		*format_limiter(char *token);
 
 #endif
