@@ -24,8 +24,7 @@ SRC_LEXER = ${addprefix ${LEXER_PATH}, tokenize.c \
 										is_type.c}
 
 PARSER_PATH = ${SRC_PATH}parser/
-SRC_PARSER = ${addprefix ${PARSER_PATH}, check_order.c \
-											parenthese.c \
+SRC_PARSER = ${addprefix ${PARSER_PATH}, checker.c \
 											get_table.c \
 											get_cmd.c}
 

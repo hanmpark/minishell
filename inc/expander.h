@@ -18,8 +18,8 @@ typedef struct s_astglob
 
 char	*treat_env(char *line, bool prevent_eval);
 char	**expand_arg(char *arg);
-char	*get_quotestr(char *arg, int *i);
-char	*word_str(char *arg, int *i);
+char	*extract_expand_quoted(char *arg, int *i);
+char	*extract_expand_unquoted(char *arg, int *i);
 
 /* TREATING THE ASTERIX WILDCARD */
 

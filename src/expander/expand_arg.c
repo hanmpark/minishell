@@ -6,14 +6,18 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 09:03:57 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 09:14:39 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expander.h"
 
-static char	**join_last_element(char **array, char **join)
+/*
+* Concatenates the first string of the joining array in the last string
+* of the first array. Then, simply join the remaining elements to the array.
+*/
+static char	**append_array(char **array, char **join)
 {
 	char	*add;
 	int		i;
@@ -43,12 +47,12 @@ static char	**convert_to_array(char *arg, int *i, bool first_iter)
 
 	if (arg[*i] == '\'' || arg[*i] == '"')
 	{
-		str = get_quotestr(arg, i);
+		str = extract_expand_quoted(arg, i);
 		array = ft_arraynew(treat_env(ft_strdup(str), false));
 	}
 	else
 	{
-		str = word_str(arg, i);
+		str = extract_expand_unquoted(arg, i);
 		array = array_iter_globbing(ft_split(str, ' '));
 		if (first_iter && !*array && !arg[*i])
 		{
@@ -70,7 +74,7 @@ static char	**quotes_expansion(char **cmd, char *arg, int *i)
 		ft_arrayfree(cmd);
 		return (NULL);
 	}
-	cmd = join_last_element(cmd, expanded_array);
+	cmd = append_array(cmd, expanded_array);
 	return (cmd);
 }
 

@@ -6,12 +6,11 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 18:32:33 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 09:37:41 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "expander.h"
 #include "parsing.h"
 #include "exit.h"
 
@@ -49,28 +48,6 @@ static void	reset_fd(t_cmd *cmd, t_token *l_token)
 			cmd->fdout = STDOUT_FILENO;
 		}
 	}
-}
-
-/*
-* Checks file name:
-* if the file name contains space / NULL after being expaneded,
-* returns an error.
-*/
-static bool	check_filename(t_token *token)
-{
-	char	**expanded_token;
-
-	expanded_token = expand_arg(ft_strdup(token->token));
-	if (!expanded_token || ft_arraylen(expanded_token) > 1)
-	{
-		if (expanded_token)
-			ft_arrayfree(expanded_token);
-		return (error_token(token->token, ERR_AMB, 1));
-	}
-	free(token->token);
-	token->token = ft_strdup(*expanded_token);
-	ft_arrayfree(expanded_token);
-	return (true);
 }
 
 /*

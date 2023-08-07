@@ -6,14 +6,21 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:28 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 08:55:52 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 09:27:03 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expander.h"
 
-char	*get_quotestr(char *arg, int *i)
+/*
+* Extracts and expands a quoted part of a token string:
+* - extracts the first part of the token string until it reaches
+* its closing quotation mark.
+* - if the extracted part is from simple quotes, does not expand it.
+* - else if the extracted part is from double quotes, expands it.
+*/
+char	*extract_expand_quoted(char *arg, int *i)
 {
 	char	quote_type;
 	int		start;
@@ -30,7 +37,13 @@ char	*get_quotestr(char *arg, int *i)
 	return (str);
 }
 
-char	*word_str(char *arg, int *i)
+/*
+* Extracts and expands an unquoted part of a token string:
+* - extracts the first part of the token string until it reaches
+* NULL or a quotation mark.
+* - expands the extracted part.
+*/
+char	*extract_expand_unquoted(char *arg, int *i)
 {
 	char	*str;
 	int		start;

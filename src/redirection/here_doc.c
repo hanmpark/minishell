@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:42 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 18:12:16 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 09:29:30 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*expand_here_doc(bool is_quote, char *line)
 	return (line);
 }
 
-static void	check_doc(char *limiter, int *pfd)
+static void	init_here_doc(char *limiter, int *pfd)
 {
 	char	*line;
 	char	*line_nl;
@@ -74,7 +74,7 @@ int	here_doc(char *limiter)
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
-		check_doc(ft_strjoin(limiter, "\n"), pfd);
+		init_here_doc(ft_strjoin(limiter, "\n"), pfd);
 	close(pfd[1]);
 	waitpid(pid, NULL, 0);
 	return (pfd[0]);
