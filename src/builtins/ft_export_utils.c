@@ -50,3 +50,19 @@ void	put_export(char **envp)
 		}
 	}
 }
+
+bool	check_env_var(char *var_name)
+{
+	int	i;
+
+	i = -1;
+	if (!var_name)
+		return (true);
+	if (var_name[0] && (!ft_isalpha(var_name[0]) && var_name[0] != '_'))
+		return (put_error_env(var_name));
+	while (var_name[++i] && var_name[i] != '=')
+		if (!ft_isenv(var_name[i]) && \
+			!(var_name[i] == '+' && var_name[i + 1] && var_name[i + 1] == '='))
+			return (put_error_env(var_name));
+	return (true);
+}
