@@ -1,60 +1,9 @@
 #include "minishell.h"
 #include "parsing.h"
 #include "builtin.h"
+#include "exit.h"
 
-void	sort_ascii(char **envp)
-{
-	int		i;
-	int		j;
-	char	*tmp;
-
-	i = -1;
-	while (envp[++i])
-	{
-		j = i;
-		while (envp[++j])
-		{
-			if (ft_strcmp(envp[i], envp[j]) > 0)
-			{
-				tmp = envp[i];
-				envp[i] = envp[j];
-				envp[j] = tmp;
-			}
-		}
-	}
-}
-
-void	put_export(char **envp)
-{
-	int		i;
-	char	*env_name;
-
-	i = -1;
-	sort_ascii(envp);
-	while (envp[++i])
-	{
-		env_name = ft_strchr(envp[i], '=');
-		if (!env_name)
-			ft_printf(EXPORTED"%s\n", envp[i]);
-		else
-		{
-			env_name = ft_strndup(envp[i], env_name - envp[i] + 1);
-			ft_printf(EXPORTED"%s", env_name);
-			ft_printf("\"%s\"\n", envp[i] + ft_strlen(env_name));
-			free(env_name);
-		}
-	}
-}
-
-bool	put_error_env(char *var_name)
-{
-	ft_putstr_fd("minishell: export: `", 2);
-	ft_putstr_fd(var_name, 2);
-	ft_putstr_fd("': not a valid identifier\n", 2);
-	return (false);
-}
-
-bool	check_env(char *var_name)
+static bool	check_env(char *var_name)
 {
 	int	i;
 
@@ -64,34 +13,82 @@ bool	check_env(char *var_name)
 	if (var_name[0] && (!ft_isalpha(var_name[0]) && var_name[0] != '_'))
 		return (put_error_env(var_name));
 	while (var_name[++i] && var_name[i] != '=')
-		if (!ft_isenv(var_name[i]))
+		if (!ft_isenv(var_name[i]) && \
+			!(var_name[i] == '+' && var_name[i + 1] && var_name[i + 1] == '='))
 			return (put_error_env(var_name));
 	return (true);
 }
 
-void	edit_env_var(char ***envp, char *env)
+static void	found_var(char **env_var, char *env, bool append)
 {
-	bool	create;
+	char	*tmp;
+
+	tmp = NULL;
+	if (append == true)
+	{
+		if (!ft_strchr(*env_var, '='))
+		{
+			tmp = ft_strdup(*env_var);
+			free(*env_var);
+			*env_var = ft_strjoin(tmp, "=");
+			free(tmp);
+		}
+		tmp = ft_strjoin(*env_var, ft_strchr(env, '=') + 1);
+		free(*env_var);
+		*env_var = tmp;
+		return ;
+	}
+	free(*env_var);
+	*env_var = ft_strdup(env);
+}
+
+static void	not_found_var(char ***envp, char *env, bool append)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if (append == true)
+	{
+		tmp = ft_strndup(env, ft_strchr(env, '+') - env);
+		*envp = ft_arrayadd(*envp, ft_strjoin(tmp, ft_strchr(env, '=')));
+		free(tmp);
+		return ;
+	}
+	*envp = ft_arrayadd(*envp, ft_strdup(env));
+}
+
+static void	edit_env_var(char ***envp, char *env)
+{
 	int		env_name_len;
 	int		i;
 
-	create = true;
 	env_name_len = ft_strchr(env, '=') - env;
+	if (env_name_len > 0 && *(ft_strchr(env, '=') - 1) == '+')
+		env_name_len = ft_strchr(env, '+') - env;
 	i = -1;
 	while ((*envp)[++i])
 	{
+		if (env_name_len < 0 && !ft_strncmp((*envp)[i], env, ft_strlen(env)))
+			return ;
 		if (!ft_strncmp((*envp)[i], env, env_name_len))
 		{
-			free((*envp)[i]);
-			(*envp)[i] = ft_strdup(env);
-			create = false;
-			break ;
+			found_var(&(*envp)[i], env, *(ft_strchr(env, '=') - 1) == '+');
+			return ;
 		}
 	}
-	if (create == true)
-		*envp = ft_arrayadd(*envp, ft_strdup(env));
+	if (env_name_len < 0)
+		not_found_var(envp, env, false);
+	else if (!(*envp)[i])
+		not_found_var(envp, env, *(ft_strchr(env, '=') - 1) == '+');
 }
 
+/*
+* Exports variables/print the list of environment variables:
+* - if export is used without any argument, displays the list of all
+* the environment variables in ASCII ascending order, with "declare -x"
+* in front of them.
+* - else, it sets and exports environment variables.
+*/
 int	ft_export(char **av, char ***envp)
 {
 	int	return_val;

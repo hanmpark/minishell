@@ -14,11 +14,11 @@ int	builtin_checker(char **cmd)
 	else if (!ft_strcmp(cmd[0], "export"))
 		return (1);
 	// else if (!ft_strcmp(cmd[0], "unset"))
-	// 	return (ft_unset(cmd));
+	// 	return (1);
 	// else if (!ft_strcmp(cmd[0], "env"))
-	// 	return (ft_env(cmd, envp));
+	// 	return (1);
 	// else if (!ft_strcmp(cmd[0], "exit"))
-	// 	return (ft_exit(cmd));
+	// 	return (1);
 	return (0);
 }
 
@@ -34,7 +34,7 @@ int	builtin_cmds(char **cmd, char ***envp)
 	else if (!ft_strcmp(cmd[0], "export"))
 	 	return (ft_export(cmd, envp));
 	// else if (!ft_strcmp(cmd[0], "unset"))
-	// 	return (ft_unset(cmd));
+	// 	return (ft_unset(cmd, envp));
 	// else if (!ft_strcmp(cmd[0], "env"))
 	// 	return (ft_env(cmd, envp));
 	// else if (!ft_strcmp(cmd[0], "exit"))

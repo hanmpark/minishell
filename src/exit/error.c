@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:46 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 20:26:02 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 18:19:46 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,13 @@ void	error_not_executable(char *cmd)
 	if (S_ISDIR(stat.st_mode))
 		error_exit(cmd, ERR_ISDIR, NOT_EXECUTABLE);
 	error_exit(cmd, ERR_PERM, NOT_EXECUTABLE);
+}
+
+// SEE IF WE CAN USE IT FOR THE OTHER BUILTINS
+bool	put_error_env(char *var_name)
+{
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(var_name, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+	return (false);
 }
