@@ -23,7 +23,6 @@
 bool	error_token(char *token, char *err_msg, int st);
 void	error_not_found(char *cmd);
 void	error_not_executable(char *cmd);
-bool	put_error_env(char *var_name);
 
 void	free_tokens(t_tok **l_token);
 void	free_tree(t_tree *tree);

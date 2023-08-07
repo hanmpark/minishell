@@ -8,11 +8,11 @@
 * - it is used to navigate the file system by changing the current
 * working directory.
 */
-int	ft_cd(char **av, char **envp)
+int	ft_cd(char **argv, char **envp)
 {
 	char	*go_to_dir;
 
-	if (ft_arraylen(av) == 1)
+	if (ft_arraylen(argv) == 1)
 	{
 		go_to_dir = get_env("HOME", envp);
 		if (!go_to_dir)
@@ -22,7 +22,7 @@ int	ft_cd(char **av, char **envp)
 		}
 	}
 	else
-		go_to_dir = av[1];
+		go_to_dir = argv[1];
 	if (chdir(go_to_dir) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);

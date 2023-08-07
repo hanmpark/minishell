@@ -1,6 +1,13 @@
 #include "minishell.h"
 #include "builtin.h"
-#include "exit.h"
+
+static bool	put_error_unset(char *var_name)
+{
+	ft_putstr_fd(ERR_UNSET, 2);
+	ft_putstr_fd(var_name, 2);
+	ft_putstr_fd(NOT_VALID_ID, 2);
+	return (false);
+}
 
 static bool	check_unset_arg(char *arg)
 {
@@ -8,12 +15,12 @@ static bool	check_unset_arg(char *arg)
 
 	i = -1;
 	if (!*arg)
-		return (put_error_env(arg));
+		return (put_error_unset(arg));
 	if (arg[0] && (!ft_isalpha(arg[0]) && arg[0] != '_'))
-		return (put_error_env(arg));
+		return (put_error_unset(arg));
 	while (arg[++i])
 		if (!ft_isenv(arg[i]))
-			return (put_error_env(arg));
+			return (put_error_unset(arg));
 	return (true);
 }
 

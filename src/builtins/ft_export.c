@@ -82,21 +82,21 @@ static void	edit_env_var(char ***envp, char *env)
 * in front of them.
 * - else, it sets and exports environment variables.
 */
-int	ft_export(char **av, char ***envp)
+int	ft_export(char **argv, char ***envp)
 {
 	int	return_val;
 	int	i;
 
 	i = 0;
-	return_val = 0;
-	while (av[++i])
+	return_val = EXIT_SUCCESS;
+	while (argv[++i])
 	{
-		if (!check_env_var(av[i]))
+		if (!check_env_var(argv[i]))
 		{
-			return_val = 1;
+			return_val = EXIT_FAILURE;
 			continue ;
 		}
-		edit_env_var(envp, av[i]);
+		edit_env_var(envp, argv[i]);
 	}
 	if (i == 1)
 		put_export(*envp);

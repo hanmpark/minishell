@@ -1,6 +1,5 @@
 #include "minishell.h"
 #include "builtin.h"
-#include "exit.h"
 
 static void	sort_ascii(char **envp)
 {
@@ -50,18 +49,26 @@ void	put_export(char **envp)
 	}
 }
 
+static bool	put_error_export(char *var_name)
+{
+	ft_putstr_fd(ERR_EXPORT, 2);
+	ft_putstr_fd(var_name, 2);
+	ft_putstr_fd(NOT_VALID_ID, 2);
+	return (false);
+}
+
 bool	check_env_var(char *var_name)
 {
 	int	i;
 
 	i = -1;
 	if (!*var_name)
-		return (put_error_env(var_name));
+		return (put_error_export(var_name));
 	if (var_name[0] && (!ft_isalpha(var_name[0]) && var_name[0] != '_'))
-		return (put_error_env(var_name));
+		return (put_error_export(var_name));
 	while (var_name[++i] && var_name[i] != '=')
 		if (!ft_isenv(var_name[i]) && \
 			!(var_name[i] == '+' && var_name[i + 1] && var_name[i + 1] == '='))
-			return (put_error_env(var_name));
+			return (put_error_export(var_name));
 	return (true);
 }
