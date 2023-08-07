@@ -1,7 +1,7 @@
 #include "structft.h"
 
 // Counts the number of pipes
-int	ft_countpipe(t_token *l_token)
+int	ft_countpipe(t_tok *l_token)
 {
 	int	nbr;
 

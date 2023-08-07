@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 07:40:34 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 14:05:38 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
 * - this step ensures a well-structured execution flow
 * during the execution phase.
 */
-static t_treenode	*parser(t_token *l_token)
+static t_tree	*parser(t_tok *l_token, char **envp)
 {
-	t_treenode	*cmdtable;
+	t_tree	*cmdtable;
 
 	cmdtable = NULL;
 	if (!check_order(l_token) || !check_parentheses(l_token))
 		return (NULL);
-	cmdtable = get_table(l_token);
+	cmdtable = get_table(l_token, envp);
 	if (!cmdtable)
 		return (NULL);
 	return (cmdtable);
@@ -42,7 +42,7 @@ static t_treenode	*parser(t_token *l_token)
 * - identifies the building blocks of the command(s) using these tokens.
 * - if no errors are encountered, returns the command table.
 */
-static t_token	*lexer(char *line)
+static t_tok	*lexer(char *line)
 {
 	t_lex	lex;
 
@@ -67,16 +67,16 @@ static t_token	*lexer(char *line)
 * parentheses and redirections.
 * - generates the minishell's AST to represent the parsend line's structure.
 */
-static t_treenode	*parsing(char *line, bool is_debug)
+static t_tree	*parsing(char *line, bool is_debug, char **envp)
 {
-	t_treenode	*cmdtable;
-	t_token		*l_token;
+	t_tree	*cmdtable;
+	t_tok	*l_token;
 
 	cmdtable = NULL;
 	l_token = lexer(line);
 	if (!l_token)
 		return (NULL);
-	cmdtable = parser(l_token);
+	cmdtable = parser(l_token, envp);
 	if (!cmdtable)
 	{
 		free_tokens(&l_token);
@@ -102,12 +102,12 @@ static t_treenode	*parsing(char *line, bool is_debug)
 */
 void	handle_line(char *line, char ***envp, bool is_debug)
 {
-	t_treenode	*tree;
+	t_tree	*tree;
 
 	if (!*line)
 		return ;
 	add_history(line);
-	tree = parsing(line, is_debug);
+	tree = parsing(line, is_debug, *envp);
 	free(line);
 	if (!tree)
 		return ;

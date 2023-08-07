@@ -1,7 +1,7 @@
 #include "structft.h"
 
 // Resets the count in every node in the tree
-void	ft_treereset(t_treenode *node)
+void	ft_treereset(t_tree *node)
 {
 	if (!node)
 		return ;

@@ -17,7 +17,7 @@ void	set_termios(bool set)
 
 static t_minishell	*init_minishell(int argc, char **argv, char **envp)
 {
-	t_minishell *mnsh;
+	t_minishell	*mnsh;
 
 	mnsh = malloc(sizeof(t_minishell));
 	mnsh->is_debug = false;
@@ -27,7 +27,7 @@ static t_minishell	*init_minishell(int argc, char **argv, char **envp)
 		return (false);
 	set_termios(true);
 	mnsh->line = NULL;
-	mnsh->env_var = ft_arraydup(envp);
+	mnsh->envp = ft_arraydup(envp);
 	g_exit = 0;
 	return (mnsh);
 }
@@ -52,10 +52,10 @@ int	main(int argc, char **argv, char **envp)
 		mnsh->line = readline("minishell$ ");
 		if (!mnsh->line)
 			break ;
-		handle_line(mnsh->line, &mnsh->env_var, mnsh->is_debug);
+		handle_line(mnsh->line, &mnsh->envp, mnsh->is_debug);
 		// system("leaks minishell");
 	}
-	ft_arrayfree(mnsh->env_var);
+	ft_arrayfree(mnsh->envp);
 	free(mnsh);
 	write(1, "exit\n", 5);
 	set_termios(false);

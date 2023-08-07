@@ -24,8 +24,8 @@ bool	error_token(char *token, char *err_msg, int st);
 void	error_not_found(char *cmd);
 void	error_not_executable(char *cmd);
 
-void	free_tokens(t_token **l_token);
-void	free_tree(t_treenode *tree);
+void	free_tokens(t_tok **l_token);
+void	free_tree(t_tree *tree);
 void	free_cmd(t_cmd **cmd);
 
 #endif

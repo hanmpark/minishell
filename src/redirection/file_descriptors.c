@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_descriptors.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 09:42:52 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 14:01:41 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	open_file(char	*filename, int mode)
 	return (fd);
 }
 
-static void	reset_fd(t_cmd *cmd, t_token *l_token)
+static void	reset_fd(t_cmd *cmd, t_tok *l_token)
 {
 	if (l_token->type == LESS || l_token->type == DLESS)
 	{
@@ -59,19 +59,19 @@ static void	reset_fd(t_cmd *cmd, t_token *l_token)
 * - opens the specified file updating the command structure's
 * file descriptors accordingly.
 */
-bool	handle_redirection(t_cmd *cmd, t_token **l_token)
+bool	handle_redirection(t_cmd *cmd, t_tok **l_token, char **envp)
 {
 	t_type	type;
 
 	type = (*l_token)->type;
 	reset_fd(cmd, *l_token);
 	*l_token = (*l_token)->next;
-	if (type != DLESS && !check_filename(*l_token))
+	if (type != DLESS && !check_filename(*l_token, envp))
 		return (false);
 	if (type == LESS)
 		cmd->fdin = open_file((*l_token)->token, READ);
 	else if (type == DLESS)
-		cmd->fdin = here_doc((*l_token)->token);
+		cmd->fdin = here_doc((*l_token)->token, envp);
 	else if (type == GREAT)
 		cmd->fdout = open_file((*l_token)->token, TRUNC);
 	else if (type == DGREAT)

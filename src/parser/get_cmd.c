@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:55 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 19:33:03 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 13:58:37 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "parsing.h"
 #include "exit.h"
 
-static char	**get_args(t_token **cur, int *par_id)
+static char	**get_args(t_tok **cur, int *par_id, char **envp)
 {
 	char	**args;
 	char	**tmp;
@@ -27,7 +27,7 @@ static char	**get_args(t_token **cur, int *par_id)
 	{
 		if (!is_par((*cur)->type))
 		{
-			tmp = expand_arg(ft_strdup((*cur)->token));
+			tmp = expand_arg(ft_strdup((*cur)->token), envp);
 			if (!args)
 			{
 				*par_id = (*cur)->par_id;
@@ -41,16 +41,16 @@ static char	**get_args(t_token **cur, int *par_id)
 	return (args);
 }
 
-static bool	set_cmd(t_token **l_tok, t_treenode *node, t_cmd *cmdline)
+static bool	set_cmd(t_tok **l_tok, t_tree *node, t_cmd *cmdline, char **envp)
 {
 	if (is_redir((*l_tok)->type))
 	{
 		node->par_id = (*l_tok)->par_id;
-		if (!handle_redirection(cmdline, l_tok))
+		if (!handle_redirection(cmdline, l_tok, envp))
 			return (false);
 	}
 	else
-		cmdline->args = get_args(l_tok, &node->par_id);
+		cmdline->args = get_args(l_tok, &node->par_id, envp);
 	return (true);
 }
 
@@ -60,7 +60,7 @@ static bool	set_cmd(t_token **l_tok, t_treenode *node, t_cmd *cmdline)
 * - for each command, treats the redirection if there is any and stores them
 * in the command structure.
 */
-t_cmd	**get_simple_cmd(t_token **l_tok, t_treenode *node)
+t_cmd	**get_simple_cmd(t_tok **l_tok, t_tree *node, char **envp)
 {
 	t_cmd	**cmd;
 	int		i;
@@ -73,7 +73,7 @@ t_cmd	**get_simple_cmd(t_token **l_tok, t_treenode *node)
 	{
 		if (!cmd[i])
 			cmd[i] = ft_cmdnew();
-		if (!set_cmd(l_tok, node, cmd[i]))
+		if (!set_cmd(l_tok, node, cmd[i], envp))
 		{
 			free_cmd(cmd);
 			return (NULL);

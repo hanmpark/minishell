@@ -37,16 +37,16 @@ typedef struct s_minishell
 {
 	char				*line;
 	bool				is_debug;
-	char				**env_var;
+	char				**envp;
 }	t_minishell;
 
-int	g_exit;
+int		g_exit;
 
 void	set_termios(bool set);
 
 /* FOR DEBUGGING PURPOSE */
 
-void	print_tree(t_treenode *node);
-void	print_tokens(t_token *l_token);
+void	print_tree(t_tree *node);
+void	print_tokens(t_tok *l_token);
 
 #endif

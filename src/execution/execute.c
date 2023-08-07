@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:10 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 07:52:04 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 13:52:45 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "execution.h"
 #include "exit.h"
 
-static t_treenode	*next_command(t_treenode *node, int status)
+static t_tree	*next_command(t_tree *node, int status)
 {
 	if (status != NO_CHILD_PROCESS)
 	{
@@ -70,7 +70,7 @@ static bool	exec_node(t_cmd **cmd, int nb_pipe, int *status, char ***envp)
 * - depending on the status of the last command,
 * it will move on to the and_branch or the or_branch node if they exist.
 */
-void	execute(t_treenode *node, char ***envp)
+void	execute(t_tree *node, char ***envp)
 {
 	int	status;
 

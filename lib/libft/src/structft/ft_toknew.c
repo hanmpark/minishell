@@ -2,11 +2,11 @@
 #include <stdlib.h>
 
 // Creates a new linked list node.
-t_token	*ft_toknew(char *token, int type)
+t_tok	*ft_toknew(char *token, int type)
 {
-	t_token	*tok;
+	t_tok	*tok;
 
-	tok = malloc(sizeof(t_token));
+	tok = malloc(sizeof(t_tok));
 	if (!tok)
 		return (NULL);
 	tok->token = token;

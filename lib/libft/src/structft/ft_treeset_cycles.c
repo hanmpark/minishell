@@ -1,7 +1,7 @@
 #include "structft.h"
 
 // Counts how many times it has to pass in a node to run through the whole tree
-void	ft_treeset_cycles(t_treenode *node)
+void	ft_treeset_cycles(t_tree *node)
 {
 	if (!node)
 		return ;

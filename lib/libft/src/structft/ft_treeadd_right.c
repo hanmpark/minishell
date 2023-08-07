@@ -1,6 +1,6 @@
 #include "structft.h"
 
-static void	recursive_add_right(t_treenode *node, t_treenode *new)
+static void	recursive_add_right(t_tree *node, t_tree *new)
 {
 	int	pass;
 
@@ -19,7 +19,7 @@ static void	recursive_add_right(t_treenode *node, t_treenode *new)
 }
 
 // Adds a new node in each node's and_branch
-void	ft_treeadd_right(t_treenode **node, t_treenode *new)
+void	ft_treeadd_right(t_tree **node, t_tree *new)
 {
 	if (!*node)
 		*node = new;

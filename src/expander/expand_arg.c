@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_arg.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 09:14:39 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 14:03:30 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,20 @@ static char	**append_array(char **array, char **join)
 	return (array);
 }
 
-static char	**convert_to_array(char *arg, int *i, bool first_iter)
+static char	**convert_to_array(char *arg, int *i, bool first_iter, char **envp)
 {
 	char	*str;
 	char	**array;
 
 	if (arg[*i] == '\'' || arg[*i] == '"')
 	{
-		str = extract_expand_quoted(arg, i);
-		array = ft_arraynew(treat_env(ft_strdup(str), false));
+		str = extract_expand_quoted(arg, envp, i);
+		array = ft_arraynew(treat_env(ft_strdup(str), envp, false));
 	}
 	else
 	{
-		str = extract_expand_unquoted(arg, i);
-		array = array_iter_globbing(ft_split(str, ' '));
+		str = extract_expand_unquoted(arg, envp, i);
+		array = array_iter_globbing(ft_split(str, ' '), envp);
 		if (first_iter && !*array && !arg[*i])
 		{
 			ft_arrayfree(array);
@@ -64,11 +64,11 @@ static char	**convert_to_array(char *arg, int *i, bool first_iter)
 	return (array);
 }
 
-static char	**quotes_expansion(char **cmd, char *arg, int *i)
+static char	**quotes_expansion(char **cmd, char *arg, int *i, char **envp)
 {
 	char	**expanded_array;
 
-	expanded_array = convert_to_array(arg, i, *i == 0);
+	expanded_array = convert_to_array(arg, i, *i == 0, envp);
 	if (!expanded_array)
 	{
 		ft_arrayfree(cmd);
@@ -84,7 +84,7 @@ static char	**quotes_expansion(char **cmd, char *arg, int *i)
 * such as quotes and asterisk wildcard. If the environment value is NULL
 * and there are no more elements to process in the argument, it returns NULL.
 */
-char	**expand_arg(char *arg)
+char	**expand_arg(char *arg, char **envp)
 {
 	char	**cmd;
 	int		i;
@@ -94,7 +94,7 @@ char	**expand_arg(char *arg)
 		return (NULL);
 	i = 0;
 	while (cmd && arg[i])
-		cmd = quotes_expansion(cmd, arg, &i);
+		cmd = quotes_expansion(cmd, arg, &i, envp);
 	free(arg);
 	return (cmd);
 }

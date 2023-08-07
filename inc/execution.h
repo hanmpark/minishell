@@ -10,7 +10,7 @@
 # define FORK_FAIL -2
 # define NO_CHILD_PROCESS -3
 
-void	execute(t_treenode *node, char ***envp);
+void	execute(t_tree *node, char ***envp);
 pid_t	parse_exec(t_cmd *cmd, char ***envp, int id, bool is_last);
 void	set_redirection(t_cmd *cmd);
 void	set_pipe_input(int *pfd, bool is_last_cmd);

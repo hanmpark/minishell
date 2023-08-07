@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 07:44:42 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 13:53:04 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	nbr_skip(char *str, t_type type)
 * - if the separator is different from spaces, tokenizes the sep.
 * - else, skips spaces and go to the next token.
 */
-static void	skip_sep(t_token **l_token, t_lex *lex, char *line)
+static void	skip_sep(t_tok **l_token, t_lex *lex, char *line)
 {
 	int	skip;
 
@@ -60,7 +60,7 @@ static void	skip_sep(t_token **l_token, t_lex *lex, char *line)
 * variables.
 * - returns false if the second quotation mark is not found.
 */
-static bool	separate_token(t_token **l_token, t_lex *lex, char *line)
+static bool	separate_token(t_tok **l_token, t_lex *lex, char *line)
 {
 	char	*token;
 

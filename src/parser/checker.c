@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:58 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 09:33:22 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 14:01:21 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 * if the file name contains space / NULL after being expaneded,
 * returns an error.
 */
-bool	check_filename(t_token *token)
+bool	check_filename(t_tok *token, char **envp)
 {
 	char	**expanded_token;
 
-	expanded_token = expand_arg(ft_strdup(token->token));
+	expanded_token = expand_arg(ft_strdup(token->token), envp);
 	if (!expanded_token || ft_arraylen(expanded_token) > 1)
 	{
 		if (expanded_token)
@@ -37,7 +37,7 @@ bool	check_filename(t_token *token)
 	return (true);
 }
 
-static int	right_token(int last_type, t_token *cur)
+static int	right_tok(int last_type, t_tok *cur)
 {
 	if (is_redir(last_type) && cur->type != WORD)
 		return (-1);
@@ -57,14 +57,14 @@ static int	right_token(int last_type, t_token *cur)
 }
 
 // Checks the order of the tokens
-bool	check_order(t_token *l_token)
+bool	check_order(t_tok *l_token)
 {
 	int	last_type;
 
 	last_type = -1;
 	while (l_token)
 	{
-		last_type = right_token(last_type, l_token);
+		last_type = right_tok(last_type, l_token);
 		if (last_type == -1)
 			return (error_token(l_token->token, ERR_TOKEN, ORDER_WRONG));
 		if (last_type == -2)
@@ -78,7 +78,7 @@ bool	check_order(t_token *l_token)
 	return (true);
 }
 
-static t_token	*check_in_parentheses(t_token *l_token, int *par_id)
+static t_tok	*check_in_parentheses(t_tok *l_token, int *par_id)
 {
 	int	found_operator;
 
@@ -112,7 +112,7 @@ static t_token	*check_in_parentheses(t_token *l_token, int *par_id)
 * - returns true if parentheses are closed and have at least
 * one logical operators, either '&&' or '||'.
 */
-bool	check_parentheses(t_token *l_token)
+bool	check_parentheses(t_tok *l_token)
 {
 	int	par_id;
 

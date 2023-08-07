@@ -2,11 +2,11 @@
 #include <stdlib.h>
 
 // Creates a new node for the tree
-t_treenode	*ft_treenew(void)
+t_tree	*ft_treenew(void)
 {
-	t_treenode	*node;
+	t_tree	*node;
 
-	node = malloc(sizeof(t_treenode));
+	node = malloc(sizeof(t_tree));
 	if (!node)
 		return (NULL);
 	node->rec_cycles = 0;

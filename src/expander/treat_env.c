@@ -3,25 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   treat_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:15 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 19:36:38 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 13:42:55 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*subenv(char *str)
+static char	*get_env(char *str, char **envp)
 {
-	int		len;
+	size_t	env_name_len;
 	char	*env;
+	int		i;
 
-	len = 0;
-	while (str[len] && ft_isenv(str[len]))
-		len++;
-	env = ft_substr(str, 0, len);
-	return (env);
+	i = 0;
+	while (str[i] && ft_isenv(str[i]))
+		i++;
+	env = ft_substr(str, 0, i);
+	env_name_len = ft_strlen(env);
+	i = -1;
+	while (envp[++i])
+	{
+		if (!ft_strncmp(envp[i], env, env_name_len))
+		{
+			free(env);
+			return (envp[i] + env_name_len + 1);
+		}
+	}
+	return (NULL);
 }
 
 static char	*replace_env(char *line, char *replace, bool exit, int start)
@@ -43,15 +54,12 @@ static char	*replace_env(char *line, char *replace, bool exit, int start)
 	return (edited_line);
 }
 
-static char	*edit_line(char *line, char *env, int *i)
+static char	*edit_line(char *line, char *env, char **envp, int *i)
 {
-	char	*env_name;
 	char	*env_value;
 	char	*edited_line;
 
-	env_name = subenv(env);
-	env_value = getenv(env_name);
-	free(env_name);
+	env_value = get_env(env, envp);
 	if (!env_value)
 		edited_line = replace_env(line, "", false, *i);
 	else
@@ -79,7 +87,7 @@ static char	*edit_line_exit(char *line, char *exit_st, int *i)
 * - if the environment variable exists, replace it by its value.
 * - else, deletes it from the line.
 */
-char	*treat_env(char *line, bool prevent_eval)
+char	*treat_env(char *line, char **envp, bool prevent_eval)
 {
 	int	i;
 
@@ -87,7 +95,7 @@ char	*treat_env(char *line, bool prevent_eval)
 	while (line[i])
 	{
 		if (line[i] == '$' && (ft_isenv(line[i + 1]) || prevent_eval))
-			line = edit_line(line, line + i + 1, &i);
+			line = edit_line(line, line + i + 1, envp, &i);
 		else if (line[i] == '$' && line[i + 1] && line[i + 1] == '?')
 			line = edit_line_exit(line, ft_itoa(g_exit), &i);
 		else

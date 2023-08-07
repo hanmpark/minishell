@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:28 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 09:27:03 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 13:47:52 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 * - if the extracted part is from simple quotes, does not expand it.
 * - else if the extracted part is from double quotes, expands it.
 */
-char	*extract_expand_quoted(char *arg, int *i)
+char	*extract_expand_quoted(char *arg, char **envp, int *i)
 {
 	char	quote_type;
 	int		start;
@@ -32,7 +32,7 @@ char	*extract_expand_quoted(char *arg, int *i)
 		(*i)++;
 	str = ft_substr(arg, start, *i - start);
 	if (quote_type == '"')
-		str = treat_env(str, false);
+		str = treat_env(str, envp, false);
 	++(*i);
 	return (str);
 }
@@ -43,7 +43,7 @@ char	*extract_expand_quoted(char *arg, int *i)
 * NULL or a quotation mark.
 * - expands the extracted part.
 */
-char	*extract_expand_unquoted(char *arg, int *i)
+char	*extract_expand_unquoted(char *arg, char **envp, int *i)
 {
 	char	*str;
 	int		start;
@@ -57,6 +57,6 @@ char	*extract_expand_unquoted(char *arg, int *i)
 		if (arg[*i] == '\'' || arg[*i] == '"')
 			prevent_eval = true;
 	}
-	str = treat_env(ft_substr(arg, start, *i - start), prevent_eval);
+	str = treat_env(ft_substr(arg, start, *i - start), envp, prevent_eval);
 	return (str);
 }

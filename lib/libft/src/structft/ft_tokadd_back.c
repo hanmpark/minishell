@@ -1,9 +1,9 @@
 #include "structft.h"
 
 // Adds a new node at the end of a linked list.
-void	ft_tokadd_back(t_token **lst, t_token *new)
+void	ft_tokadd_back(t_tok **lst, t_tok *new)
 {
-	t_token	*node;
+	t_tok	*node;
 
 	if (!*lst)
 		*lst = new;
