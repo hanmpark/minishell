@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 07:49:22 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 09:03:57 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,35 +36,35 @@ static char	**join_last_element(char **array, char **join)
 	return (array);
 }
 
-static char	**convert_to_array(char *str, bool is_quote)
+static char	**convert_to_array(char *arg, int *i, bool first_iter)
 {
+	char	*str;
 	char	**array;
 
-	if (is_quote == false)
+	if (arg[*i] == '\'' || arg[*i] == '"')
 	{
-		array = ft_split(str, ' ');
-		array = array_iter_globbing(array);
+		str = get_quotestr(arg, i);
+		array = ft_arraynew(treat_env(ft_strdup(str), false));
 	}
 	else
-		array = ft_arraynew(treat_env(ft_strdup(str), false));
+	{
+		str = word_str(arg, i);
+		array = array_iter_globbing(ft_split(str, ' '));
+		if (first_iter && !*array && !arg[*i])
+		{
+			ft_arrayfree(array);
+			array = NULL;
+		}
+	}
 	free(str);
 	return (array);
 }
 
-static char	**quotes_expansion(char **cmd, char *arg, int *i, bool *is_quote)
+static char	**quotes_expansion(char **cmd, char *arg, int *i)
 {
-	char	*str;
 	char	**expanded_array;
 
-	*is_quote = false;
-	if (arg[*i] == '\'' || arg[*i] == '"')
-	{
-		*is_quote = true;
-		str = get_quotestr(arg, i);
-	}
-	else
-		str = word_str(arg, i);
-	expanded_array = convert_to_array(str, *is_quote);
+	expanded_array = convert_to_array(arg, i, *i == 0);
 	if (!expanded_array)
 	{
 		ft_arrayfree(cmd);
@@ -83,25 +83,14 @@ static char	**quotes_expansion(char **cmd, char *arg, int *i, bool *is_quote)
 char	**expand_arg(char *arg)
 {
 	char	**cmd;
-	bool	is_quote;
-	int		passed;
 	int		i;
 
 	cmd = ft_calloc(1, sizeof(char *));
 	if (!cmd)
 		return (NULL);
 	i = 0;
-	passed = 0;
 	while (cmd && arg[i])
-	{
-		cmd = quotes_expansion(cmd, arg, &i, &is_quote);
-		passed++;
-	}
-	if (cmd && passed == 1 && !is_quote && !*cmd && !arg[i])
-	{
-		ft_arrayfree(cmd);
-		cmd = NULL;
-	}
+		cmd = quotes_expansion(cmd, arg, &i);
 	free(arg);
 	return (cmd);
 }

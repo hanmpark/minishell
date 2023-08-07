@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:28 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:53:29 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 08:55:52 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_quotestr(char *arg, int *i)
 
 	quote_type = arg[*i];
 	start = ++(*i);
-	while (arg[*i] != quote_type)
+	while (arg[*i] && arg[*i] != quote_type)
 		(*i)++;
 	str = ft_substr(arg, start, *i - start);
 	if (quote_type == '"')
