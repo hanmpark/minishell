@@ -1,6 +1,7 @@
 #include "charft.h"
 
-/* Appends a null-terminated string from the source to the destination,
+/*
+* Appends a null-terminated string from the source to the destination,
 * while ensuring that the destination buffer does not overflow.
 */
 size_t	ft_strlcat(char *dst, const char *src, size_t size)

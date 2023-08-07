@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:53:26 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 07:48:11 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ static char	**sort_files(char **files)
 	return (files);
 }
 
-// Get the file names of the current directory and sort them
+/*
+* Gets all the files in the current directory, stores them in an array
+* and sorts them in ascending order (ASCII).
+*/
 char	**init_entry_files(void)
 {
 	char	**sorted_files;

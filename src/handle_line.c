@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 18:03:01 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 07:40:34 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 /*
 * Parser part:
-* - verifies the format of the line and create a binary tree of commands.
+* - verifies the format of the line and creates a binary tree of commands.
 * - this step ensures a well-structured execution flow
 * during the execution phase.
 */

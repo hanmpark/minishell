@@ -1,4 +1,5 @@
-/* Applies a function to each character of a string, with the index
+/*
+* Applies a function to each character of a string, with the index
 * of the character passed as an argument to the function.
 */
 void	ft_striteri(char *s, void (*f)(unsigned int, char *))

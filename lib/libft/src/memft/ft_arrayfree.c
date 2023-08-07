@@ -1,5 +1,6 @@
 #include "memft.h"
 
+// Frees an array of strings
 void	ft_arrayfree(char **ar)
 {
 	int	i;

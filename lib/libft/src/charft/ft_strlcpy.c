@@ -1,6 +1,7 @@
 #include "charft.h"
 
-/* Copies a null-terminated string from the source to the destination,
+/*
+* Copies a null-terminated string from the source to the destination,
 * while ensuring that the destination buffer does not overflow.
 */
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)

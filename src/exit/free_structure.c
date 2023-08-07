@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:40 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 19:47:16 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 07:51:17 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ static void	free_node(t_treenode **node)
 }
 
 /*
-* Frees the entire tree:
-* - each existing node is cleared.
+* Frees the entire AST:
+* - each existing node in the AST is cleared.
 * - every structure that the node contains is cleared.
 */
 void	free_tree(t_treenode *tree)

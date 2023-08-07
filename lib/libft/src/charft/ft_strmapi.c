@@ -1,7 +1,8 @@
 #include "charft.h"
 #include <stdlib.h>
 
-/* Applies a function to each character of a string,
+/*
+* Applies a function to each character of a string,
 * creating a new string with the modified characters.
 */
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))

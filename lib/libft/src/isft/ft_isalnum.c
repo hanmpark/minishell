@@ -1,4 +1,5 @@
-/* Checks whether a given character is alphanumeric, meaning it is either
+/*
+* Checks whether a given character is alphanumeric, meaning it is either
 * an alphabetic character (a-z, A-Z) or a digit (0-9).
 */
 int	ft_isalnum(int c)

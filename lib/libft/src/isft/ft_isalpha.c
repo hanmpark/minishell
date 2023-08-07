@@ -1,4 +1,5 @@
-/* Checks whether a given character is an alphabetic character.
+/*
+* Checks whether a given character is an alphabetic character.
 * It determines if the character is either an uppercase letter (A-Z) 
 * or a lowercase letter (a-z).
 */

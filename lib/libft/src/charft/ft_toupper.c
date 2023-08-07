@@ -1,4 +1,5 @@
-/* Converts a given lowercase character
+/*
+* Converts a given lowercase character
 * to its corresponding uppercase representation.
 */
 int	ft_toupper(int character)

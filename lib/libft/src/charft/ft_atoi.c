@@ -1,6 +1,7 @@
 #include "charft.h"
 
-/* Converts a string representation of an integer into its corresponding
+/*
+* Converts a string representation of an integer into its corresponding
 * integer value.
 */
 int	ft_atoi(const char *str)

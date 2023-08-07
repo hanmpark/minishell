@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:48 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 19:31:25 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 07:42:47 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static t_token	*check_in_parentheses(t_token *l_token, int *par_id)
 /*
 * Checks parentheses:
 * - returns false if the parentheses are not closed.
-* - returns true if parentheses have at least one logical operators
-* ('&&' and '||').
+* - returns true if parentheses are closed and have at least
+* one logical operators, either '&&' or '||'.
 */
 bool	check_parentheses(t_token *l_token)
 {

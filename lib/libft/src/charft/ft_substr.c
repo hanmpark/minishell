@@ -1,7 +1,8 @@
 #include "charft.h"
 #include "memft.h"
 
-/* Creates a new string that contains a portion of the original string
+/*
+* Creates a new string that contains a portion of the original string
 * starting at a specified index and with a specified length.
 */
 char	*ft_substr(char const *s, unsigned int start, size_t len)

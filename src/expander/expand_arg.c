@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 20:52:19 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 07:49:22 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	**quotes_expansion(char **cmd, char *arg, int *i, bool *is_quote)
 /*
 * Expands the command's arguments:
 * This function expands the command's arguments based on different conditions,
-* such as quotes and asterisk wildcards. If the environment value is NULL
+* such as quotes and asterisk wildcard. If the environment value is NULL
 * and there are no more elements to process in the argument, it returns NULL.
 */
 char	**expand_arg(char *arg)

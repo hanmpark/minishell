@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 19:35:11 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 07:44:42 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static void	skip_sep(t_token **l_token, t_lex *lex, char *line)
 	lex->last = lex->cur;
 }
 
-/* Creates tokens and sets their type:
+/*
+* Creates tokens and sets their type:
 * - they are stored in linked lists.
 * - creates a token which stores everything between quotes without expanding
 * variables.

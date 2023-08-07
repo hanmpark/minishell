@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:10 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 20:30:53 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 07:52:04 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static bool	exec_node(t_cmd **cmd, int nb_pipe, int *status, char ***envp)
 * Execute the commands found in the line:
 * - the commands are stocked in an AST.
 * - depending on the status of the last command,
-* it will move on to the and_branch or the or_branch node.
+* it will move on to the and_branch or the or_branch node if they exist.
 */
 void	execute(t_treenode *node, char ***envp)
 {

@@ -1,6 +1,7 @@
 #include "charft.h"
 
-/* Searches for a substring within a given string,
+/*
+* Searches for a substring within a given string,
 * but with a specified maximum length to search.
 */
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)

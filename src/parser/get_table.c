@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 19:33:13 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/07 07:43:22 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static t_treenode	*get_node(t_token **l_tok, t_treenode *table, t_token mode)
 /*
 * Get the command table for the execution part:
 * - handles redirections for commands.
-* - creates a binary tree for each command line.
+* - creates a binary tree node for each command line.
 * - expand the tokens.
 */
 t_treenode	*get_table(t_token *l_tok)
