@@ -90,7 +90,6 @@ int	ft_export(char **av, char ***envp)
 	int	i;
 
 	i = 0;
-	// ft_printf("JE PASSE ICI OUUUUU\n");
 	return_val = 0;
 	while (av[++i])
 	{
