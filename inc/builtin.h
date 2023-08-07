@@ -4,11 +4,13 @@
 # define EXPORTED "declare -x "
 # define INVALID_ID "not a valid identifier"
 
-// Identifier for built-ins
+/* IDENTIFIER FOR BUILTINS */
+
 int	builtin_checker(char **cmd);
 int	builtin_cmds(char **cmd, char ***envp);
 
-// Built-ins
+/* BUILTINS */
+
 int	ft_echo(char **av);
 int	ft_cd(char **av);
 int	ft_pwd(void);
