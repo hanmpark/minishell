@@ -1,6 +1,11 @@
 #include "minishell.h"
+#include "builtin.h"
 
-// pwd builtin
+/*
+* Pwd command:
+* - stands for "Print Working Directory".
+* - used to display the current working directory.
+*/
 int	ft_pwd(void)
 {
 	char	buf[4096];

@@ -13,10 +13,12 @@ int		builtin_cmds(char **cmd, char ***envp);
 /* BUILTINS */
 
 int		ft_echo(char **av);
-int		ft_cd(char **av);
+int		ft_cd(char **av, char **envp);
 int		ft_pwd(void);
 int		ft_export(char **av, char ***envp);
 void	put_export(char **envp);
 bool	check_env_var(char *var_name);
+int		ft_env(char **envp);
+int		ft_unset(char **argv, char ***envp);
 
 #endif

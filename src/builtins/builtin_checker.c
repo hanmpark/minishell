@@ -13,10 +13,10 @@ int	builtin_checker(char **cmd)
 		return (1);
 	else if (!ft_strcmp(cmd[0], "export"))
 		return (1);
-	// else if (!ft_strcmp(cmd[0], "unset"))
-	// 	return (1);
-	// else if (!ft_strcmp(cmd[0], "env"))
-	// 	return (1);
+	else if (!ft_strcmp(cmd[0], "unset"))
+		return (1);
+	else if (!ft_strcmp(cmd[0], "env"))
+		return (1);
 	// else if (!ft_strcmp(cmd[0], "exit"))
 	// 	return (1);
 	return (0);
@@ -28,15 +28,15 @@ int	builtin_cmds(char **cmd, char ***envp)
 	if (!ft_strcmp(cmd[0], "echo"))
 		return (ft_echo(cmd));
 	else if (!ft_strcmp(cmd[0], "cd"))
-		return (ft_cd(cmd));
+		return (ft_cd(cmd, *envp));
 	else if (!ft_strcmp(cmd[0], "pwd"))
 		return (ft_pwd());
 	else if (!ft_strcmp(cmd[0], "export"))
-	 	return (ft_export(cmd, envp));
-	// else if (!ft_strcmp(cmd[0], "unset"))
-	// 	return (ft_unset(cmd, envp));
-	// else if (!ft_strcmp(cmd[0], "env"))
-	// 	return (ft_env(cmd, envp));
+		return (ft_export(cmd, envp));
+	else if (!ft_strcmp(cmd[0], "unset"))
+		return (ft_unset(cmd, envp));
+	else if (!ft_strcmp(cmd[0], "env"))
+		return (ft_env(*envp));
 	// else if (!ft_strcmp(cmd[0], "exit"))
 	// 	return (ft_exit(cmd));
 	return (0);

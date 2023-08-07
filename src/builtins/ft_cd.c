@@ -1,11 +1,32 @@
 #include "minishell.h"
-#include "parsing.h"
+#include "expander.h"
+#include "builtin.h"
 
-int	ft_cd(char **av)
+/*
+* Cd command:
+* - stands for "Change Directory".
+* - it is used to navigate the file system by changing the current
+* working directory.
+*/
+int	ft_cd(char **av, char **envp)
 {
-	if (chdir(av[0]) == -1)
+	char	*go_to_dir;
+
+	if (ft_arraylen(av) == 1)
 	{
-		perror("minishell: cd:");
+		go_to_dir = get_env("HOME", envp);
+		if (!go_to_dir)
+		{
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+			return (1);
+		}
+	}
+	else
+		go_to_dir = av[1];
+	if (chdir(go_to_dir) == -1)
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		perror(go_to_dir);
 		return (1);
 	}
 	return (0);

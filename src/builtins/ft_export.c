@@ -1,7 +1,5 @@
 #include "minishell.h"
-#include "parsing.h"
 #include "builtin.h"
-#include "exit.h"
 
 static void	found_var(char **env_var, char *env, bool append)
 {
@@ -78,7 +76,7 @@ static void	edit_env_var(char ***envp, char *env)
 }
 
 /*
-* Exports variables/print the list of environment variables:
+* Export command:
 * - if export is used without any argument, displays the list of all
 * the environment variables in ASCII ascending order, with "declare -x"
 * in front of them.

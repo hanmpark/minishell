@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   treat_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:15 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 13:42:55 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/07 20:33:30 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_env(char *str, char **envp)
+char	*get_env(char *str, char **envp)
 {
 	size_t	env_name_len;
 	char	*env;
@@ -32,6 +32,7 @@ static char	*get_env(char *str, char **envp)
 			return (envp[i] + env_name_len + 1);
 		}
 	}
+	free(env);
 	return (NULL);
 }
 

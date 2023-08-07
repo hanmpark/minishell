@@ -1,24 +1,20 @@
 #include "minishell.h"
-#include "parsing.h"
+#include "builtin.h"
 
-/* implementation de la commande env en utilisant char **envp.
-* dans l'idée ce serai de faire ça.
-* env: une commande interne dans bash qui permet d'afficher les variables
-* d'environnement.
+/*
+* Env command:
+* It allows the user to see a list of all environment variables,
+* along with their values, that are available in the current session.
 */
-void	ft_env(char **envp)
+int	ft_env(char **envp)
 {
 	int	i;
 
 	i = -1;
 	while (envp[++i])
-		printf("%s\n", envp[i]);
-}
-
-int	main(int ac, char **av, char **envp)
-{
-	(void)ac;
-	(void)av;
-	ft_env(envp);
+	{
+		if (ft_strchr(envp[i], '='))
+			ft_printf("%s\n", envp[i]);
+	}
 	return (0);
 }

@@ -54,7 +54,9 @@ SRC_BUILTINS = ${addprefix ${BUILTINS_PATH}, builtin_checker.c \
 												ft_echo.c \
 												ft_pwd.c \
 												ft_export.c \
-												ft_export_utils.c}
+												ft_export_utils.c \
+												ft_env.c \
+												ft_unset.c}
 
 EXIT_PATH = ${SRC_PATH}exit/
 SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \

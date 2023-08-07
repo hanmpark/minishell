@@ -20,6 +20,7 @@ char	*treat_env(char *line, char **envp, bool prevent_eval);
 char	**expand_arg(char *arg, char **envp);
 char	*extract_expand_quoted(char *arg, char **envp, int *i);
 char	*extract_expand_unquoted(char *arg, char **envp, int *i);
+char	*get_env(char *str, char **envp);
 
 /* TREATING THE ASTERIX WILDCARD */
 

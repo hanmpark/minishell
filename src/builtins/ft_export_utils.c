@@ -1,13 +1,12 @@
 #include "minishell.h"
-#include "parsing.h"
 #include "builtin.h"
 #include "exit.h"
 
 static void	sort_ascii(char **envp)
 {
+	char	*tmp;
 	int		i;
 	int		j;
-	char	*tmp;
 
 	i = -1;
 	while (envp[++i])
@@ -31,8 +30,8 @@ static void	sort_ascii(char **envp)
 */
 void	put_export(char **envp)
 {
-	int		i;
 	char	*env_name;
+	int		i;
 
 	i = -1;
 	sort_ascii(envp);
