@@ -19,20 +19,13 @@ SRCS_CHARFT = ${addprefix ${CHARFT_PATH}, ft_atoi.c \
 											ft_split.c \
 											ft_strchr.c \
 											ft_strdup.c \
-											ft_striteri.c \
 											ft_strjoin.c \
-											ft_strlcat.c \
-											ft_strlcpy.c \
 											ft_strlen.c \
-											ft_strmapi.c \
 											ft_strncmp.c \
 											ft_strcmp.c \
 											ft_strnstr.c \
 											ft_strrchr.c \
-											ft_strtrim.c \
 											ft_substr.c \
-											ft_tolower.c \
-											ft_toupper.c \
 											ft_strndup.c \
 											ft_arraylen.c \
 											ft_arrayjoin.c \
@@ -43,9 +36,7 @@ SRCS_CHARFT = ${addprefix ${CHARFT_PATH}, ft_atoi.c \
 ISFT_PATH = ./src/isft/
 SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
 										ft_isalpha.c \
-										ft_isascii.c \
 										ft_isdigit.c \
-										ft_isprint.c \
 										ft_isspace.c \
 										ft_isenv.c \
 										ft_strisdigit.c}
@@ -66,11 +57,7 @@ SRCS_STRUCTFT = ${addprefix ${STRUCTFT_PATH}, ft_tokadd_back.c \
 MEMFT_PATH = ./src/memft/
 SRCS_MEMFT = ${addprefix ${MEMFT_PATH}, ft_bzero.c \
 										ft_calloc.c \
-										ft_memchr.c \
-										ft_memcmp.c \
 										ft_memcpy.c \
-										ft_memmove.c \
-										ft_memset.c \
 										ft_arrayfree.c}
 
 PUTFT_PATH = ./src/putft/
