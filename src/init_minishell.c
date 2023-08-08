@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:41:41 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 12:48:08 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:03:24 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	set_termios(bool set)
 
 	tcgetattr(STDIN_FILENO, &termios);
 	if (set == true)
-		termios.c_lflag &= ~ECHOCTL;
+		termios.c_lflag &= ~(ICANON | ECHOCTL);
 	else
-		termios.c_lflag |= ECHOCTL;
+		termios.c_lflag |= ICANON | ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &termios);
 }
 
