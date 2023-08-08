@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 14:05:38 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/08 12:39:08 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,10 @@ void	handle_line(char *line, char ***envp, bool is_debug)
 	t_tree	*tree;
 
 	if (!*line)
+	{
+		free(line);
 		return ;
+	}
 	add_history(line);
 	tree = parsing(line, is_debug, *envp);
 	free(line);
