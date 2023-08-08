@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:14 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 09:55:15 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/08 18:04:00 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ pid_t	fork_cmd(t_cmd *cmd, char ***envp, bool is_last)
 * or in a new child process.
 * - manages input/output redirection if needed.
 */
-pid_t	parse_exec(t_cmd *cmd, char ***envp, int id, bool is_last)
+pid_t	parse_exec(t_mnsh *mnsh, t_cmd *cmd, int id, bool is_last)
 {
 	set_redirection(cmd);
 	if (is_last && id == 0 && builtin_checker(cmd->args))
 	{
-		g_exit = builtin_cmds(cmd->args, envp, 1);
+		mnsh->exit = builtin_cmds(cmd->args, &mnsh->envp, 1);
 		return (NO_CHILD_PROCESS);
 	}
-	return (fork_cmd(cmd, envp, is_last));
+	return (fork_cmd(cmd, &mnsh->envp, is_last));
 }

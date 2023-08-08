@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:25 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 13:52:45 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:07:36 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ static void	print_tree_rec(t_tree *node, int level)
 */
 void	print_tree(t_tree *node)
 {
+	if (!node)
+		return ;
 	ft_printf("\033[38;5;62mTREE:\033[0m\n");
 	print_tree_rec(node, 0);
 	ft_printf("\n");

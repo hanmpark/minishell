@@ -42,14 +42,13 @@ typedef enum e_type
 
 typedef struct s_minishell
 {
-	char				*line;
-	bool				is_debug;
-	char				**envp;
-}	t_minishell;
+	char	*line;
+	char	**envp;
+	bool	is_debug;
+	int		exit;
+}	t_mnsh;
 
-int		g_exit;
-
-t_minishell	*init_minishell(int argc, char **argv, char **envp);
+t_mnsh	*init_mnsh(int argc, char **argv, char **envp);
 void		set_termios(bool set);
 char		*get_prompt(char *cwd);
 

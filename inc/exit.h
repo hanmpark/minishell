@@ -20,7 +20,7 @@
 # define BIN_NOT_FOUND 127
 # define ORDER_WRONG 258
 
-bool	error_token(char *token, char *err_msg, int st);
+bool	error_token(char *token, char *err_msg, int *exit_st, int err_no);
 void	error_not_found(char *cmd);
 void	error_not_executable(char *cmd);
 

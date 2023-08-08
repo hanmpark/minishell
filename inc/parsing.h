@@ -19,10 +19,10 @@ typedef struct s_lexer
 	int			last;
 }	t_lex;
 
-void	handle_line(char *line, char ***envp, bool is_debug);
+void	handle_line(t_mnsh *mnsh);
 
-bool	tokenize(t_lex *lex, char *line);
-char	*tokenize_string(t_lex *lex, char *str, char *line);
+bool	tokenize(t_lex *lex, t_mnsh *mnsh);
+char	*tokenize_string(t_lex *lex, t_mnsh *mnsh, char *token);
 
 t_type	is_separator(char *str);
 int		is_undefined(char *str);
@@ -30,14 +30,14 @@ bool	is_redir(t_type type);
 bool	is_cmdsep(t_type type);
 bool	is_par(t_type type);
 
-bool	check_order(t_tok *l_token);
-bool	check_parentheses(t_tok *l_token);
-bool	check_filename(t_tok *token, char **envp);
+bool	check_order(t_tok *l_token, int *ex);
+bool	check_parentheses(t_tok *l_token, int *exit_st);
+bool	check_filename(t_mnsh *mnsh, t_tok *token);
 
-t_tree	*get_table(t_tok *l_token, char **envp);
-t_cmd	**get_simple_cmd(t_tok **l_tok, t_tree *node, char **envp);
-bool	handle_redirection(t_cmd *cmd, t_tok **l_token, char **envp);
-int		here_doc(char *token, char **envp);
+t_tree	*get_table(t_tok *l_token, t_mnsh *mnsh);
+t_cmd	**get_simple_cmd(t_mnsh *mnsh, t_tok **l_tok, t_tree *node);
+bool	handle_redirection(t_mnsh *mnsh, t_cmd *cmd, t_tok **l_token);
+int		here_doc(t_mnsh *mnsh, char *token);
 char	*format_limiter(char *token);
 
 #endif

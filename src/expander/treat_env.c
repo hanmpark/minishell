@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:15 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 20:33:30 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:43:20 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static char	*edit_line_exit(char *line, char *exit_st, int *i)
 * - if the environment variable exists, replace it by its value.
 * - else, deletes it from the line.
 */
-char	*treat_env(char *line, char **envp, bool prevent_eval)
+char	*treat_env(t_mnsh *mnsh, char *line, bool prevent_eval)
 {
 	int	i;
 
@@ -96,9 +96,9 @@ char	*treat_env(char *line, char **envp, bool prevent_eval)
 	while (line[i])
 	{
 		if (line[i] == '$' && (ft_isenv(line[i + 1]) || prevent_eval))
-			line = edit_line(line, line + i + 1, envp, &i);
+			line = edit_line(line, line + i + 1, mnsh->envp, &i);
 		else if (line[i] == '$' && line[i + 1] && line[i + 1] == '?')
-			line = edit_line_exit(line, ft_itoa(g_exit), &i);
+			line = edit_line_exit(line, ft_itoa(mnsh->exit), &i);
 		else
 			i++;
 	}

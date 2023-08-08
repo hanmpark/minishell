@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_minishell.c                                   :+:      :+:    :+:   */
+/*   init_mnsh.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:41:41 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 15:07:31 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:54:40 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ static char	**update_shlvl(char **envp)
 	return (envp);
 }
 
-t_minishell	*init_minishell(int argc, char **argv, char **envp)
+t_mnsh	*init_mnsh(int argc, char **argv, char **envp)
 {
-	t_minishell	*mnsh;
+	t_mnsh	*mnsh;
 
-	mnsh = malloc(sizeof(t_minishell));
+	mnsh = malloc(sizeof(t_mnsh));
 	mnsh->is_debug = false;
 	if (argc == 2 && !ft_strcmp(argv[1], "debug"))
 		mnsh->is_debug = true;
@@ -63,7 +63,7 @@ t_minishell	*init_minishell(int argc, char **argv, char **envp)
 	set_termios(true);
 	mnsh->line = NULL;
 	mnsh->envp = update_shlvl(ft_arraydup(envp));
-	g_exit = 0;
+	mnsh->exit = 0;
 	return (mnsh);
 }
 

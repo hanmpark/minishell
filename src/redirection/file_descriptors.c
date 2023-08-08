@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_descriptors.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 14:01:41 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/08 18:09:04 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,26 @@ static void	reset_fd(t_cmd *cmd, t_tok *l_token)
 * - opens the specified file updating the command structure's
 * file descriptors accordingly.
 */
-bool	handle_redirection(t_cmd *cmd, t_tok **l_token, char **envp)
+bool	handle_redirection(t_mnsh *mnsh, t_cmd *cmd, t_tok **l_token)
 {
 	t_type	type;
 
 	type = (*l_token)->type;
 	reset_fd(cmd, *l_token);
 	*l_token = (*l_token)->next;
-	if (type != DLESS && !check_filename(*l_token, envp))
+	if (type != DLESS && !check_filename(mnsh, *l_token))
 		return (false);
 	if (type == LESS)
 		cmd->fdin = open_file((*l_token)->token, READ);
 	else if (type == DLESS)
-		cmd->fdin = here_doc((*l_token)->token, envp);
+		cmd->fdin = here_doc(mnsh, (*l_token)->token);
 	else if (type == GREAT)
 		cmd->fdout = open_file((*l_token)->token, TRUNC);
 	else if (type == DGREAT)
 		cmd->fdout = open_file((*l_token)->token, APPEND);
 	if (cmd->fdin == -1 || cmd->fdout == -1)
-		return (error_token((*l_token)->token, ERR_ENOENT, 1));
+		return (error_token((*l_token)->token, ERR_ENOENT, &mnsh->exit, \
+			NO_HANDLE));
 	*l_token = (*l_token)->next;
 	return (true);
 }

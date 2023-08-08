@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 13:53:04 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/08 18:05:48 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static void	skip_sep(t_tok **l_token, t_lex *lex, char *line)
 
 	skip = nbr_skip(line + lex->cur, lex->type);
 	if (lex->type != SPACE && line[lex->cur])
-		ft_tokadd_back(l_token, ft_toknew(ft_substr(line, lex->cur, skip), \
-			lex->type));
+		ft_tokadd_back(l_token, \
+			ft_toknew(ft_substr(line, lex->cur, skip), lex->type));
 	if (!skip && line[lex->cur])
 		lex->cur++;
 	lex->cur += skip;
@@ -60,20 +60,20 @@ static void	skip_sep(t_tok **l_token, t_lex *lex, char *line)
 * variables.
 * - returns false if the second quotation mark is not found.
 */
-static bool	separate_token(t_tok **l_token, t_lex *lex, char *line)
+static bool	separate_token(t_lex *lex, t_mnsh *mnsh)
 {
 	char	*token;
 
-	token = ft_substr(line, lex->last, lex->cur - lex->last);
+	token = ft_substr(mnsh->line, lex->last, lex->cur - lex->last);
 	if (lex->type == QUOTE || lex->type == DQUOTE)
-		token = tokenize_string(lex, token, line);
+		token = tokenize_string(lex, mnsh, token);
 	if (!token)
 		return (false);
 	if (*token)
-		ft_tokadd_back(l_token, ft_toknew(token, WORD));
+		ft_tokadd_back(&lex->l_token, ft_toknew(token, WORD));
 	else if (!*token)
 		free(token);
-	skip_sep(l_token, lex, line);
+	skip_sep(&lex->l_token, lex, mnsh->line);
 	return (true);
 }
 
@@ -82,12 +82,12 @@ static bool	separate_token(t_tok **l_token, t_lex *lex, char *line)
 * - reads each character and tokenize them by their type.
 * - the line is split with the separators.
 */
-bool	tokenize(t_lex *lex, char *line)
+bool	tokenize(t_lex *lex, t_mnsh *mnsh)
 {
-	lex->type = is_separator(line + lex->cur);
-	if (lex->type != WORD || !line[lex->cur])
+	lex->type = is_separator(mnsh->line + lex->cur);
+	if (lex->type != WORD || !mnsh->line[lex->cur])
 	{
-		if (!separate_token(&lex->l_token, lex, line))
+		if (!separate_token(lex, mnsh))
 			return (false);
 	}
 	else

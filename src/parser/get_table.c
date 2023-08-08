@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_table.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 13:54:48 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:28:05 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_tree	*addnode(t_tree *table, t_tree *add, t_tok mode)
 * - the parentheses' priorities.
 * - the logical operators "&&" or "||".
 */
-static t_tree	*get_node(t_tok **l_tok, t_tree *table, t_tok mod, char **envp)
+static t_tree	*get_node(t_tok **l_tok, t_mnsh *mns, t_tree *table, t_tok mod)
 {
 	t_tree	*node;
 
@@ -45,7 +45,7 @@ static t_tree	*get_node(t_tok **l_tok, t_tree *table, t_tok mod, char **envp)
 	if (!node)
 		return (NULL);
 	node->nb_pipe = ft_countpipe(*l_tok);
-	node->cmd = get_simple_cmd(l_tok, node, envp);
+	node->cmd = get_simple_cmd(mns, l_tok, node);
 	if (!node->cmd)
 	{
 		free_tree(node);
@@ -65,7 +65,7 @@ static t_tree	*get_node(t_tok **l_tok, t_tree *table, t_tok mod, char **envp)
 * - creates a binary tree node for each command line.
 * - expand the tokens.
 */
-t_tree	*get_table(t_tok *l_tok, char **envp)
+t_tree	*get_table(t_tok *l_tok, t_mnsh *mnsh)
 {
 	t_tree	*cmdtable;
 	t_tok	add_mode;
@@ -76,7 +76,7 @@ t_tree	*get_table(t_tok *l_tok, char **envp)
 		add_mode = *l_tok;
 		if (l_tok->type == AND_IF || l_tok->type == OR_IF)
 			l_tok = l_tok->next;
-		cmdtable = get_node(&l_tok, cmdtable, add_mode, envp);
+		cmdtable = get_node(&l_tok, mnsh, cmdtable, add_mode);
 		if (!cmdtable)
 			return (NULL);
 	}

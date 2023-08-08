@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:58 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 14:01:21 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:48:49 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@
 * if the file name contains space / NULL after being expaneded,
 * returns an error.
 */
-bool	check_filename(t_tok *token, char **envp)
+bool	check_filename(t_mnsh *mnsh, t_tok *token)
 {
 	char	**expanded_token;
 
-	expanded_token = expand_arg(ft_strdup(token->token), envp);
+	expanded_token = expand_arg(mnsh, ft_strdup(token->token));
 	if (!expanded_token || ft_arraylen(expanded_token) > 1)
 	{
 		if (expanded_token)
 			ft_arrayfree(expanded_token);
-		return (error_token(token->token, ERR_AMB, 1));
+		return (error_token(token->token, ERR_AMB, &mnsh->exit, NO_HANDLE));
 	}
 	free(token->token);
 	token->token = ft_strdup(*expanded_token);
@@ -57,7 +57,7 @@ static int	right_tok(int last_type, t_tok *cur)
 }
 
 // Checks the order of the tokens
-bool	check_order(t_tok *l_token)
+bool	check_order(t_tok *l_token, int *ex)
 {
 	int	last_type;
 
@@ -66,15 +66,15 @@ bool	check_order(t_tok *l_token)
 	{
 		last_type = right_tok(last_type, l_token);
 		if (last_type == -1)
-			return (error_token(l_token->token, ERR_TOKEN, ORDER_WRONG));
+			return (error_token(l_token->token, ERR_TOKEN, ex, ORDER_WRONG));
 		if (last_type == -2)
-			return (error_token(l_token->token, ERR_NOHANDLE, NO_HANDLE));
+			return (error_token(l_token->token, ERR_NOHANDLE, ex, NO_HANDLE));
 		l_token = l_token->next;
 	}
 	if (is_cmdsep(last_type))
-		return (error_token(NULL, ERR_MISS, NO_HANDLE));
+		return (error_token(NULL, ERR_MISS, ex, NO_HANDLE));
 	else if (is_redir(last_type))
-		return (error_token(NULL, ERR_REDIR, ORDER_WRONG));
+		return (error_token(NULL, ERR_REDIR, ex, ORDER_WRONG));
 	return (true);
 }
 
@@ -112,7 +112,7 @@ static t_tok	*check_in_parentheses(t_tok *l_token, int *par_id)
 * - returns true if parentheses are closed and have at least
 * one logical operators, either '&&' or '||'.
 */
-bool	check_parentheses(t_tok *l_token)
+bool	check_parentheses(t_tok *l_token, int *exit_st)
 {
 	int	par_id;
 
@@ -124,10 +124,10 @@ bool	check_parentheses(t_tok *l_token)
 			l_token->par_id = ++par_id;
 			l_token = check_in_parentheses(l_token->next, &par_id);
 			if (!l_token)
-				return (error_token("(", ERR_TOKEN, NO_HANDLE));
+				return (error_token("(", ERR_TOKEN, exit_st, NO_HANDLE));
 		}
 		else if (l_token->type == RPAR)
-			return (error_token(")", ERR_TOKEN, NO_HANDLE));
+			return (error_token(")", ERR_TOKEN, exit_st, NO_HANDLE));
 		l_token = l_token->next;
 	}
 	return (true);

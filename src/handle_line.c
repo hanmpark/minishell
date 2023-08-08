@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 12:39:08 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:53:03 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,15 @@
 * - this step ensures a well-structured execution flow
 * during the execution phase.
 */
-static t_tree	*parser(t_tok *l_token, char **envp)
+static t_tree	*parser(t_tok *l_token, t_mnsh *mnsh)
 {
 	t_tree	*cmdtable;
 
 	cmdtable = NULL;
-	if (!check_order(l_token) || !check_parentheses(l_token))
+	if (!check_order(l_token, &mnsh->exit) \
+		|| !check_parentheses(l_token, &mnsh->exit))
 		return (NULL);
-	cmdtable = get_table(l_token, envp);
-	if (!cmdtable)
-		return (NULL);
+	cmdtable = get_table(l_token, mnsh);
 	return (cmdtable);
 }
 
@@ -42,16 +41,16 @@ static t_tree	*parser(t_tok *l_token, char **envp)
 * - identifies the building blocks of the command(s) using these tokens.
 * - if no errors are encountered, returns the command table.
 */
-static t_tok	*lexer(char *line)
+static t_tok	*lexer(t_mnsh *mnsh)
 {
 	t_lex	lex;
 
 	lex.cur = 0;
 	lex.last = 0;
 	lex.l_token = NULL;
-	while (line[lex.last])
+	while (mnsh->line[lex.last])
 	{
-		if (!tokenize(&lex, line))
+		if (!tokenize(&lex, mnsh))
 		{
 			free_tokens(&lex.l_token);
 			return (NULL);
@@ -67,22 +66,17 @@ static t_tok	*lexer(char *line)
 * parentheses and redirections.
 * - generates the minishell's AST to represent the parsend line's structure.
 */
-static t_tree	*parsing(char *line, bool is_debug, char **envp)
+static t_tree	*parsing(t_mnsh *mnsh)
 {
 	t_tree	*cmdtable;
 	t_tok	*l_token;
 
 	cmdtable = NULL;
-	l_token = lexer(line);
+	l_token = lexer(mnsh);
 	if (!l_token)
 		return (NULL);
-	cmdtable = parser(l_token, envp);
-	if (!cmdtable)
-	{
-		free_tokens(&l_token);
-		return (NULL);
-	}
-	if (is_debug)
+	cmdtable = parser(l_token, mnsh);
+	if (mnsh->is_debug)
 	{
 		print_tokens(l_token);
 		print_tree(cmdtable);
@@ -100,20 +94,20 @@ static t_tree	*parsing(char *line, bool is_debug, char **envp)
 * 3. executes the line: if parsing is successful,
 * executes the actions specified by the AST.
 */
-void	handle_line(char *line, char ***envp, bool is_debug)
+void	handle_line(t_mnsh *mnsh)
 {
 	t_tree	*tree;
 
-	if (!*line)
+	if (!*mnsh->line)
 	{
-		free(line);
+		free(mnsh->line);
 		return ;
 	}
-	add_history(line);
-	tree = parsing(line, is_debug, *envp);
-	free(line);
+	add_history(mnsh->line);
+	tree = parsing(mnsh);
+	free(mnsh->line);
 	if (!tree)
 		return ;
-	execute(tree, envp);
+	execute(mnsh, tree);
 	free_tree(tree);
 }

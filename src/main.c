@@ -1,6 +1,22 @@
 #include "minishell.h"
 #include "parsing.h"
 
+static void	handle_loop(t_mnsh *mnsh)
+{
+	char	*prompt;
+
+	while ("apagnan")
+	{
+		prompt = get_prompt(getcwd(NULL, 0));
+		mnsh->line = readline(prompt);
+		free(prompt);
+		if (!mnsh->line)
+			break ;
+		handle_line(mnsh);
+		// system("leaks minishell");
+	}
+}
+
 /*
 * Minishell's main:
 * A command-line interpreter that can execute
@@ -11,25 +27,15 @@
 */
 int	main(int argc, char **argv, char **envp)
 {
-	t_minishell	*mnsh;
-	char		*prompt;
+	t_mnsh	*mnsh;
 
-	mnsh = init_minishell(argc, argv, envp);
+	mnsh = init_mnsh(argc, argv, envp);
 	if (!mnsh)
 		return (EXIT_FAILURE);
-	while ("apagnan")
-	{
-		prompt = get_prompt(getcwd(NULL, 0));
-		mnsh->line = readline(prompt);
-		free(prompt);
-		if (!mnsh->line)
-			break ;
-		handle_line(mnsh->line, &mnsh->envp, mnsh->is_debug);
-		// system("leaks minishell");
-	}
+	handle_loop(mnsh);
+	set_termios(false);
 	ft_arrayfree(mnsh->envp);
 	free(mnsh);
 	write(1, "exit\n", 5);
-	set_termios(false);
 	return (EXIT_SUCCESS);
 }

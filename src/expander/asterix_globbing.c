@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asterix_globbing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:37 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 14:02:14 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:45:01 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	**asterix_globbing(const char *pattern)
 	return (files);
 }
 
-static char	**glob_or_expand(char **ar, char *arg, char **envp)
+static char	**glob_or_expand(t_mnsh *mnsh, char **ar, char *arg)
 {
 	char	**glob_array;
 	char	*exp_str;
@@ -52,7 +52,7 @@ static char	**glob_or_expand(char **ar, char *arg, char **envp)
 	glob_array = asterix_globbing(arg);
 	if (!glob_array || !*glob_array)
 	{
-		exp_str = treat_env(ft_strdup(arg), envp, false);
+		exp_str = treat_env(mnsh, ft_strdup(arg), false);
 		if (exp_str && *exp_str)
 			ar = ft_arrayadd(ar, exp_str);
 		else if (exp_str && !*exp_str)
@@ -68,7 +68,7 @@ static char	**glob_or_expand(char **ar, char *arg, char **envp)
 * If there is at least one, perform pattern matching on filenames
 * in the current directory.
 */
-char	**array_iter_globbing(char **args, char **envp)
+char	**array_iter_globbing(t_mnsh *mnsh, char **args)
 {
 	char	**res;
 	int		i;
@@ -80,7 +80,7 @@ char	**array_iter_globbing(char **args, char **envp)
 		return (NULL);
 	i = -1;
 	while (args[++i])
-		res = glob_or_expand(res, args[i], envp);
+		res = glob_or_expand(mnsh, res, args[i]);
 	ft_arrayfree(args);
 	return (res);
 }
