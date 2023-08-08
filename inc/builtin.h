@@ -2,12 +2,15 @@
 # define BUILTIN_H
 
 # define EXPORTED "declare -x "
-# define INVALID_ID "not a valid identifier"
 # define NO_EQUAL_SIGN -1
 
-# define NOT_VALID_ID "': not a valid identifier\n"
 # define ERR_EXPORT "minishell: export: `"
 # define ERR_UNSET "minishell: unset: `"
+# define ERR_EXIT "minishell: exit: "
+
+# define NOT_VALID_ID "': not a valid identifier\n"
+# define EXIT_ARGS "minishell: exit: too many arguments\n"
+# define NUM_ARGS_REQ ": numeric argument required\n"
 
 /* IDENTIFIER FOR BUILTINS */
 
