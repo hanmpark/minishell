@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:41:41 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 15:00:55 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:07:31 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	*get_prompt(char *cwd)
 	size_t	count_slash;
 	size_t	cwd_len;
 
+	if (!cwd)
+		return (ft_strdup(FIRST_COLOR"minishell"LAST_PART));
 	count_slash = 0;
 	cwd_len = ft_strlen(cwd);
 	while (count_slash < 2 && cwd[--cwd_len])
