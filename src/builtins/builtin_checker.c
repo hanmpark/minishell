@@ -23,7 +23,7 @@ int	builtin_checker(char **cmd)
 }
 
 // check for each builtin commands
-int	builtin_cmds(char **cmd, char ***envp)
+int	builtin_cmds(char **cmd, char ***envp, pid_t pid)
 {
 	if (!ft_strcmp(cmd[0], "echo"))
 		return (ft_echo(cmd));
@@ -38,6 +38,6 @@ int	builtin_cmds(char **cmd, char ***envp)
 	else if (!ft_strcmp(cmd[0], "env"))
 		return (ft_env(*envp));
 	else if (!ft_strcmp(cmd[0], "exit"))
-		return (ft_exit(cmd));
+		return (ft_exit(pid, cmd));
 	return (0);
 }

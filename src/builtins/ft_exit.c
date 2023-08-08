@@ -1,8 +1,6 @@
 #include "minishell.h"
 #include "builtin.h"
 
-#include "limits.h"
-
 static long int	ft_atol(char *str)
 {
 	long int	num;
@@ -50,28 +48,34 @@ static bool	check_first_argument(char *arg)
 	return (true);
 }
 
+static void	put_error_exit(char *arg)
+{
+	ft_putstr_fd(ERR_EXIT, 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd(NUM_ARGS_REQ, 2);
+	exit(255);
+}
+
 /*
 * Exit command:
 * It is used to terminate a shell session and return an exit
 * to the parent process.
 */
-int	ft_exit(char **argv)
+int	ft_exit(pid_t process_id, char **argv)
 {
-	if (ft_arraylen(argv) > 2)
-	{
-		ft_putstr_fd(EXIT_ARGS, 2);
-		return (1);
-	}
+	if (process_id != 0)
+		ft_printf("exit\n");
 	if (argv[1])
 	{
 		if (!check_first_argument(argv[1]))
+			put_error_exit(argv[1]);
+		else if (ft_arraylen(argv) > 2)
 		{
-			ft_putstr_fd(ERR_EXIT, 2);
-			ft_putstr_fd(argv[1], 2);
-			ft_putstr_fd(NUM_ARGS_REQ, 2);
-			exit(255);
+			ft_putstr_fd(EXIT_ARGS, 2);
+			exit(1);
 		}
-		exit(ft_atol(argv[1]) % 256);
+		else
+			exit(ft_atol(argv[1]) % 256);
 	}
 	exit(0);
 	return (0);

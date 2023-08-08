@@ -15,7 +15,7 @@
 /* IDENTIFIER FOR BUILTINS */
 
 int		builtin_checker(char **cmd);
-int		builtin_cmds(char **cmd, char ***envp);
+int		builtin_cmds(char **cmd, char ***envp, pid_t pid);
 
 /* BUILTINS */
 
@@ -27,6 +27,6 @@ void	put_export(char **envp);
 bool	check_env_var(char *var_name);
 int		ft_env(char **envp);
 int		ft_unset(char **argv, char ***envp);
-int		ft_exit(char **argv);
+int		ft_exit(pid_t process_id, char **argv);
 
 #endif

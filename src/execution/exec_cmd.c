@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:14 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 20:30:21 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/08 09:55:15 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	exec_cmd(char **cmd_args, char ***envp)
 	if (!cmd_args)
 		exit(EXIT_SUCCESS);
 	if (builtin_checker(cmd_args))
-		exit(builtin_cmds(cmd_args, envp));
+		exit(builtin_cmds(cmd_args, envp, CHILD_PROCESS));
 	if (!find_path_cmd(cmd_args, *envp))
 		if (!is_path_cmd(cmd_args[0]))
 			error_not_found(cmd_args[0]);
@@ -90,7 +90,7 @@ pid_t	parse_exec(t_cmd *cmd, char ***envp, int id, bool is_last)
 	set_redirection(cmd);
 	if (is_last && id == 0 && builtin_checker(cmd->args))
 	{
-		g_exit = builtin_cmds(cmd->args, envp);
+		g_exit = builtin_cmds(cmd->args, envp, 1);
 		return (NO_CHILD_PROCESS);
 	}
 	return (fork_cmd(cmd, envp, is_last));
