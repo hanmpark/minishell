@@ -64,15 +64,13 @@ static void	edit_env_var(char ***envp, char *env)
 			&& !ft_strncmp((*envp)[i], env, ft_strlen(env)))
 			return ;
 		if (!ft_strncmp((*envp)[i], env, env_name_len))
-		{
-			found_var(&(*envp)[i], env, *(ft_strchr(env, '=') - 1) == '+');
-			return ;
-		}
+			return (found_var(&(*envp)[i], env, *(ft_strchr(env, '=') - 1) \
+				== '+'));
 	}
 	if (env_name_len == NO_EQUAL_SIGN)
-		not_found_var(envp, env, false);
+		return (not_found_var(envp, env, false));
 	else if (!(*envp)[i])
-		not_found_var(envp, env, *(ft_strchr(env, '=') - 1) == '+');
+		return (not_found_var(envp, env, *(ft_strchr(env, '=') - 1) == '+'));
 }
 
 /*

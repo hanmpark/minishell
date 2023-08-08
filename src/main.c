@@ -15,6 +15,28 @@ void	set_termios(bool set)
 	tcsetattr(STDIN_FILENO, TCSANOW, &termios);
 }
 
+void	update_envp(char ***envp)
+{
+	char	*str;
+	char	*number;
+	int		i;
+
+	i = -1;
+	while ((*envp)[++i])
+	{
+		if (!ft_strncmp((*envp)[i], "SHLVL", 5))
+		{
+			number = ft_itoa(ft_atoi(ft_strchr((*envp)[i], '=') + 1) + 1);
+			str = ft_strjoin("SHLVL=", number);
+			free(number);
+			free((*envp)[i]);
+			(*envp)[i] = str;
+			return ;
+		}
+	}
+	*envp = ft_arrayadd(*envp, ft_strdup("SHLVL=1"));
+}
+
 static t_minishell	*init_minishell(int argc, char **argv, char **envp)
 {
 	t_minishell	*mnsh;
@@ -28,6 +50,7 @@ static t_minishell	*init_minishell(int argc, char **argv, char **envp)
 	set_termios(true);
 	mnsh->line = NULL;
 	mnsh->envp = ft_arraydup(envp);
+	update_envp(&mnsh->envp);
 	g_exit = 0;
 	return (mnsh);
 }
