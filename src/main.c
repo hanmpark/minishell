@@ -12,13 +12,16 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	*mnsh;
+	char		*prompt;
 
 	mnsh = init_minishell(argc, argv, envp);
 	if (!mnsh)
 		return (EXIT_FAILURE);
 	while ("apagnan")
 	{
-		mnsh->line = readline("minishell$ ");
+		prompt = get_prompt(getcwd(NULL, 0));
+		mnsh->line = readline(prompt);
+		free(prompt);
 		if (!mnsh->line)
 			break ;
 		handle_line(mnsh->line, &mnsh->envp, mnsh->is_debug);

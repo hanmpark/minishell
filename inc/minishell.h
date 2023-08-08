@@ -15,6 +15,13 @@
 # define NBR_TYPES 11
 # define NBR_UDF 10
 
+/* PROMPT */
+
+# define FIRST_COLOR "\033[38;5;183m"
+# define FIRST_PART FIRST_COLOR "~"
+# define LAST_COLOR "\033[38;5;191m"
+# define LAST_PART LAST_COLOR " > \033[0m"
+
 typedef enum e_type
 {
 	DLESS,
@@ -44,6 +51,7 @@ int		g_exit;
 
 t_minishell	*init_minishell(int argc, char **argv, char **envp);
 void		set_termios(bool set);
+char		*get_prompt(char *cwd);
 
 /* FOR DEBUGGING PURPOSE */
 

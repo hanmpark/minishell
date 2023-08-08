@@ -6,11 +6,12 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:41:41 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 14:03:24 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:00:55 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "expander.h"
 
 #include <termios.h>
 
@@ -64,4 +65,31 @@ t_minishell	*init_minishell(int argc, char **argv, char **envp)
 	mnsh->envp = update_shlvl(ft_arraydup(envp));
 	g_exit = 0;
 	return (mnsh);
+}
+
+/*
+* Returns the prompt for minishell:
+* Gets the current working directory, returns the last two directories.
+*/
+char	*get_prompt(char *cwd)
+{
+	char	*prompt;
+	char	*tmp;
+	size_t	count_slash;
+	size_t	cwd_len;
+
+	count_slash = 0;
+	cwd_len = ft_strlen(cwd);
+	while (count_slash < 2 && cwd[--cwd_len])
+	{
+		if (cwd[cwd_len] == '/')
+			count_slash++;
+	}
+	prompt = ft_strdup(cwd + cwd_len);
+	tmp = ft_strjoin(FIRST_PART, prompt);
+	free(prompt);
+	prompt = ft_strjoin(tmp, LAST_PART);
+	free(tmp);
+	free(cwd);
+	return (prompt);
 }
