@@ -35,6 +35,8 @@ static bool	check_first_argument(char *arg)
 		sign = true;
 		arg++;
 	}
+	else if (*arg == '+')
+		arg++;
 	if (!ft_strisdigit(arg))
 		return (false);
 	if (ft_strlen(arg) == 19)
