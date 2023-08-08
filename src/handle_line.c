@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 17:53:03 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/08 23:34:50 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "execution.h"
 #include "parsing.h"
 #include "exit.h"
-
-#include <stdbool.h>
 
 /*
 * Parser part:

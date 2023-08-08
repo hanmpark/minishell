@@ -67,12 +67,15 @@ SRC_BUILTINS = ${addprefix ${BUILTINS_PATH}, builtin_checker.c \
 												ft_unset.c \
 												ft_exit.c}
 
+SIGNALS_PATH = ${SRC_PATH}signals/
+SRC_SIGNALS = ${addprefix ${SIGNALS_PATH}, handle_signal.c}
+
 EXIT_PATH = ${SRC_PATH}exit/
 SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \
 										error.c}
 
 SRC = ${SRC_PARSER} ${SRC_LEXER} ${SRC_ENV} ${SRC_WILDCARD} ${SRC_EXIT} ${SRC_EXEC} \
-	${SRC_BUILTINS} ${SRC_DEBUG} ${SRC_REDIR} ${SRC_MAIN}
+	${SRC_BUILTINS} ${SRC_SIGNALS} ${SRC_DEBUG} ${SRC_REDIR} ${SRC_MAIN}
 
 OBJ = ${SRC:.c=.o}
 
@@ -103,12 +106,13 @@ ${SRC_PATH}%.o: ${SRC_PATH}%.c ${HEADER_PATH}
 # -l specifie la bibliotheque,
 # -L le chemin d'accès (du coup dans le repertoire brew)
 
+### Trying to find a way fix rl_replace_line(); in order to use it for signals
+## -I /Users/$(USER)/.brew/opt/readline/include
 
 NAME = minishell
 
 ### Must MODIFY Makefile for the PC that doesn't have the library for readline function();
 READ_LINE_PATH = ~/.brew/opt/readline/lib
-
 LIBFT_PATH = ./lib/libft/
 
 all: ${NAME}

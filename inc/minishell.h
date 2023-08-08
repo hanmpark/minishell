@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:27 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 18:48:15 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/08 22:44:59 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include "../lib/libft/inc/ft_printf.h"
 # include "../lib/libft/inc/structft.h"
@@ -59,9 +60,15 @@ typedef struct s_minishell
 	int		exit;
 }	t_mnsh;
 
+/* GLOBAL VARIABLE */
+
+int		g_sig;
+
 t_mnsh	*init_mnsh(int argc, char **argv, char **envp);
 void	set_termios(bool set);
 char	*get_prompt(char *cwd);
+void	handle_signal(void);
+void	interaction_mod(void);
 
 /* FOR DEBUGGING PURPOSE */
 
