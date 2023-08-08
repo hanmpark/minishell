@@ -39,10 +39,14 @@ SRC_REDIR = ${addprefix ${REDIR_PATH}, file_descriptors.c \
 										here_doc.c}
 
 EXPANDER_PATH = ${SRC_PATH}expander/
-SRC_EXPANDER = ${addprefix ${EXPANDER_PATH}, treat_env.c \
-												expand_tools.c \
-												expand_arg.c \
-												compare_file.c \
+
+ENV_PATH = ${EXPANDER_PATH}environment/
+SRC_ENV = ${addprefix ${ENV_PATH}, expand_arg.c \
+									expand_tools.c \
+									treat_env.c}
+
+WILDCARD_PATH = ${EXPANDER_PATH}wildcard/
+SRC_WILDCARD = ${addprefix ${WILDCARD_PATH}, compare_file.c \
 												match_files.c \
 												asterix_globbing.c \
 												init_entry_files.c}
@@ -67,7 +71,7 @@ EXIT_PATH = ${SRC_PATH}exit/
 SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \
 										error.c}
 
-SRC = ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} ${SRC_EXEC} \
+SRC = ${SRC_PARSER} ${SRC_LEXER} ${SRC_ENV} ${SRC_WILDCARD} ${SRC_EXIT} ${SRC_EXEC} \
 	${SRC_BUILTINS} ${SRC_DEBUG} ${SRC_REDIR} ${SRC_MAIN}
 
 OBJ = ${SRC:.c=.o}
