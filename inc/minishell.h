@@ -42,11 +42,12 @@ typedef struct s_minishell
 
 int		g_exit;
 
-void	set_termios(bool set);
+t_minishell	*init_minishell(int argc, char **argv, char **envp);
+void		set_termios(bool set);
 
 /* FOR DEBUGGING PURPOSE */
 
-void	print_tree(t_tree *node);
-void	print_tokens(t_tok *l_token);
+void		print_tree(t_tree *node);
+void		print_tokens(t_tok *l_token);
 
 #endif

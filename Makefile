@@ -14,6 +14,10 @@ LGREEN = \033[38;5;155m
 # ---------------------------- SOURCES / OBJECTS ----------------------------- #
 SRC_PATH = ./src/
 
+SRC_MAIN = ${addprefix ${SRC_PATH}, main.c \
+									init_minishell.c \
+									handle_line.c}
+
 DEBUG_PATH = ${SRC_PATH}debug/
 SRC_DEBUG = ${addprefix ${DEBUG_PATH}, print_tokens.c \
 										print_tree.c}
@@ -64,7 +68,7 @@ SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \
 										error.c}
 
 SRC = ${SRC_PARSER} ${SRC_LEXER} ${SRC_EXPANDER} ${SRC_EXIT} ${SRC_EXEC} \
-	${SRC_BUILTINS} ${SRC_DEBUG} ${SRC_REDIR} ${SRC_PATH}main.c ${SRC_PATH}handle_line.c
+	${SRC_BUILTINS} ${SRC_DEBUG} ${SRC_REDIR} ${SRC_MAIN}
 
 OBJ = ${SRC:.c=.o}
 
