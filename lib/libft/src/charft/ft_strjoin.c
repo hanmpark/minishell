@@ -1,5 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 18:36:56 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/08/08 18:36:59 by hanmpark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "charft.h"
 #include "memft.h"
+
 #include <stdlib.h>
 
 // Takes two parameters: pointers to the two strings to be concatenated.

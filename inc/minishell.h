@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 18:42:27 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/08/08 18:48:15 by hanmpark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -18,9 +30,8 @@
 /* PROMPT */
 
 # define FIRST_COLOR "\033[38;5;183m"
-# define FIRST_PART FIRST_COLOR "~"
 # define LAST_COLOR "\033[38;5;191m"
-# define LAST_PART LAST_COLOR " > \033[0m"
+# define DEF "\033[0m"
 
 typedef enum e_type
 {
@@ -49,12 +60,12 @@ typedef struct s_minishell
 }	t_mnsh;
 
 t_mnsh	*init_mnsh(int argc, char **argv, char **envp);
-void		set_termios(bool set);
-char		*get_prompt(char *cwd);
+void	set_termios(bool set);
+char	*get_prompt(char *cwd);
 
 /* FOR DEBUGGING PURPOSE */
 
-void		print_tree(t_tree *node);
-void		print_tokens(t_tok *l_token);
+void	print_tree(t_tree *node);
+void	print_tokens(t_tok *l_token);
 
 #endif

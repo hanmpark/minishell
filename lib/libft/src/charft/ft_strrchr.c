@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 18:37:11 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/08/08 18:37:12 by hanmpark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "charft.h"
 
 // Searches for the last occurrence of a specified character in a string.

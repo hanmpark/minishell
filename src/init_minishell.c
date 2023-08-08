@@ -79,7 +79,7 @@ char	*get_prompt(char *cwd)
 	size_t	cwd_len;
 
 	if (!cwd)
-		return (ft_strdup(FIRST_COLOR"minishell"LAST_PART));
+		return (ft_strdup(FIRST_COLOR "minishell" LAST_COLOR " > " DEF));
 	count_slash = 0;
 	cwd_len = ft_strlen(cwd);
 	while (count_slash < 2 && cwd[--cwd_len])
@@ -88,9 +88,9 @@ char	*get_prompt(char *cwd)
 			count_slash++;
 	}
 	prompt = ft_strdup(cwd + cwd_len);
-	tmp = ft_strjoin(FIRST_PART, prompt);
+	tmp = ft_strjoin(FIRST_COLOR "~", prompt);
 	free(prompt);
-	prompt = ft_strjoin(tmp, LAST_PART);
+	prompt = ft_strjoin(tmp, LAST_COLOR " > " DEF);
 	free(tmp);
 	free(cwd);
 	return (prompt);

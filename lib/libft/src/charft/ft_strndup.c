@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 18:37:04 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/08/08 18:37:07 by hanmpark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "charft.h"
+
 #include <stdlib.h>
 
 // Duplicates n number of bytes in a null-terminated string.

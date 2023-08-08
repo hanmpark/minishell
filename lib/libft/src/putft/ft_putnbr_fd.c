@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 18:38:30 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/08/08 18:38:33 by hanmpark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "putft.h"
+
 #include <limits.h>
 
 // Writes an integer value to a specified file descriptor.
