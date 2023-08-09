@@ -5,13 +5,11 @@ static void	handle_loop(t_mnsh *mnsh)
 {
 	char	*prompt;
 
-	handle_signal();
+	handle_sig_parent();
 	while ("apagnan")
 	{
 		prompt = get_prompt(getcwd(NULL, 0));
 		mnsh->line = readline(prompt);
-		if (g_sig > 0)
-			interaction_mod();
 		free(prompt);
 		if (!mnsh->line)
 			break ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format_limiter.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:54:34 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 10:25:00 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:36:34 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,13 @@ static char	*extracts_join_limiter(char *old_limiter, char *token, int *i)
 char	*format_limiter(char *token)
 {
 	char	*limiter;
-	char	*tmp;
 	int		i;
 
-	tmp = ft_calloc(1, sizeof(char));
-	if (!tmp)
+	limiter = ft_calloc(1, sizeof(char));
+	if (!limiter)
 		return (NULL);
 	i = 0;
 	while (token[i])
-		tmp = extracts_join_limiter(tmp, token, &i);
-	limiter = ft_strjoin(tmp, "\n");
-	free(tmp);
+		limiter = extracts_join_limiter(limiter, token, &i);
 	return (limiter);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:27 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 15:00:02 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 16:47:44 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int		g_exit;
 t_mnsh	*init_mnsh(int argc, char **argv, char **envp);
 void	set_termios(bool set);
 char	*get_prompt(char *cwd);
-void	handle_signal(void);
-void	interaction_mod(void);
+void	handle_sig_parent(void);
+void	handle_sig_child(void);
 
 /* FOR DEBUGGING PURPOSE */
 

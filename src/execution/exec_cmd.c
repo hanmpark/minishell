@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:14 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 15:00:30 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 20:07:04 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ pid_t	fork_cmd(t_cmd *cmd, char ***envp, bool is_last)
 	}
 	if (pid == CHILD_PROCESS)
 	{
+		handle_sig_child();
 		set_pipe_output(cmd->fdout, pfd, is_last);
 		exec_cmd(cmd->args, envp);
 	}
