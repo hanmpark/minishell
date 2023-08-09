@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:58 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 11:51:28 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:19:46 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	check_filename(t_mnsh *mnsh, t_tok *token)
 	{
 		if (expanded_token)
 			ft_arrayfree(expanded_token);
-		return (error_token(token->token, ERR_AMB, &mnsh->exit, NO_HANDLE));
+		return (error_token(token->token, ERR_AMB, NO_HANDLE));
 	}
 	free(token->token);
 	token->token = ft_strdup(*expanded_token);
@@ -57,7 +57,7 @@ static int	right_tok(int last_type, t_tok *cur)
 }
 
 // Checks the order of the tokens
-bool	check_order(t_tok *l_token, int *ex)
+bool	check_order(t_tok *l_token)
 {
 	int	last_type;
 
@@ -66,15 +66,15 @@ bool	check_order(t_tok *l_token, int *ex)
 	{
 		last_type = right_tok(last_type, l_token);
 		if (last_type == -1)
-			return (error_token(l_token->token, ERR_TOKEN, ex, ORDER_WRONG));
+			return (error_token(l_token->token, ERR_TOKEN, ORDER_WRONG));
 		if (last_type == -2)
-			return (error_token(l_token->token, ERR_NOHANDLE, ex, NO_HANDLE));
+			return (error_token(l_token->token, ERR_NOHANDLE, NO_HANDLE));
 		l_token = l_token->next;
 	}
 	if (is_cmdsep(last_type))
-		return (error_token(NULL, ERR_MISS, ex, NO_HANDLE));
+		return (error_token(NULL, ERR_MISS, NO_HANDLE));
 	else if (is_redir(last_type))
-		return (error_token(NULL, ERR_REDIR, ex, ORDER_WRONG));
+		return (error_token(NULL, ERR_REDIR, ORDER_WRONG));
 	return (true);
 }
 
@@ -112,7 +112,7 @@ static t_tok	*check_in_parentheses(t_tok *l_token, int *par_id)
 * - returns true if parentheses are closed and have at least
 * one logical operators, either '&&' or '||'.
 */
-bool	check_parentheses(t_tok *l_token, int *exit_st)
+bool	check_parentheses(t_tok *l_token)
 {
 	int	par_id;
 
@@ -124,10 +124,10 @@ bool	check_parentheses(t_tok *l_token, int *exit_st)
 			l_token->par_id = ++par_id;
 			l_token = check_in_parentheses(l_token->next, &par_id);
 			if (!l_token)
-				return (error_token("(", ERR_TOKEN, exit_st, NO_HANDLE));
+				return (error_token("(", ERR_TOKEN, NO_HANDLE));
 		}
 		else if (l_token->type == RPAR)
-			return (error_token(")", ERR_TOKEN, exit_st, NO_HANDLE));
+			return (error_token(")", ERR_TOKEN, NO_HANDLE));
 		l_token = l_token->next;
 	}
 	return (true);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 23:34:50 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:18:15 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ static t_tree	*parser(t_tok *l_token, t_mnsh *mnsh)
 	t_tree	*cmdtable;
 
 	cmdtable = NULL;
-	if (!check_order(l_token, &mnsh->exit) \
-		|| !check_parentheses(l_token, &mnsh->exit))
+	if (!check_order(l_token) || !check_parentheses(l_token))
 		return (NULL);
 	cmdtable = get_table(l_token, mnsh);
 	return (cmdtable);

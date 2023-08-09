@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:29 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 18:42:30 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:21:08 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ bool	is_redir(t_type type);
 bool	is_cmdsep(t_type type);
 bool	is_par(t_type type);
 
-bool	check_order(t_tok *l_token, int *ex);
-bool	check_parentheses(t_tok *l_token, int *exit_st);
+bool	check_order(t_tok *l_token);
+bool	check_parentheses(t_tok *l_token);
 bool	check_filename(t_mnsh *mnsh, t_tok *token);
 
 t_tree	*get_table(t_tok *l_token, t_mnsh *mnsh);

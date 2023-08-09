@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:23 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 18:42:24 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:20:40 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define BIN_NOT_FOUND 127
 # define ORDER_WRONG 258
 
-bool	error_token(char *token, char *err_msg, int *exit_st, int err_no);
+bool	error_token(char *token, char *err_msg, int err_no);
 void	error_not_found(char *cmd);
 void	error_not_executable(char *cmd);
 

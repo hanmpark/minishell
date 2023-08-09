@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:07 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 17:25:49 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:19:38 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool	find_second_mark(t_lex *lex, char *line, char quote)
 	return (true);
 }
 
-static bool	move_to_end(t_lex *lex, char *line, int *exit_st)
+static bool	move_to_end(t_lex *lex, char *line)
 {
 	while (line[lex->cur] && \
 		(lex->type == DQUOTE || lex->type == QUOTE || lex->type == WORD))
@@ -35,9 +35,9 @@ static bool	move_to_end(t_lex *lex, char *line, int *exit_st)
 			if (!find_second_mark(lex, line, line[lex->cur]))
 			{
 				if (lex->type == DQUOTE)
-					return (error_token("\"", ERR_TOKEN, exit_st, NO_HANDLE));
+					return (error_token("\"", ERR_TOKEN, NO_HANDLE));
 				else if (lex->type == QUOTE)
-					return (error_token("'", ERR_TOKEN, exit_st, NO_HANDLE));
+					return (error_token("'", ERR_TOKEN, NO_HANDLE));
 			}
 		}
 		else
@@ -52,7 +52,7 @@ static char	*get_string(t_lex *lex, t_mnsh *mnsh, char *token)
 	char	*add_str;
 	char	*final_str;
 
-	if (!move_to_end(lex, mnsh->line, &mnsh->exit))
+	if (!move_to_end(lex, mnsh->line))
 	{
 		free(token);
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:46 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 17:15:20 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:20:26 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 * - exits with 1 usually if it's not something we have to handle.
 * - exits with 258 for other parsing errors.
 */
-bool	error_token(char *token, char *err_msg, int *exit_st, int err_no)
+bool	error_token(char *token, char *err_msg, int err_no)
 {
 	if (ft_strrchr(err_msg, '`'))
 	{
@@ -37,7 +37,7 @@ bool	error_token(char *token, char *err_msg, int *exit_st, int err_no)
 		ft_putstr_fd(token, 2);
 		ft_putstr_fd(err_msg, 2);
 	}
-	*exit_st = err_no;
+	g_exit = err_no;
 	return (false);
 }
 

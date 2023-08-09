@@ -63,7 +63,7 @@ t_mnsh	*init_mnsh(int argc, char **argv, char **envp)
 	set_termios(true);
 	mnsh->line = NULL;
 	mnsh->envp = update_shlvl(ft_arraydup(envp));
-	mnsh->exit = 0;
+	g_exit = 0;
 	return (mnsh);
 }
 

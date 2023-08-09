@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:15 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 17:43:20 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:00:30 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*treat_env(t_mnsh *mnsh, char *line, bool prevent_eval)
 		if (line[i] == '$' && (ft_isenv(line[i + 1]) || prevent_eval))
 			line = edit_line(line, line + i + 1, mnsh->envp, &i);
 		else if (line[i] == '$' && line[i + 1] && line[i + 1] == '?')
-			line = edit_line_exit(line, ft_itoa(mnsh->exit), &i);
+			line = edit_line_exit(line, ft_itoa(g_exit), &i);
 		else
 			i++;
 	}

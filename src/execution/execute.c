@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:10 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 18:29:33 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:19:17 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 #include "execution.h"
 #include "exit.h"
 
-static t_tree	*next_command(t_tree *node, int *exit_st, int cmd_st)
+static t_tree	*next_command(t_tree *node, int cmd_st)
 {
 	if (cmd_st != NO_CHILD_PROCESS)
 	{
 		if (WIFEXITED(cmd_st))
-			*exit_st = WEXITSTATUS(cmd_st);
+			g_exit = WEXITSTATUS(cmd_st);
 		else if (WIFSIGNALED(cmd_st))
-			*exit_st = 128 + WTERMSIG(cmd_st);
+			g_exit = 128 + WTERMSIG(cmd_st);
 		else if (WIFSTOPPED(cmd_st))
-			*exit_st = 128 + WSTOPSIG(cmd_st);
+			g_exit = 128 + WSTOPSIG(cmd_st);
 	}
-	if (*exit_st != 0)
+	if (g_exit != 0)
 		return (node->or_branch);
 	return (node->and_branch);
 }
@@ -87,6 +87,6 @@ void	execute(t_mnsh *mnsh, t_tree *node)
 	{
 		if (!exec_node(mnsh, node, &cmd_st))
 			exit(1);
-		node = next_command(node, &mnsh->exit, cmd_st);
+		node = next_command(node, cmd_st);
 	}
 }
