@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:18:18 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 18:18:20 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 11:51:28 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static long int	ft_atol(char *str)
 
 	num = 0;
 	sign = 1;
-	while (*str && ft_isspace(*str))
+	while (*str && ft_isWHITE_SPACE(*str))
 		str++;
 	if (*str == '-')
 	{

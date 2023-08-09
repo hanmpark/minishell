@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:58 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 17:48:49 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 11:51:28 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 /*
 * Checks file name:
-* if the file name contains space / NULL after being expaneded,
+* if the file name contains WHITE_SPACE / NULL after being expaneded,
 * returns an error.
 */
 bool	check_filename(t_mnsh *mnsh, t_tok *token)

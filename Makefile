@@ -87,41 +87,40 @@ ifdef DEBUG
 	CFLAGS += -fsanitize=address -g
 endif
 
-HEADER_PATH = ./inc/
+CUR_INC = ./inc/
+LIBFT_PATH = ./lib/libft/
+READLINE_PATH = ./vendor/readline/
 SRC_COUNT = 0
 SRC_TOT = ${shell find ${SRC_PATH} -type f -name '*.c' | wc -l}
 SRC_PRCT = ${shell expr 100 \* ${SRC_COUNT} / ${SRC_TOT}}
 BAR = ${shell expr 23 \* ${SRC_COUNT} / ${SRC_TOT}}
 
-${SRC_PATH}%.o: ${SRC_PATH}%.c ${HEADER_PATH}
+${SRC_PATH}%.o: ${SRC_PATH}%.c
 	@${eval SRC_COUNT = ${shell expr ${SRC_COUNT} + 1}}
-	@${CC} ${CFLAGS} -I ${HEADER_PATH} -c $< -o ${<:.c=.o}
+	@${CC} ${CFLAGS} -I${CUR_INC} -I${LIBFT_PATH}inc/ -I${READLINE_PATH}include/ -c $< -o ${<:.c=.o}
 	@echo "\n ${BOLD}${CUR}${LPURPLE}-> Compiling ${DEF}${BOLD}${LYELLOW}[MINISHELL]${DEF}"
 	@printf " ${LPURPLE}   [${LGREEN}%-23.${BAR}s${LPURPLE}] [%d/%d (%d%%)]${DEF}" "***********************" ${SRC_COUNT} ${SRC_TOT} ${SRC_PRCT}
 	@echo "${UP}${UP}${UP}"
 
 # ---------------------------------- RULES ----------------------------------- #
-# pour la fonction readline, il faut inclure la librairie qu'on installe en utilisant
-# la commmande: 'brew install readline'
 # -l specifie la bibliotheque,
 # -L le chemin d'accès (du coup dans le repertoire brew)
 
-### Trying to find a way fix rl_replace_line(); in order to use it for signals
-## -I /Users/$(USER)/.brew/opt/readline/include
-
 NAME = minishell
+LIBS = -L${LIBFT_PATH} -L${READLINE_PATH}/lib -lreadline -lft
 
-### Must MODIFY Makefile for the PC that doesn't have the library for readline function();
-READ_LINE_PATH = ~/.brew/opt/readline/lib
-LIBFT_PATH = ./lib/libft/
-
-all: ${NAME}
+all: readline ${NAME}
 
 ${NAME}: ${OBJ}
 	@echo "\n\n\n"
 	@${MAKE} -C ${LIBFT_PATH}
-	@${CC} ${CFLAGS} ${LIBFT_PATH}libft.a ${OBJ} -o ${NAME} -lreadline -L ${READ_LINE_PATH}
+	@${CC} ${CFLAGS} ${LIBS} ${OBJ} -o ${NAME}
 	@echo "\n\n\n\n   ${BOLD}${CUR}${LYELLOW}${NAME} COMPILED ✨${DEF}\n"
+
+readline: ${READLINE_PATH}
+
+${READLINE_PATH}:
+	sh ./install_readline.sh
 
 bonus:
 	${MAKE}
@@ -142,4 +141,4 @@ fclean: clean
 re: fclean
 	@${MAKE} all
 
-.PHONY: all clean fclean re debug
+.PHONY: all readline bonus debug clean fclean re

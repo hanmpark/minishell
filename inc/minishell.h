@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:27 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 22:44:59 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/09 11:55:45 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 # include <stdlib.h>
 # include <signal.h>
 # include <readline/readline.h>
-# include "../lib/libft/inc/ft_printf.h"
-# include "../lib/libft/inc/structft.h"
-# include "../lib/libft/inc/charft.h"
-# include "../lib/libft/inc/memft.h"
-# include "../lib/libft/inc/isft.h"
-# include "../lib/libft/inc/putft.h"
+# include <readline/history.h>
+# include "ft_printf.h"
+# include "structft.h"
+# include "charft.h"
+# include "memft.h"
+# include "isft.h"
+# include "putft.h"
 
 # define NBR_TYPES 11
 # define NBR_UDF 10
@@ -48,7 +49,7 @@ typedef enum e_type
 	QUOTE,
 	DQUOTE,
 	UNDEFINED,
-	SPACE,
+	WHITE_SPACE,
 	WORD
 }	t_type;
 

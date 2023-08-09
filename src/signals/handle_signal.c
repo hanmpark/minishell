@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 23:40:22 by kquetat-          #+#    #+#             */
-/*   Updated: 2023/08/08 23:40:23 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/09 11:52:54 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	interaction_mod(void)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_on_new_line();
-		rl_replace_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 		g_sig = 0;
 	}
