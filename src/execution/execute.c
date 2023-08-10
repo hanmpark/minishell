@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:10 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 22:39:19 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:59:24 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "signals.h"
 #include "exit.h"
 
+extern int	g_exit;
+
 static t_tree	*next_command(t_tree *node)
 {
 	if (g_exit != 0)
@@ -22,7 +24,7 @@ static t_tree	*next_command(t_tree *node)
 	return (node->and_branch);
 }
 
-static bool	wait_cmds(t_cmd **cmd)
+static void	wait_cmds(t_cmd **cmd)
 {
 	int	status;
 	int	i;
@@ -35,10 +37,9 @@ static bool	wait_cmds(t_cmd **cmd)
 			waitpid(cmd[i]->pid, &status, 0);
 	}
 	set_exit_status(status);
-	return (true);
 }
 
-static bool	exec_node(t_mnsh *mnsh, t_tree *node)
+static void	exec_node(t_mnsh *mnsh, t_tree *node)
 {
 	t_cmd	**cmd;
 	int		iostream[2];
@@ -49,11 +50,7 @@ static bool	exec_node(t_mnsh *mnsh, t_tree *node)
 	cmd = node->cmd;
 	i = -1;
 	while (++i < node->nb_pipe)
-	{
 		cmd[i]->pid = parse_exec(mnsh, cmd[i], i, i == node->nb_pipe - 1);
-		if (cmd[i]->pid == FORK_FAIL || cmd[i]->pid == PIPE_FAIL)
-			return (false);
-	}
 	reset_iostream(iostream);
 	return (wait_cmds(cmd));
 }
@@ -68,8 +65,7 @@ void	execute(t_mnsh *mnsh, t_tree *node)
 {
 	while (node)
 	{
-		if (!exec_node(mnsh, node))
-			exit(1);
+		exec_node(mnsh, node);
 		node = next_command(node);
 	}
 }

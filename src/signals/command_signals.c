@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:13:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 22:27:03 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:51:02 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@ static void	command_sigquit(int signal)
 	ft_putstr_fd("Quit: 3\n", STDOUT_FILENO);
 }
 
-void	command_signals(void)
+/*
+* Sets up custom signal handlers for the SIGINT and SIGQUIT signals
+* - within the context of a specific command.
+* - provides specialized behavior to handle interruptions and termination
+* signals during the execution of a command.
+*/
+void	setup_command_signals_handlers(void)
 {
 	signal(SIGINT, command_sigint);
 	signal(SIGQUIT, command_sigquit);

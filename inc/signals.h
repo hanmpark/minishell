@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 12:16:50 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 22:42:45 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:10:33 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 
 void	set_termios(bool set);
 
-void	basic_signals(void);
-void	command_signals(void);
-void	heredoc_signals(void);
-void	ignore_signals(void);
+void	setup_basic_signals_handlers(void);
+void	setup_command_signals_handlers(void);
+void	setup_heredoc_signals_handlers(void);
+void	setup_ignore_signals_handlers(void);
 void	set_exit_status(int process_status);
 
 #endif

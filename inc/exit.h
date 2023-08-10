@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:23 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 15:20:40 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 22:48:47 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 bool	error_token(char *token, char *err_msg, int err_no);
 void	error_not_found(char *cmd);
 void	error_not_executable(char *cmd);
+void	error_fatal(char *err_msg);
 
 void	free_tokens(t_tok **l_token);
 void	free_tree(t_tree *tree);

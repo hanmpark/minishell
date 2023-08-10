@@ -6,12 +6,14 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:42:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 21:17:34 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:59:05 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expander.h"
+
+extern int	g_exit;
 
 static char	**update_shlvl(char **envp)
 {

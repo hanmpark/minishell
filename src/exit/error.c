@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:46 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 20:10:48 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:59:34 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "exit.h"
 
 #include <sys/stat.h>
+
+extern int	g_exit;
 
 /*
 * Handling error messages and its exit status:
@@ -80,4 +82,10 @@ void	error_not_executable(char *cmd)
 	if (S_ISDIR(stat.st_mode))
 		error_exit(cmd, ERR_ISDIR, NOT_EXECUTABLE);
 	error_exit(cmd, ERR_PERM, NOT_EXECUTABLE);
+}
+
+void	error_fatal(char *err_msg)
+{
+	perror(err_msg);
+	exit(1);
 }

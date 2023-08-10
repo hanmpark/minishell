@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:21 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 20:25:13 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 22:52:15 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@
 # define WRITE_END 1
 # define READ_END 0
 
-# define EXEC_FAIL -1
-# define PIPE_FAIL -1
-# define FORK_FAIL -2
-# define NO_CHILD_PROCESS -3
+# define NO_CHILD_PROCESS -1
 
 void	execute(t_mnsh *mnsh, t_tree *node);
 int		parse_exec(t_mnsh *mnsh, t_cmd *cmd, int id, bool is_last);

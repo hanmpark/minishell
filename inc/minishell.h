@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:27 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 21:17:21 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:57:56 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ typedef enum e_type
 
 typedef struct s_minishell
 {
-	char				*line;
-	char				**envp;
-	bool				is_debug;
+	char	*line;
+	char	**envp;
+	bool	is_debug;
 }	t_mnsh;
 
 /* GLOBAL VARIABLE */

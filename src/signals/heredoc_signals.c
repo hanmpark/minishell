@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:06:50 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 21:10:13 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:50:23 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ static void	heredoc_sigquit(int signal)
 	rl_redisplay();
 }
 
-void	heredoc_signals(void)
+/*
+* Sets up custom signal handlers for the SIGINT and SIGQUIT signals:
+* - specifically during the input collection phase of a heredoc.
+* - it provides tailored behavior for handling interruptions and termination
+* signals while gathering input for a heredoc.
+*/
+void	setup_heredoc_signals_handlers(void)
 {
 	signal(SIGINT, heredoc_sigint);
 	signal(SIGQUIT, heredoc_sigquit);

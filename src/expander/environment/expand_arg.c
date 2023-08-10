@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 17:45:22 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 00:08:19 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	**append_array(char **array, char **join)
 	array[i] = ft_strjoin(add, *join);
 	free(add);
 	if (ft_arraylen(join) > 1)
-		array = ft_arrayjoin(array, join + 1);
+		array = ft_arrayjoin(array, ft_arraydup(join + 1));
 	ft_arrayfree(join);
 	return (array);
 }

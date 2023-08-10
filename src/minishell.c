@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:26:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 21:18:42 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 00:00:44 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	handle_loop(t_mnsh *mnsh)
 
 	while ("apagnan")
 	{
-		basic_signals();
+		setup_basic_signals_handlers();
 		set_termios(true);
 		prompt = get_prompt(getcwd(NULL, 0));
 		mnsh->line = readline(prompt);
@@ -63,7 +63,6 @@ static void	handle_loop(t_mnsh *mnsh)
 			break ;
 		}
 		handle_line(mnsh);
-		// system("leaks minishell");
 	}
 }
 

@@ -5,13 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 21:10:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 21:12:52 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/08/10 23:10:04 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/08/10 23:58:41 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "signals.h"
+
+extern int	g_exit;
 
 static void	basic_sigint(int signal)
 {
@@ -32,7 +34,13 @@ static void	basic_sigquit(int signal)
 	rl_redisplay();
 }
 
-void	basic_signals(void)
+/*
+* Sets up the basic signal handlers for the SIGINT and SIGQUIT signals:
+* it provides a simple behavior for these signals, allowing interruption
+* of the ongoing operation (SIGINT) and graceful termination
+* with core dump (SIGQUIT).
+*/
+void	setup_basic_signals_handlers(void)
 {
 	signal(SIGINT, basic_sigint);
 	signal(SIGQUIT, basic_sigquit);

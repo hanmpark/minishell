@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:25 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 17:07:36 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 22:49:26 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void	print_single_cmd(char **args)
 	while (args[i])
 	{
 		ft_printf("[%s] ", args[i]);
-		fflush(stdout);
 		i++;
 	}
 	ft_printf("\n");

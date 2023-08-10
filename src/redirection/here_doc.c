@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:42 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 21:20:26 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 23:59:54 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "expander.h"
 #include "parsing.h"
 #include "signals.h"
+
+extern int	g_exit;
 
 static bool	should_expand(char *token)
 {
@@ -38,7 +40,7 @@ static void	init_here_doc(t_mnsh *mnsh, char *limiter, bool expand, int *pfd)
 	char	*line;
 	char	*line_nl;
 
-	heredoc_signals();
+	setup_heredoc_signals_handlers();
 	set_termios(true);
 	close(pfd[0]);
 	line = readline("> ");
