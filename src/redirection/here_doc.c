@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:42 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 13:33:09 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:22:29 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,36 @@
 #include "parsing.h"
 #include "signals.h"
 
-static bool	found_quote(char *line)
+static bool	should_expand(char *token)
 {
-	while (*line)
+	while (*token)
 	{
-		if (*line == '\'' || *line == '"')
-			return (true);
-		line++;
+		if (*token == '\'' || *token == '"')
+			return (false);
+		token++;
 	}
-	return (false);
+	return (true);
 }
 
-static char	*expand_here_doc(t_mnsh *mnsh, bool is_quoted, char *line)
+static char	*expand_here_doc(t_mnsh *mnsh, bool expand, char *line)
 {
-	if (!is_quoted)
+	if (expand)
 		return (treat_env(mnsh, line, false));
 	return (line);
 }
 
-static void	init_here_doc(t_mnsh *mnsh, char *token, bool is_quoted, int *pfd)
+static void	init_here_doc(t_mnsh *mnsh, char *limiter, bool expand, int *pfd)
 {
-	char	*limiter;
 	char	*line;
 	char	*line_nl;
 
+	handle_signals(mnsh->sa, &heredoc_signals);
+	set_termios(true);
 	close(pfd[0]);
-	limiter = format_limiter(token);
 	line = readline("> ");
 	while (line && ft_strcmp(line, limiter))
 	{
-		line = expand_here_doc(mnsh, is_quoted, line);
+		line = expand_here_doc(mnsh, expand, line);
 		line_nl = ft_strjoin(line, "\n");
 		write(pfd[1], line_nl, ft_strlen(line_nl));
 		free(line);
@@ -58,6 +58,21 @@ static void	init_here_doc(t_mnsh *mnsh, char *token, bool is_quoted, int *pfd)
 	exit(EXIT_SUCCESS);
 }
 
+static int	check_here_doc_state(int pfd, pid_t pid)
+{
+	int	here_doc_status;
+
+	waitpid(pid, &here_doc_status, 0);
+	set_exit_status(here_doc_status);
+	if (g_exit != 0)
+	{
+		close(pfd);
+		g_exit = 1;
+		return (-2);
+	}
+	return (pfd);
+}
+
 /*
 * Here document ('<<'):
 * - passes the input(s) to a command as if it were read from a file.
@@ -67,9 +82,8 @@ static void	init_here_doc(t_mnsh *mnsh, char *token, bool is_quoted, int *pfd)
 */
 int	here_doc(t_mnsh *mnsh, char *token)
 {
-	int	pfd[2];
-	int	pid;
-	int	status;
+	pid_t	pid;
+	int		pfd[2];
 
 	handle_signals(mnsh->sa, SIG_IGN);
 	if (pipe(pfd) == -1)
@@ -78,19 +92,7 @@ int	here_doc(t_mnsh *mnsh, char *token)
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
-	{
-		set_termios(true);
-		handle_signals(mnsh->sa, &heredoc_signals);
-		init_here_doc(mnsh, token, found_quote(token), pfd);
-	}
+		init_here_doc(mnsh, format_limiter(token), should_expand(token), pfd);
 	close(pfd[1]);
-	waitpid(pid, &status, 0);
-	set_exit_status(status);
-	if (g_exit != 0)
-	{
-		close(pfd[0]);
-		g_exit = 1;
-		return (-2);
-	}
-	return (pfd[0]);
+	return (check_here_doc_state(pfd[0], pid));
 }
