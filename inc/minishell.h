@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:27 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 09:13:54 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 12:23:01 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "ft_printf.h"
@@ -68,9 +67,6 @@ int		g_exit;
 t_mnsh	*init_mnsh(int argc, char **argv, char **envp);
 void	set_termios(bool set);
 char	*get_prompt(char *cwd);
-void	handle_signals(struct sigaction *sa, void (*f)(int));
-void	command_signals(int sig);
-void	basic_signals(int signal);
 
 /* FOR DEBUGGING PURPOSE */
 

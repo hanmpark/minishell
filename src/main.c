@@ -1,5 +1,6 @@
 #include "minishell.h"
 #include "parsing.h"
+#include "signals.h"
 
 static void	handle_loop(t_mnsh *mnsh)
 {

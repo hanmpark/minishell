@@ -6,13 +6,14 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:42 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 01:31:30 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:33:09 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expander.h"
 #include "parsing.h"
+#include "signals.h"
 
 static bool	found_quote(char *line)
 {
@@ -32,14 +33,16 @@ static char	*expand_here_doc(t_mnsh *mnsh, bool is_quoted, char *line)
 	return (line);
 }
 
-static void	init_here_doc(t_mnsh *mnsh, char *limit, bool is_quoted, int *pfd)
+static void	init_here_doc(t_mnsh *mnsh, char *token, bool is_quoted, int *pfd)
 {
+	char	*limiter;
 	char	*line;
 	char	*line_nl;
 
 	close(pfd[0]);
+	limiter = format_limiter(token);
 	line = readline("> ");
-	while (ft_strcmp(line, limit))
+	while (line && ft_strcmp(line, limiter))
 	{
 		line = expand_here_doc(mnsh, is_quoted, line);
 		line_nl = ft_strjoin(line, "\n");
@@ -50,7 +53,7 @@ static void	init_here_doc(t_mnsh *mnsh, char *limit, bool is_quoted, int *pfd)
 	}
 	if (line)
 		free(line);
-	free(limit);
+	free(limiter);
 	close(pfd[1]);
 	exit(EXIT_SUCCESS);
 }
@@ -64,21 +67,30 @@ static void	init_here_doc(t_mnsh *mnsh, char *limit, bool is_quoted, int *pfd)
 */
 int	here_doc(t_mnsh *mnsh, char *token)
 {
-	char	*limiter;
-	int		pfd[2];
-	int		pid;
+	int	pfd[2];
+	int	pid;
+	int	status;
 
-	handle_signals(mnsh->sa, SIG_DFL);
-	limiter = format_limiter(token);
+	handle_signals(mnsh->sa, SIG_IGN);
 	if (pipe(pfd) == -1)
 		return (-1);
 	pid = fork();
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
-		init_here_doc(mnsh, limiter, found_quote(token), pfd);
-	free(limiter);
+	{
+		set_termios(true);
+		handle_signals(mnsh->sa, &heredoc_signals);
+		init_here_doc(mnsh, token, found_quote(token), pfd);
+	}
 	close(pfd[1]);
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &status, 0);
+	set_exit_status(status);
+	if (g_exit != 0)
+	{
+		close(pfd[0]);
+		g_exit = 1;
+		return (-2);
+	}
 	return (pfd[0]);
 }
