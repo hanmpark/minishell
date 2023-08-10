@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:11 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 11:51:28 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 09:18:10 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_type	is_separator(char *str)
 			return (i);
 	if (!ft_strncmp(str, "&", 1))
 		return (UNDEFINED);
-	if (ft_isWHITE_SPACE(*str))
+	if (ft_isspace(*str))
 		return (WHITE_SPACE);
 	return (WORD);
 }

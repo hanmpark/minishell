@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 11:51:28 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 09:18:38 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	nbr_skip(char *str, t_type type)
 	if (!str)
 		return (0);
 	skip = 0;
-	while (str[skip] && ft_isWHITE_SPACE(str[skip]))
+	while (str[skip] && ft_isspace(str[skip]))
 		skip++;
 	if (type == DLESS || type == DGREAT || type == OR_IF || type == AND_IF)
 		return (2);
@@ -29,15 +29,15 @@ static int	nbr_skip(char *str, t_type type)
 		return (is_undefined(str));
 	else if ((type == UNDEFINED && *str == '&'))
 		return (1);
-	else if (type != WORD && !ft_isWHITE_SPACE(*str))
+	else if (type != WORD && !ft_isspace(*str))
 		return (1);
 	return (skip);
 }
 
 /*
 * Skips the separator:
-* - if the separator is different from WHITE_SPACEs, tokenizes the sep.
-* - else, skips WHITE_SPACEs and go to the next token.
+* - if the separator is different from spaces, tokenizes the sep.
+* - else, skips spaces and go to the next token.
 */
 static void	skip_sep(t_tok **l_token, t_lex *lex, char *line)
 {
