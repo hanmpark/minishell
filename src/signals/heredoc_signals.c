@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmdnew.c                                        :+:      :+:    :+:   */
+/*   heredoc_signals.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 18:39:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 20:08:00 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/08/10 21:06:50 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/08/10 21:10:13 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structft.h"
+#include "minishell.h"
+#include "signals.h"
 
-#include <stdlib.h>
-
-// Creates a new allocated t_cmd structure
-t_cmd	*ft_cmdnew(void)
+static void	heredoc_sigint(int signal)
 {
-	t_cmd	*cmd;
+	if (signal != SIGINT)
+		return ;
+	ft_putstr_fd("\n", STDOUT_FILENO);
+	exit(1);
+}
 
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->args = NULL;
-	cmd->pid = 0;
-	cmd->fdin = 0;
-	cmd->fdout = 1;
-	return (cmd);
+static void	heredoc_sigquit(int signal)
+{
+	if (signal != SIGQUIT)
+		return ;
+	rl_on_new_line();
+	rl_redisplay();
+}
+
+void	heredoc_signals(void)
+{
+	signal(SIGINT, heredoc_sigint);
+	signal(SIGQUIT, heredoc_sigquit);
 }

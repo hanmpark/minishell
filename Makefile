@@ -68,8 +68,11 @@ SRC_BUILTINS = ${addprefix ${BUILTINS_PATH}, builtin_checker.c \
 												ft_exit.c}
 
 SIGNALS_PATH = ${SRC_PATH}signals/
-SRC_SIGNALS = ${addprefix ${SIGNALS_PATH}, ctrl_signals.c \
-											set_signals.c}
+SRC_SIGNALS = ${addprefix ${SIGNALS_PATH}, set_signals.c \
+											basic_signals.c \
+											command_signals.c \
+											heredoc_signals.c \
+											ignore_signals.c}
 
 EXIT_PATH = ${SRC_PATH}exit/
 SRC_EXIT = ${addprefix ${EXIT_PATH}, free_structure.c \

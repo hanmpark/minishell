@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:26:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 14:41:36 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 21:18:42 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	handle_loop(t_mnsh *mnsh)
 
 	while ("apagnan")
 	{
-		handle_signals(mnsh->sa, &basic_signals);
+		basic_signals();
 		set_termios(true);
 		prompt = get_prompt(getcwd(NULL, 0));
 		mnsh->line = readline(prompt);
@@ -83,7 +83,6 @@ int	main(int argc, char **argv, char **envp)
 	if (!mnsh)
 		return (EXIT_FAILURE);
 	handle_loop(mnsh);
-	free(mnsh->sa);
 	ft_arrayfree(mnsh->envp);
 	free(mnsh);
 	return (EXIT_SUCCESS);

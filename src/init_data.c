@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:42:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 14:42:58 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 21:17:34 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,6 @@ t_mnsh	*init_mnsh(int argc, char **argv, char **envp)
 	mnsh = malloc(sizeof(t_mnsh));
 	if (!mnsh)
 		return (NULL);
-	mnsh->sa = malloc(sizeof(struct sigaction));
-	if (!mnsh->sa)
-	{
-		free(mnsh);
-		return (NULL);
-	}
 	mnsh->is_debug = false;
 	if (argc == 2 && !ft_strcmp(argv[1], "debug"))
 		mnsh->is_debug = true;

@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:42 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 14:22:29 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 21:20:26 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	init_here_doc(t_mnsh *mnsh, char *limiter, bool expand, int *pfd)
 	char	*line;
 	char	*line_nl;
 
-	handle_signals(mnsh->sa, &heredoc_signals);
+	heredoc_signals();
 	set_termios(true);
 	close(pfd[0]);
 	line = readline("> ");
@@ -85,7 +85,8 @@ int	here_doc(t_mnsh *mnsh, char *token)
 	pid_t	pid;
 	int		pfd[2];
 
-	handle_signals(mnsh->sa, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (pipe(pfd) == -1)
 		return (-1);
 	pid = fork();

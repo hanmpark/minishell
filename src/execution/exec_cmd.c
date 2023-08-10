@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:14 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 13:53:14 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 22:42:45 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	exec_cmd(char **cmd_args, char ***envp)
 		error_not_executable(cmd_args[0]);
 }
 
-pid_t	fork_cmd(t_cmd *cmd, char ***envp, bool is_last)
+static pid_t	fork_cmd(t_cmd *cmd, char ***envp, bool is_last)
 {
 	pid_t	pid;
 	int		pfd[2];
@@ -95,8 +95,8 @@ pid_t	parse_exec(t_mnsh *mnsh, t_cmd *cmd, int id, bool is_last)
 		return (NO_CHILD_PROCESS);
 	}
 	if (cmd->args && !ft_strcmp(*cmd->args, "./minishell"))
-		handle_signals(mnsh->sa, SIG_IGN);
+		ignore_signals();
 	else
-		handle_signals(mnsh->sa, &command_signals);
+		command_signals();
 	return (fork_cmd(cmd, &mnsh->envp, is_last));
 }
