@@ -6,11 +6,12 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:15 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 23:59:45 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:45:44 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "isft.h"
 
 extern int	g_exit;
 

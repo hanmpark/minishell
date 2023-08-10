@@ -6,11 +6,12 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:18:16 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 18:18:17 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:43:45 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_printf.h"
 #include "builtin.h"
 
 /*

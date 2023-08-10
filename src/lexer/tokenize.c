@@ -6,13 +6,14 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 09:18:38 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:46:03 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 #include "exit.h"
+#include "isft.h"
 
 static int	nbr_skip(char *str, t_type type)
 {

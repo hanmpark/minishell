@@ -6,12 +6,14 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:18:59 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 18:19:04 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:49:33 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtin.h"
+#include "putft.h"
+#include "isft.h"
 
 static bool	put_error_unset(char *var_name)
 {

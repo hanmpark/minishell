@@ -6,13 +6,14 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:18:11 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 18:18:12 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:48:50 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expander.h"
 #include "builtin.h"
+#include "putft.h"
 
 /*
 * Cd command:

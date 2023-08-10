@@ -6,12 +6,13 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:18:50 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 18:18:57 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:49:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "builtin.h"
+#include "putft.h"
 
 /*
 * Pwd command:

@@ -6,12 +6,13 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:06:50 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 23:50:23 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:50:14 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "signals.h"
+#include "putft.h"
 
 static void	heredoc_sigint(int signal)
 {

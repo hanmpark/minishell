@@ -6,11 +6,12 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:25 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 22:49:26 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:42:58 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_printf.h"
 
 static void	print_tabs(int numtabs)
 {

@@ -6,12 +6,13 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:13:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 23:51:02 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:50:04 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "signals.h"
+#include "putft.h"
 
 static void	command_sigint(int signal)
 {

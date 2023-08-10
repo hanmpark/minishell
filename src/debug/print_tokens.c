@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   print_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:54 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 14:05:47 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:42:46 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_printf.h"
 
 static void	print_type(t_type type)
 {

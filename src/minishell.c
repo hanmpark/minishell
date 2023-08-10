@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:26:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 00:56:54 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:48:43 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "execution.h"
 #include "parsing.h"
 #include "signals.h"
+#include "putft.h"
 #include "exit.h"
 
 /*

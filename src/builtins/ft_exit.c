@@ -6,12 +6,15 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:18:18 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 09:18:00 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:49:02 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_printf.h"
 #include "builtin.h"
+#include "putft.h"
+#include "isft.h"
 
 static long int	ft_atol(char *str)
 {

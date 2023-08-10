@@ -6,12 +6,13 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 23:10:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 23:58:41 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:49:57 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "signals.h"
+#include "putft.h"
 
 extern int	g_exit;
 
