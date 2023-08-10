@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 14:37:05 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 15:28:21 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static t_tok	*lexer(t_mnsh *mnsh)
 * - parses the line: creates tokens from the input line and checks
 * the order of tokens to handle special cases like
 * parentheses and redirections.
-* - generates the minishell's AST to represent the parsend line's structure.
+* - generates the minishell's AST to represent the parsed line's structure.
 */
 t_tree	*parsing(t_mnsh *mnsh)
 {

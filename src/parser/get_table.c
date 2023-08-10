@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_table.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 12:33:03 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 15:50:44 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static t_tree	*addnode(t_tree *table, t_tree *add, t_tok mode)
 		return (NULL);
 	if (table->par_id == mode.par_id || !mode.par_id)
 	{
-		if (mode.type == 3)
+		if (mode.type == AND_IF)
 			ft_treeadd_right(&table, add);
-		else if (mode.type == 2)
+		else if (mode.type == OR_IF)
 			ft_treeadd_left(&table, add);
 		return (table);
 	}
