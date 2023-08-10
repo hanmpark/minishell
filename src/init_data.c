@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:42:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 23:59:05 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 01:34:10 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,17 @@ char	*get_prompt(char *cwd)
 {
 	char	*prompt;
 	char	*tmp;
-	size_t	count_slash;
-	size_t	cwd_len;
 
 	if (!cwd)
-		return (ft_strdup(FIRST_COLOR "minishell" LAST_COLOR " > " DEF));
-	count_slash = 0;
-	cwd_len = ft_strlen(cwd);
-	while (count_slash < 2 && cwd[--cwd_len])
-	{
-		if (cwd[cwd_len] == '/')
-			count_slash++;
-	}
-	prompt = ft_strdup(cwd + cwd_len);
+		return (ft_strdup(FIRST_COLOR "minishell" SUCCESS_COLOR " > " DEF));
+	prompt = ft_strdup(ft_strrchr(cwd, '/'));
+	free(cwd);
 	tmp = ft_strjoin(FIRST_COLOR "~", prompt);
 	free(prompt);
-	prompt = ft_strjoin(tmp, LAST_COLOR " > " DEF);
+	if (g_exit == 0)
+		prompt = ft_strjoin(tmp, SUCCESS_COLOR " > " DEF);
+	else
+		prompt = ft_strjoin(tmp, ERROR_COLOR " > " DEF);
 	free(tmp);
-	free(cwd);
 	return (prompt);
 }

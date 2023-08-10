@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:30:28 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 00:00:06 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 00:44:18 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	set_termios(bool set)
 */
 void	set_exit_status(int process_status)
 {
-	if (process_status == NO_CHILD_PROCESS)
-		return ;
 	if (WIFEXITED(process_status))
 		g_exit = WEXITSTATUS(process_status);
 	else if (WIFSIGNALED(process_status))

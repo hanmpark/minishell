@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:10 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 23:59:24 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 00:58:11 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,11 @@ static void	wait_cmds(t_cmd **cmd)
 	int	i;
 
 	i = -1;
-	status = NO_CHILD_PROCESS;
+	if (cmd[0]->pid == NO_CHILD_PROCESS)
+		return ;
 	while (cmd[++i])
-	{
-		if (cmd[i]->pid != NO_CHILD_PROCESS)
 			waitpid(cmd[i]->pid, &status, 0);
-	}
-	set_exit_status(status);
+	return (set_exit_status(status));
 }
 
 static void	exec_node(t_mnsh *mnsh, t_tree *node)
