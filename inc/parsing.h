@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:29 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 15:21:08 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:40:14 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define READ 0
 # define TRUNC 1
 # define APPEND 2
+
+# define HERE_DOC_SIG -2
 
 typedef struct s_separator
 {
@@ -31,7 +33,7 @@ typedef struct s_lexer
 	int			last;
 }	t_lex;
 
-void	handle_line(t_mnsh *mnsh);
+t_tree	*parsing(t_mnsh *mnsh);
 
 bool	tokenize(t_lex *lex, t_mnsh *mnsh);
 char	*tokenize_string(t_lex *lex, t_mnsh *mnsh, char *token);

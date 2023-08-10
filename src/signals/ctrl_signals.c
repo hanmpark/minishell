@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_signal.c                                    :+:      :+:    :+:   */
+/*   ctrl_signals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 23:40:22 by kquetat-          #+#    #+#             */
-/*   Updated: 2023/08/10 13:56:53 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:30:55 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 #include "signals.h"
-
-void	set_exit_status(int process_status)
-{
-	if (WIFEXITED(process_status))
-		g_exit = WEXITSTATUS(process_status);
-	else if (WIFSIGNALED(process_status))
-		g_exit = 128 + WTERMSIG(process_status);
-	else if (WIFSTOPPED(process_status))
-		g_exit = 128 + WSTOPSIG(process_status);
-}
 
 void	basic_signals(int signal)
 {

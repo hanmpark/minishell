@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 12:16:50 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 13:53:05 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:32:15 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define SIGNALS_H
 
 # include <signal.h>
+
+void	set_termios(bool set);
 
 void	handle_signals(struct sigaction *sa, void (*f)(int));
 void	command_signals(int signal);

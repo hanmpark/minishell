@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_line.c                                      :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 15:18:15 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:37:05 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static t_tok	*lexer(t_mnsh *mnsh)
 * parentheses and redirections.
 * - generates the minishell's AST to represent the parsend line's structure.
 */
-static t_tree	*parsing(t_mnsh *mnsh)
+t_tree	*parsing(t_mnsh *mnsh)
 {
 	t_tree	*cmdtable;
 	t_tok	*l_token;
@@ -80,31 +80,4 @@ static t_tree	*parsing(t_mnsh *mnsh)
 	}
 	free_tokens(&l_token);
 	return (cmdtable);
-}
-
-/*
-* Handles the given line in 3 parts:
-* 1. parses the line: tokenizes and processes the input line
-* through lexing, parsing, and expanding stages.
-* 2. creates an AST: stores the relevant data in an Abstract Syntax Tree (AST)
-* to represent the parsed line's structure.
-* 3. executes the line: if parsing is successful,
-* executes the actions specified by the AST.
-*/
-void	handle_line(t_mnsh *mnsh)
-{
-	t_tree	*tree;
-
-	if (!*mnsh->line)
-	{
-		free(mnsh->line);
-		return ;
-	}
-	add_history(mnsh->line);
-	tree = parsing(mnsh);
-	free(mnsh->line);
-	if (!tree)
-		return ;
-	execute(mnsh, tree);
-	free_tree(tree);
 }

@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:45 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 11:19:19 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:40:32 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ bool	handle_redirection(t_mnsh *mnsh, t_cmd *cmd, t_tok **l_token)
 		cmd->fdout = open_file((*l_token)->token, APPEND);
 	if (cmd->fdin == -1 || cmd->fdout == -1)
 		return (error_token((*l_token)->token, ERR_ENOENT, NO_HANDLE));
-	if (cmd->fdin == -2)
+	if (cmd->fdin == HERE_DOC_SIG)
 		return (false);
 	*l_token = (*l_token)->next;
 	return (true);

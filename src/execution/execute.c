@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:10 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 12:31:12 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:47:12 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,6 @@ static t_tree	*next_command(t_tree *node, int cmd_st)
 	if (g_exit != 0)
 		return (node->or_branch);
 	return (node->and_branch);
-}
-
-static void	reset_iostream(int *iostream)
-{
-	dup2(iostream[STDIN_FILENO], STDIN_FILENO);
-	dup2(iostream[STDOUT_FILENO], STDOUT_FILENO);
-	close(iostream[STDIN_FILENO]);
-	close(iostream[STDOUT_FILENO]);
 }
 
 static bool	wait_cmds(t_cmd **cmd, int *cmd_st)

@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:38 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/06 19:57:39 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:47:20 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,12 @@ void	set_pipe_output(int fdout, int *pfd, bool is_last_cmd)
 	if (fdout == STDOUT_FILENO)
 		dup2(pfd[WRITE_END], STDOUT_FILENO);
 	close(pfd[WRITE_END]);
+}
+
+void	reset_iostream(int *iostream)
+{
+	dup2(iostream[STDIN_FILENO], STDIN_FILENO);
+	dup2(iostream[STDOUT_FILENO], STDOUT_FILENO);
+	close(iostream[STDIN_FILENO]);
+	close(iostream[STDOUT_FILENO]);
 }

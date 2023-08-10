@@ -1,31 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_mnsh.c                                   :+:      :+:    :+:   */
+/*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 12:41:41 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 16:54:40 by hanmpark         ###   ########.fr       */
+/*   Created: 2023/08/10 14:42:52 by hanmpark          #+#    #+#             */
+/*   Updated: 2023/08/10 14:42:58 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expander.h"
-
-#include <termios.h>
-
-void	set_termios(bool set)
-{
-	struct termios	termios;
-
-	tcgetattr(STDIN_FILENO, &termios);
-	if (set == true)
-		termios.c_lflag &= ~(ICANON | ECHOCTL);
-	else
-		termios.c_lflag |= ICANON | ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &termios);
-}
 
 static char	**update_shlvl(char **envp)
 {
