@@ -55,12 +55,19 @@ t_mnsh	*init_mnsh(int argc, char **argv, char **envp)
 	t_mnsh	*mnsh;
 
 	mnsh = malloc(sizeof(t_mnsh));
+	if (!mnsh)
+		return (NULL);
+	mnsh->sa = malloc(sizeof(struct sigaction));
+	if (!mnsh->sa)
+	{
+		free(mnsh);
+		return (NULL);
+	}
 	mnsh->is_debug = false;
 	if (argc == 2 && !ft_strcmp(argv[1], "debug"))
 		mnsh->is_debug = true;
 	else if (argc != 1)
-		return (false);
-	set_termios(true);
+		return (NULL);
 	mnsh->line = NULL;
 	mnsh->envp = update_shlvl(ft_arraydup(envp));
 	g_exit = 0;

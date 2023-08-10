@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:46 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 15:20:26 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/09 20:10:48 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void	error_exit(char *err_src, char *msg, int st)
 	free(tmp);
 	ft_putstr_fd(cat_str, 2);
 	free(cat_str);
-	set_termios(false);
 	exit(st);
 }
 

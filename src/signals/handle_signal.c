@@ -3,57 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 23:40:22 by kquetat-          #+#    #+#             */
-/*   Updated: 2023/08/09 20:06:16 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/10 09:13:31 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-static void	parent_sig_handler(int signal)
+void	basic_signals(int signal)
 {
 	if (signal == SIGINT)
 	{
-		ft_printf("PASS\n");
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_exit = 1;
 	}
-	// else if (signal == SIGQUIT)
-	// 	return ;
+	if (signal == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
-static void	child_sig_handler(int signal, siginfo_t *sa, void *ignore)
+void	command_signals(int signal)
 {
-	(void)ignore;
 	if (signal == SIGINT)
-		kill(sa->si_pid, SIGTERM);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+	if (signal == SIGQUIT)
+		return ;
 }
 
-void	handle_sig_child(void)
+void	handle_signals(struct sigaction *sa, void (*f)(int))
 {
-	struct sigaction	sa;
-
-	sa.sa_sigaction = &child_sig_handler;
-	sa.sa_flags = SA_SIGINFO;
-	sigemptyset(&(sa.sa_mask));
-	if (sigaction(SIGINT, &sa, 0) == -1)
+	ft_bzero(sa, sizeof(struct sigaction));
+	sa->sa_handler = f;
+	sa->sa_flags = 0;
+	sigemptyset(&(sa->sa_mask));
+	if (sigaction(SIGINT, sa, 0) == -1)
 		exit(EXIT_FAILURE);
-}
-
-void	handle_sig_parent(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = &parent_sig_handler;
-	sa.sa_flags = 0;
-	sigemptyset(&(sa.sa_mask));
-	if (sigaction(SIGINT, &sa, 0) == -1)
-		exit(EXIT_FAILURE);
-	if (sigaction(SIGQUIT, &sa, 0) == -1)
+	if (sigaction(SIGQUIT, sa, 0) == -1)
 		exit(EXIT_FAILURE);
 }

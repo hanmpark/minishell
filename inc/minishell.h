@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:27 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 16:47:44 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/10 09:13:54 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@
 
 /* PROMPT */
 
-# define FIRST_COLOR "\033[38;5;183m"
-# define LAST_COLOR "\033[38;5;191m"
-# define DEF "\033[0m"
+# define FIRST_COLOR "\001\033[38;5;183m\002"
+# define LAST_COLOR "\001\033[38;5;191m\002"
+# define DEF "\001\033[0m\002"
 
 typedef enum e_type
 {
@@ -55,9 +55,10 @@ typedef enum e_type
 
 typedef struct s_minishell
 {
-	char	*line;
-	char	**envp;
-	bool	is_debug;
+	struct sigaction	*sa;
+	char				*line;
+	char				**envp;
+	bool				is_debug;
 }	t_mnsh;
 
 /* GLOBAL VARIABLE */
@@ -67,8 +68,9 @@ int		g_exit;
 t_mnsh	*init_mnsh(int argc, char **argv, char **envp);
 void	set_termios(bool set);
 char	*get_prompt(char *cwd);
-void	handle_sig_parent(void);
-void	handle_sig_child(void);
+void	handle_signals(struct sigaction *sa, void (*f)(int));
+void	command_signals(int sig);
+void	basic_signals(int signal);
 
 /* FOR DEBUGGING PURPOSE */
 

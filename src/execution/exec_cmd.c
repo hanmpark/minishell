@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:14 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 20:07:04 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/10 00:04:20 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ pid_t	fork_cmd(t_cmd *cmd, char ***envp, bool is_last)
 	}
 	if (pid == CHILD_PROCESS)
 	{
-		handle_sig_child();
 		set_pipe_output(cmd->fdout, pfd, is_last);
 		exec_cmd(cmd->args, envp);
 	}
@@ -94,5 +93,9 @@ pid_t	parse_exec(t_mnsh *mnsh, t_cmd *cmd, int id, bool is_last)
 		g_exit = builtin_cmds(cmd->args, &mnsh->envp, 1);
 		return (NO_CHILD_PROCESS);
 	}
+	if (*cmd->args && !ft_strcmp(*cmd->args, "./minishell"))
+		handle_signals(mnsh->sa, SIG_IGN);
+	else
+		handle_signals(mnsh->sa, &command_signals);
 	return (fork_cmd(cmd, &mnsh->envp, is_last));
 }

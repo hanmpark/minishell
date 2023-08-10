@@ -5,14 +5,21 @@ static void	handle_loop(t_mnsh *mnsh)
 {
 	char	*prompt;
 
-	handle_sig_parent();
 	while ("apagnan")
 	{
+		handle_signals(mnsh->sa, &basic_signals);
+		set_termios(true);
 		prompt = get_prompt(getcwd(NULL, 0));
 		mnsh->line = readline(prompt);
 		free(prompt);
+		set_termios(false);
 		if (!mnsh->line)
+		{
+			ft_putstr_fd("\033[1A", STDOUT_FILENO);
+			ft_putstr_fd(rl_prompt, STDOUT_FILENO);
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
+		}
 		handle_line(mnsh);
 		// system("leaks minishell");
 	}
@@ -34,9 +41,8 @@ int	main(int argc, char **argv, char **envp)
 	if (!mnsh)
 		return (EXIT_FAILURE);
 	handle_loop(mnsh);
-	set_termios(false);
+	free(mnsh->sa);
 	ft_arrayfree(mnsh->envp);
 	free(mnsh);
-	write(1, "exit\n", 5);
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:42 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/09 20:06:03 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/10 01:31:30 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void	init_here_doc(t_mnsh *mnsh, char *limit, bool is_quoted, int *pfd)
 	char	*line;
 	char	*line_nl;
 
-	handle_sig_child();
 	close(pfd[0]);
 	line = readline("> ");
 	while (ft_strcmp(line, limit))
@@ -69,6 +68,7 @@ int	here_doc(t_mnsh *mnsh, char *token)
 	int		pfd[2];
 	int		pid;
 
+	handle_signals(mnsh->sa, SIG_DFL);
 	limiter = format_limiter(token);
 	if (pipe(pfd) == -1)
 		return (-1);
