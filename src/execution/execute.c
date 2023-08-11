@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:10 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 00:58:11 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include "signals.h"
 #include "exit.h"
 
-extern int	g_exit;
+extern int	g_sig;
 
 static t_tree	*next_command(t_tree *node)
 {
-	if (g_exit != 0)
+	if (g_sig != 0)
 		return (node->or_branch);
 	return (node->and_branch);
 }

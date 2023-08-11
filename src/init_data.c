@@ -6,14 +6,14 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:42:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 01:34:10 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expander.h"
 
-extern int	g_exit;
+extern int	g_sig;
 
 static char	**update_shlvl(char **envp)
 {
@@ -52,7 +52,7 @@ t_mnsh	*init_mnsh(int argc, char **argv, char **envp)
 		return (NULL);
 	mnsh->line = NULL;
 	mnsh->envp = update_shlvl(ft_arraydup(envp));
-	g_exit = 0;
+	g_sig = 0;
 	return (mnsh);
 }
 
@@ -71,7 +71,7 @@ char	*get_prompt(char *cwd)
 	free(cwd);
 	tmp = ft_strjoin(FIRST_COLOR "~", prompt);
 	free(prompt);
-	if (g_exit == 0)
+	if (g_sig == 0)
 		prompt = ft_strjoin(tmp, SUCCESS_COLOR " > " DEF);
 	else
 		prompt = ft_strjoin(tmp, ERROR_COLOR " > " DEF);

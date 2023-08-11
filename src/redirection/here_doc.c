@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:52:42 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/10 23:59:54 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "parsing.h"
 #include "signals.h"
 
-extern int	g_exit;
+extern int	g_sig;
 
 static bool	should_expand(char *token)
 {
@@ -66,10 +66,10 @@ static int	check_here_doc_state(int pfd, pid_t pid)
 
 	waitpid(pid, &here_doc_status, 0);
 	set_exit_status(here_doc_status);
-	if (g_exit != 0)
+	if (g_sig != 0)
 	{
 		close(pfd);
-		g_exit = 1;
+		g_sig = 1;
 		return (-2);
 	}
 	return (pfd);

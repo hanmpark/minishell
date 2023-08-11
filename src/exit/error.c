@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:46 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 01:49:47 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include <sys/stat.h>
 
-extern int	g_exit;
+extern int	g_sig;
 
 /*
 * Handling error messages and its exit status:
@@ -40,7 +40,7 @@ bool	error_token(char *token, char *err_msg, int err_no)
 		ft_putstr_fd(token, 2);
 		ft_putstr_fd(err_msg, 2);
 	}
-	g_exit = err_no;
+	g_sig = err_no;
 	return (false);
 }
 

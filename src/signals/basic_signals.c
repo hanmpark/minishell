@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 23:10:04 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 01:49:57 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "signals.h"
 #include "putft.h"
 
-extern int	g_exit;
+extern int	g_sig;
 
 static void	basic_sigint(int signal)
 {
@@ -24,7 +24,7 @@ static void	basic_sigint(int signal)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_exit = 1;
+	g_sig = 1;
 }
 
 static void	basic_sigquit(int signal)

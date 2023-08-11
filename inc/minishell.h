@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:27 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 01:50:25 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_minishell
 
 /* GLOBAL VARIABLE */
 
-int		g_exit;
+int		g_sig;
 
 t_mnsh	*init_mnsh(int argc, char **argv, char **envp);
 char	*get_prompt(char *cwd);

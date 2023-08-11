@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:30:28 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 00:44:18 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #include <termios.h>
 
-extern int	g_exit;
+extern int	g_sig;
 
 void	set_termios(bool set)
 {
@@ -41,9 +41,9 @@ void	set_termios(bool set)
 void	set_exit_status(int process_status)
 {
 	if (WIFEXITED(process_status))
-		g_exit = WEXITSTATUS(process_status);
+		g_sig = WEXITSTATUS(process_status);
 	else if (WIFSIGNALED(process_status))
-		g_exit = 128 + WTERMSIG(process_status);
+		g_sig = 128 + WTERMSIG(process_status);
 	else if (WIFSTOPPED(process_status))
-		g_exit = 128 + WSTOPSIG(process_status);
+		g_sig = 128 + WSTOPSIG(process_status);
 }

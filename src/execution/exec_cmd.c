@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:14 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 00:30:27 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "signals.h"
 #include "exit.h"
 
-extern int	g_exit;
+extern int	g_sig;
 
 static bool	find_path_cmd(char **cmd_args, char **envp)
 {
@@ -87,7 +87,7 @@ pid_t	parse_exec(t_mnsh *mnsh, t_cmd *cmd, int id, bool is_last)
 	set_redirection(cmd);
 	if (is_last && id == 0 && builtin_checker(cmd->args))
 	{
-		g_exit = builtin_cmds(cmd->args, &mnsh->envp, 1);
+		g_sig = builtin_cmds(cmd->args, &mnsh->envp, 1);
 		return (NO_CHILD_PROCESS);
 	}
 	if (cmd->args && (!ft_strncmp(*cmd->args, "./minishell", 11) \

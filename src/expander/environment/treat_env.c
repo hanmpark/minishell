@@ -6,14 +6,14 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:15 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 01:45:44 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "isft.h"
 
-extern int	g_exit;
+extern int	g_sig;
 
 char	*get_env(char *str, char **envp)
 {
@@ -101,7 +101,7 @@ char	*treat_env(t_mnsh *mnsh, char *line, bool prevent_eval)
 		if (line[i] == '$' && (ft_isenv(line[i + 1]) || prevent_eval))
 			line = edit_line(line, line + i + 1, mnsh->envp, &i);
 		else if (line[i] == '$' && line[i + 1] && line[i + 1] == '?')
-			line = edit_line_exit(line, ft_itoa(g_exit), &i);
+			line = edit_line_exit(line, ft_itoa(g_sig), &i);
 		else
 			i++;
 	}
