@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 #include "expander.h"
-#include "ft_printf.h"
 
 /*
 * Extracts and expands a quoted part of a token string:
