@@ -6,12 +6,13 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:28 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 17:38:53 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/12 01:48:07 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expander.h"
+#include "ft_printf.h"
 
 /*
 * Extracts and expands a quoted part of a token string:

@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 00:08:19 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/12 01:49:01 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	**convert_to_array(t_mnsh *mnsh, char *arg, int *i, bool begin)
 	if (arg[*i] == '\'' || arg[*i] == '"')
 	{
 		str = extract_expand_quoted(mnsh, arg, i);
-		array = ft_arraynew(treat_env(mnsh, ft_strdup(str), false));
+		array = ft_arraynew(ft_strdup(str));
 	}
 	else
 	{
