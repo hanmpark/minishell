@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:27 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/15 01:51:30 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 
 /* PROMPT */
 
-# define FIRST_COLOR "\001\033[1;38;5;75m\002"
+# define TITLE_COLOR "\001\033[1;38;5;198m\002"
+# define PROMPT_COLOR "\001\033[1;38;5;75m\002"
 # define SUCCESS_COLOR "\001\033[1;38;5;83m\002"
 # define ERROR_COLOR "\001\033[1;38;5;196m\002"
 # define DEF "\001\033[0m\002"

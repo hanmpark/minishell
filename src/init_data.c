@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:42:52 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/15 01:51:52 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,22 @@ t_mnsh	*init_mnsh(int argc, char **argv, char **envp)
 	return (mnsh);
 }
 
+static char	*format_cwd(char *cwd)
+{
+	char	*formatted_cwd;
+	int		count_slash;
+	int		i;
+
+	count_slash = 0;
+	i = -1;
+	while (count_slash < 3 && cwd[++i])
+		if (cwd[i] == '/')
+			count_slash++;
+	formatted_cwd = ft_strdup(cwd + i);
+	free(cwd);
+	return (formatted_cwd);
+}
+
 /*
 * Returns the prompt for minishell:
 * Gets the current working directory, returns the last two directories.
@@ -66,10 +82,9 @@ char	*get_prompt(char *cwd)
 	char	*tmp;
 
 	if (!cwd)
-		return (ft_strdup(FIRST_COLOR "minishell" SUCCESS_COLOR " > " DEF));
-	prompt = ft_strdup(ft_strrchr(cwd, '/'));
-	free(cwd);
-	tmp = ft_strjoin(FIRST_COLOR "~", prompt);
+		return (ft_strdup(PROMPT_COLOR "minishell" SUCCESS_COLOR " > " DEF));
+	prompt = format_cwd(cwd);
+	tmp = ft_strjoin(TITLE_COLOR "MINISHELL " PROMPT_COLOR "~", prompt);
 	free(prompt);
 	if (g_sig == 0)
 		prompt = ft_strjoin(tmp, SUCCESS_COLOR " > " DEF);
