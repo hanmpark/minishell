@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:10 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/15 18:28:15 by kquetat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	wait_cmds(t_cmd **cmd)
 	if (cmd[0]->pid == NO_CHILD_PROCESS)
 		return ;
 	while (cmd[++i])
-			waitpid(cmd[i]->pid, &status, 0);
+		waitpid(cmd[i]->pid, &status, 0);
 	return (set_exit_status(status));
 }
 
