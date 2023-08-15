@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/08/15 20:04:15 by hanmpark          #+#    #+#              #
+#    Updated: 2023/08/15 20:04:53 by hanmpark         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # ---------------------------------- COLORS ---------------------------------- #
 DEF = \033[0m
 BOLD = \033[1m
@@ -107,11 +119,8 @@ ${SRC_PATH}%.o: ${SRC_PATH}%.c
 	@echo "${UP}${UP}${UP}"
 
 # ---------------------------------- RULES ----------------------------------- #
-# -l specifie la bibliotheque,
-# -L le chemin d'accès (du coup dans le repertoire brew)
-
 NAME = minishell
-LIBS = -L${LIBFT_PATH} -L${READLINE_PATH}/lib -lreadline -lft
+LIBS = -L${LIBFT_PATH} -L${READLINE_PATH}lib -lreadline -lft
 
 all: readline ${NAME}
 
