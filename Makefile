@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
+#    By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/15 20:04:15 by hanmpark          #+#    #+#              #
-#    Updated: 2023/08/15 20:04:53 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/08/18 00:00:10 by kquetat-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,21 +113,21 @@ BAR = ${shell expr 23 \* ${SRC_COUNT} / ${SRC_TOT}}
 
 ${SRC_PATH}%.o: ${SRC_PATH}%.c
 	@${eval SRC_COUNT = ${shell expr ${SRC_COUNT} + 1}}
-	@${CC} ${CFLAGS} -I${CUR_INC} -I${LIBFT_PATH}inc/ -I${READLINE_PATH}include/ -c $< -o ${<:.c=.o}
+	@${CC} ${CFLAGS} -I${CUR_INC} -I${LIBFT_PATH}inc/ -I${READLINE_PATH}include/readline/ -c $< -o ${<:.c=.o}
 	@echo "\n ${BOLD}${CUR}${LPURPLE}-> Compiling ${DEF}${BOLD}${LYELLOW}[MINISHELL]${DEF}"
 	@printf " ${LPURPLE}   [${LGREEN}%-23.${BAR}s${LPURPLE}] [%d/%d (%d%%)]${DEF}" "***********************" ${SRC_COUNT} ${SRC_TOT} ${SRC_PRCT}
 	@echo "${UP}${UP}${UP}"
 
 # ---------------------------------- RULES ----------------------------------- #
 NAME = minishell
-LIBS = -L${LIBFT_PATH} -L${READLINE_PATH}lib -lreadline -lft
+LIBS = -L${READLINE_PATH}lib/ -lreadline -lhistory -L${LIBFT_PATH} -lft -I${READLINE_PATH}include/readline/
 
 all: readline ${NAME}
 
 ${NAME}: ${OBJ}
 	@echo "\n\n\n"
 	@${MAKE} -C ${LIBFT_PATH}
-	@${CC} ${CFLAGS} ${LIBS} ${OBJ} -o ${NAME}
+	@${CC} ${CFLAGS} ${OBJ} ${LIBS} -o ${NAME}
 	@echo "\n\n\n\n   ${BOLD}${CUR}${LYELLOW}${NAME} COMPILED ✨${DEF}\n"
 
 readline: ${READLINE_PATH}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
+#    By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 18:40:57 by hanmpark          #+#    #+#              #
-#    Updated: 2023/08/08 18:41:15 by hanmpark         ###   ########.fr        #
+#    Updated: 2023/08/17 22:35:21 by kquetat-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,7 +103,7 @@ BAR = ${shell expr 23 \* ${SRCS_COUNT} / ${SRCS_TOT}}
 
 %.o:%.c ${HEADER_PATH}
 	@${eval SRCS_COUNT = ${shell expr ${SRCS_COUNT} + 1}}
-	@${CC} ${CFLAGS} -I ${HEADER_PATH} -c $< -o ${<:.c=.o}
+	@${CC} ${CFLAGS} -I${HEADER_PATH} -c $< -o ${<:.c=.o}
 	@echo " ${BOLD}${CUR}${BEIGE}-> Compiling ${DEF}${BOLD}${LYELLOW}[LIBFT]${DEF}"
 	@printf " ${BEIGE}   [${LGREEN}%-23.${BAR}s${BEIGE}] [%d/%d (%d%%)]${DEF}" "***********************" ${SRCS_COUNT} ${SRCS_TOT} ${SRCS_PRCT}
 	@echo "${UP}${UP}"
