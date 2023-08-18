@@ -6,7 +6,7 @@
 #    By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/15 20:04:15 by hanmpark          #+#    #+#              #
-#    Updated: 2023/08/18 00:00:10 by kquetat-         ###   ########.fr        #
+#    Updated: 2023/08/18 18:19:03 by kquetat-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,11 +96,22 @@ SRC = ${SRC_PARSER} ${SRC_LEXER} ${SRC_ENV} ${SRC_WILDCARD} ${SRC_EXIT} ${SRC_EX
 OBJ = ${SRC:.c=.o}
 
 # --------------------------------- COMPILER --------------------------------- #
-CC = gcc
+CC = clang
 CFLAGS = -Wall -Werror -Wextra
 
 ifdef DEBUG
 	CFLAGS += -fsanitize=address -g
+endif
+
+# --------------------------------- CHECK OPERATING SYSTEM --------------------------------- #
+OS := ${shell uname}
+
+ifeq (${OS}, Linux)
+	READLINE_LIB_PATH = /usr/lib/x86_64-linux-gnu
+	READLINE_INC_PATH = /usr/include/readline/
+else
+	READLINE_LIB_PATH = ./vendor/readline/
+	READLINE_INC_PATH = ./vendor/readline/include/
 endif
 
 CUR_INC = ./inc/
@@ -113,16 +124,19 @@ BAR = ${shell expr 23 \* ${SRC_COUNT} / ${SRC_TOT}}
 
 ${SRC_PATH}%.o: ${SRC_PATH}%.c
 	@${eval SRC_COUNT = ${shell expr ${SRC_COUNT} + 1}}
-	@${CC} ${CFLAGS} -I${CUR_INC} -I${LIBFT_PATH}inc/ -I${READLINE_PATH}include/readline/ -c $< -o ${<:.c=.o}
+	@${CC} ${CFLAGS} -I${CUR_INC} -I${LIBFT_PATH}inc/ -I${READLINE_INC_PATH} -c $< -o ${<:.c=.o}
 	@echo "\n ${BOLD}${CUR}${LPURPLE}-> Compiling ${DEF}${BOLD}${LYELLOW}[MINISHELL]${DEF}"
 	@printf " ${LPURPLE}   [${LGREEN}%-23.${BAR}s${LPURPLE}] [%d/%d (%d%%)]${DEF}" "***********************" ${SRC_COUNT} ${SRC_TOT} ${SRC_PRCT}
 	@echo "${UP}${UP}${UP}"
 
 # ---------------------------------- RULES ----------------------------------- #
 NAME = minishell
-LIBS = -L${READLINE_PATH}lib/ -lreadline -lhistory -L${LIBFT_PATH} -lft -I${READLINE_PATH}include/readline/
+LIBS = -L${READLINE_LIB_PATH}lib/ -lreadline -lhistory -L${LIBFT_PATH} -lft
 
-all: readline ${NAME}
+all: os_check readline ${NAME}
+
+os_check:
+	@printf "\n\n\n    Compiling on: ${OS}\n\n\n"
 
 ${NAME}: ${OBJ}
 	@echo "\n\n\n"
