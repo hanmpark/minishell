@@ -6,7 +6,7 @@
 #    By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/15 20:04:15 by hanmpark          #+#    #+#              #
-#    Updated: 2023/08/18 18:57:48 by kquetat-         ###   ########.fr        #
+#    Updated: 2023/08/18 19:02:13 by kquetat-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -168,4 +168,4 @@ fclean: clean
 re: fclean
 	@${MAKE} all
 
-.PHONY: all readline bonus debug clean fclean re
+.PHONY: all readline bonus debug clean fclean re os_check
