@@ -6,7 +6,7 @@
 #    By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/15 20:04:15 by hanmpark          #+#    #+#              #
-#    Updated: 2023/08/18 18:19:03 by kquetat-         ###   ########.fr        #
+#    Updated: 2023/08/18 18:57:48 by kquetat-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -136,7 +136,7 @@ LIBS = -L${READLINE_LIB_PATH}lib/ -lreadline -lhistory -L${LIBFT_PATH} -lft
 all: os_check readline ${NAME}
 
 os_check:
-	@printf "\n\n\n    Compiling on: ${OS}\n\n\n"
+	@printf "\n\n    Compiling on: ${OS}\n\n"
 
 ${NAME}: ${OBJ}
 	@echo "\n\n\n"
