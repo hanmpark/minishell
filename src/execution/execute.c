@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:10 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/15 20:05:14 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/19 23:09:09 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ static void	wait_cmds(t_cmd **cmd)
 		return ;
 	while (cmd[++i])
 		waitpid(cmd[i]->pid, &status, 0);
-	return (set_exit_status(status));
+	set_exit_status(status);
 }
 
-static void	exec_node(t_mnsh *mnsh, t_tree *node)
+static bool	exec_node(t_mnsh *mnsh, t_tree *node)
 {
 	t_cmd	**cmd;
 	int		iostream[2];
@@ -50,9 +50,14 @@ static void	exec_node(t_mnsh *mnsh, t_tree *node)
 	cmd = node->cmd;
 	i = -1;
 	while (++i < node->nb_pipe)
+	{
 		cmd[i]->pid = parse_exec(mnsh, cmd[i], i, i == node->nb_pipe - 1);
+		if (cmd[i]->pid == ERR_RESOURCE)
+			return (false);
+	}
 	reset_iostream(iostream);
-	return (wait_cmds(cmd));
+	wait_cmds(cmd);
+	return (true);
 }
 
 /*
@@ -65,7 +70,8 @@ void	execute(t_mnsh *mnsh, t_tree *node)
 {
 	while (node)
 	{
-		exec_node(mnsh, node);
+		if (!exec_node(mnsh, node))
+			return ;
 		node = next_command(node);
 	}
 }

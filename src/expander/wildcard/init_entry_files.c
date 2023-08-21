@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:22 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/07 07:48:11 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/21 10:04:27 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ static char	**swap_array_element(char **files, int i, int swap_index)
 
 static char	**sort_files(char **files)
 {
-	int		swap_index;
-	int		i;
+	int	swap_index;
+	int	i;
 
 	i = -1;
 	while (files[++i])

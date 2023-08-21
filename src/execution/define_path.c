@@ -6,13 +6,14 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:21 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/01 08:54:23 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/20 00:11:14 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "execution.h"
 #include "exit.h"
+#include "isft.h"
 
 // Returns the PATH variable in envp as a string
 char	*get_path(char **envp)
@@ -37,7 +38,7 @@ static char	*find_right_path(char *cmd, char *env_path)
 	char	*dir_path;
 	int		i;
 
-	cmd_paths = ft_split(env_path + 5, ':');
+	cmd_paths = ft_split(env_path + 5, &ft_isddot);
 	i = 0;
 	while (cmd_paths[i])
 	{
@@ -62,9 +63,11 @@ char	**define_path_cmd(char **cmd_args, char *paths)
 	char	**path_defined_cmd;
 	char	*right_path;
 
+	if (!paths)
+		return (NULL);
 	right_path = find_right_path(cmd_args[0], paths);
-	if (right_path == NULL)
-		return (ft_arraydup(cmd_args));
+	if (!right_path)
+		return (NULL);
 	path_defined_cmd = ft_arraydup(cmd_args);
 	free(path_defined_cmd[0]);
 	path_defined_cmd[0] = right_path;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+        */
+/*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:27 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/17 23:43:49 by kquetat-         ###   ########.fr       */
+/*   Updated: 2023/08/21 10:06:19 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define DEF "\001\033[0m\002"
 # define UP "\001\033[1A\002"
 
+/* TYPEDEF */
+
 typedef enum e_type
 {
 	DLESS,
@@ -62,7 +64,9 @@ typedef struct s_minishell
 
 /* GLOBAL VARIABLE */
 
-int		g_sig;
+int	g_sig;
+
+/* INITIALIZATION */
 
 t_mnsh	*init_mnsh(int argc, char **argv, char **envp);
 char	*get_prompt(char *cwd);

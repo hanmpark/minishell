@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+         #
+#    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/15 20:04:15 by hanmpark          #+#    #+#              #
-#    Updated: 2023/08/18 19:02:13 by kquetat-         ###   ########.fr        #
+#    Updated: 2023/08/19 23:48:58 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

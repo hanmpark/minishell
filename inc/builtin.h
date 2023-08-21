@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:42:16 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 18:42:19 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/19 22:23:09 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define NOT_VALID_ID "': not a valid identifier\n"
 # define EXIT_ARGS "minishell: exit: too many arguments\n"
 # define NUM_ARGS_REQ ": numeric argument required\n"
+
+# define ERR_CWD "minishell: pwd: Current working directory does not exist\n"
 
 /* IDENTIFIER FOR BUILTINS */
 

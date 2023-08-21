@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:36:30 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 18:36:38 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/19 23:12:38 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 #include <stdlib.h>
 
-static size_t	count_words(char const *str, char c)
+static size_t	count_words(char const *str, int (*f)(char))
 {
 	size_t	count;
 
 	count = 0;
-	while (*str && *str == c)
+	while (*str && f(*str))
 		str++;
 	if (*str == 0)
 		return (0);
 	while (*str)
 	{
 		count++;
-		while (*str && *str != c)
+		while (*str && !f(*str))
 			str++;
-		while (*str && *str == c)
+		while (*str && f(*str))
 			str++;
 	}
 	return (count);
@@ -53,7 +53,7 @@ static char	*cpy_to_tab(char const *str, size_t size)
 }
 
 // Splits a string into an array of substrings based on a specified delimiter.
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, int (*f)(char))
 {
 	char	**tab;
 	size_t	j;
@@ -61,16 +61,16 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (0);
-	count = count_words(s, c);
+	count = count_words(s, f);
 	tab = malloc((count + 1) * sizeof(char *));
 	if (!tab)
 		return (0);
 	while (*s)
 	{
-		if (*s && *s != c)
+		if (*s && !f(*s))
 		{
 			j = 0;
-			while (s[j] && s[j] != c)
+			while (s[j] && !f(s[j]))
 				j++;
 			*(tab++) = cpy_to_tab(s, j);
 			s += j;

@@ -6,12 +6,13 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:31 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/12 01:49:01 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/19 23:12:22 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expander.h"
+#include "isft.h"
 
 /*
 * Concatenates the first string of the joining array in the last string
@@ -53,7 +54,7 @@ static char	**convert_to_array(t_mnsh *mnsh, char *arg, int *i, bool begin)
 	else
 	{
 		str = extract_expand_unquoted(mnsh, arg, i);
-		array = array_iter_globbing(mnsh, ft_split(str, ' '));
+		array = array_iter_globbing(mnsh, ft_split(str, &ft_isspace));
 		if (begin && !*array && !arg[*i])
 		{
 			ft_arrayfree(array);

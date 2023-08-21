@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kquetat- <kquetat-@student.42nice.fr>      +#+  +:+       +#+         #
+#    By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/08 18:40:57 by hanmpark          #+#    #+#              #
-#    Updated: 2023/08/17 22:35:21 by kquetat-         ###   ########.fr        #
+#    Updated: 2023/08/19 22:30:43 by hanmpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ SRCS_ISFT = ${addprefix ${ISFT_PATH}, ft_isalnum.c \
 										ft_isdigit.c \
 										ft_isspace.c \
 										ft_isenv.c \
-										ft_strisdigit.c}
+										ft_strisdigit.c \
+										ft_isddot.c}
 
 STRUCTFT_PATH = ./src/structft/
 SRCS_STRUCTFT = ${addprefix ${STRUCTFT_PATH}, ft_tokadd_back.c \

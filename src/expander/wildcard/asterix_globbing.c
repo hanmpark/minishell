@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:37 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/08 17:45:01 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/21 10:05:00 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 
 static bool	is_wildcard(const char *pattern)
 {
-	bool	yes;
+	bool	wildcard;
 	int		i;
 
 	i = 0;
-	yes = false;
+	wildcard = false;
 	while (pattern && pattern[i])
 	{
 		if (pattern[i] == '*')
-			yes = true;
+			wildcard = true;
 		if (pattern[i] == '\'' || pattern[i] == '"')
 			return (false);
 		i++;
 	}
-	return (yes);
+	return (wildcard);
 }
 
 static char	**asterix_globbing(const char *pattern)

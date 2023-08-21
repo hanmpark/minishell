@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:54:14 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/21 09:47:25 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ static bool	find_path_cmd(char **cmd_args, char **envp)
 {
 	char	**path_cmd;
 
+	if (!get_path(envp))
+		return (false);
 	path_cmd = define_path_cmd(cmd_args, get_path(envp));
+	if (!path_cmd)
+		return (false);
 	if (execve(path_cmd[0], path_cmd, envp) == -1)
 	{
 		ft_arrayfree(path_cmd);
@@ -31,9 +35,12 @@ static bool	find_path_cmd(char **cmd_args, char **envp)
 	return (true);
 }
 
-static bool	is_path_cmd(char *cmd)
+static bool	is_path_cmd(char *cmd, char **envp)
 {
-	if (ft_strchr(cmd, '/') && access(cmd, F_OK) == 0)
+	if (cmd[ft_strlen(cmd) - 1] == '/')
+		return (true);
+	else if ((ft_strchr(cmd, '/') && !access(cmd, F_OK)) \
+		|| (!ft_strchr(cmd, '/') && !access(cmd, F_OK) && !get_path(envp)))
 		return (true);
 	return (false);
 }
@@ -51,7 +58,7 @@ static void	exec_cmd(char **cmd_args, char ***envp)
 	if (builtin_checker(cmd_args))
 		exit(builtin_cmds(cmd_args, envp, CHILD_PROCESS));
 	if (!find_path_cmd(cmd_args, *envp))
-		if (!is_path_cmd(cmd_args[0]))
+		if (!is_path_cmd(cmd_args[0], *envp))
 			error_not_found(cmd_args[0]);
 	if (execve(cmd_args[0], cmd_args, *envp) == -1)
 		error_not_executable(cmd_args[0]);
@@ -63,10 +70,16 @@ static pid_t	fork_cmd(t_cmd *cmd, char ***envp, bool is_last)
 	int		pfd[2];
 
 	if (!is_last && pipe(pfd) == -1)
-		error_fatal("minishell: pipe");
+	{
+		perror("minishell: pipe");
+		return (ERR_RESOURCE);
+	}
 	pid = fork();
 	if (pid == -1)
-		error_fatal("minishell: fork");
+	{
+		perror("minishell: fork");
+		return (ERR_RESOURCE);
+	}
 	if (pid == CHILD_PROCESS)
 	{
 		set_pipe_output(cmd->fdout, pfd, is_last);

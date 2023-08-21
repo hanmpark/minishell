@@ -6,7 +6,7 @@
 /*   By: hanmpark <hanmpark@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 08:53:46 by hanmpark          #+#    #+#             */
-/*   Updated: 2023/08/11 18:41:25 by hanmpark         ###   ########.fr       */
+/*   Updated: 2023/08/20 00:41:44 by hanmpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,7 @@ void	error_not_executable(char *cmd)
 	lstat(cmd, &stat);
 	if (S_ISDIR(stat.st_mode))
 		error_exit(cmd, ERR_ISDIR, NOT_EXECUTABLE);
+	else if (!S_ISDIR(stat.st_mode) && cmd[ft_strlen(cmd) - 1] == '/')
+		error_exit(cmd, ERR_NODIR, NOT_EXECUTABLE);
 	error_exit(cmd, ERR_PERM, NOT_EXECUTABLE);
-}
-
-void	error_fatal(char *err_msg)
-{
-	perror(err_msg);
-	exit(1);
 }
